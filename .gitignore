@@ -1,5 +1,8 @@
 node_modules
 
+# used for local development using D1
+miniflare
+
 # Output
 .output
 .vercel
