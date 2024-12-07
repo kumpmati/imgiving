@@ -29,7 +29,7 @@ pages_build_output_dir = ".svelte-kit/cloudflare"
 binding = "DB"
 database_name = "giftea"
 preview_database_id = "DB" # Required for Pages local development
-database_id = "40a1ea8f-2e75-4402-ad7a-28f8e1ff55af"
+database_id = "b9396f9c-4137-4a52-84bc-0b9ff5e62e66"
 migrations_dir = "./drizzle"
 
 # Bind a Durable Object. Durable objects are a scale-to-zero compute primitive based on the actor model.
