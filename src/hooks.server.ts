@@ -1,5 +1,7 @@
 import { dev } from '$app/environment';
+import { userTable } from '$lib/server/db/schema';
 import { error } from '@sveltejs/kit';
+import { eq } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/d1';
 import type { Miniflare } from 'miniflare';
 
@@ -23,6 +25,16 @@ export async function handle({ event, resolve }) {
 	if (!event.locals.db) {
 		if (!event.platform?.env.DB) error(500, 'invalid configuration');
 		event.locals.db = drizzle(event.platform!.env.DB);
+	}
+
+	const userIdCookie = event.cookies.get('auth_session');
+	if (userIdCookie) {
+		const [user] = await event.locals.db
+			.select()
+			.from(userTable)
+			.where(eq(userTable.id, userIdCookie));
+
+		event.locals.user = user;
 	}
 
 	return resolve(event);

@@ -5,6 +5,8 @@
 	import Label from '$ui/label/label.svelte';
 </script>
 
+<a href="/auth/signin">Sign In</a>
+
 <Card.Root>
 	<form method="post" class="contents">
 		<Card.Content>

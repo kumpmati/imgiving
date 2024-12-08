@@ -7,3 +7,5 @@
 </svelte:head>
 
 <h1>{data.list.name}</h1>
+
+<pre>{JSON.stringify(data.list, null, 2)}</pre>
