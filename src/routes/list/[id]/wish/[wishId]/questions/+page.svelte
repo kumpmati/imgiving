@@ -3,10 +3,18 @@
 	import Chat from '$lib/components/chat/Chat.svelte';
 	import ListHeader from '$lib/components/ListHeader.svelte';
 	import Button from '$ui/button/button.svelte';
+	import { superActions } from 'sveltekit-superactions';
+	import { page } from '$app/stores';
+	import type { QuestionEndpoint } from './+server.js';
+	import { onMount } from 'svelte';
 
 	let { data } = $props();
 
-	// TODO: update latest read timestamp in browser to prevent load-on-hover 'reading' messages
+	const actions = superActions<QuestionEndpoint>($page.url.pathname);
+
+	onMount(() => {
+		actions.markAsRead();
+	});
 </script>
 
 <ListHeader variant="subpage">

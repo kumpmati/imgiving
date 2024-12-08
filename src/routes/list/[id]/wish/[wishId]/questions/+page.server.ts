@@ -2,19 +2,9 @@ import { chatMessageId } from '$lib/id';
 import { db } from '$lib/server/db';
 import { wishQuestionTable, wishTable } from '$lib/server/db/schema';
 import { error } from '@sveltejs/kit';
-import { asc, eq } from 'drizzle-orm';
+import { and, asc, eq } from 'drizzle-orm';
 
-export const load = async ({ params, parent }) => {
-	const { wish, isOwner } = await parent();
-
-	if (isOwner) {
-		// marks questions up to this point as seen
-		await db
-			.update(wishTable)
-			.set({ lastSeenQuestionTimestamp: new Date() })
-			.where(eq(wishTable.id, wish.id));
-	}
-
+export const load = async ({ params }) => {
 	return {
 		streamed: {
 			questions: db.query.wishQuestionTable.findMany({
@@ -36,7 +26,20 @@ export const actions = {
 			id: chatMessageId(),
 			message: raw.message.toString(),
 			wishId: params.wishId,
-			userId: locals.user.id
+			userId: locals.user.id,
+			createdAt: new Date()
 		});
+
+		// update seen timestamp so that own message is not counted as unread
+		await db
+			.update(wishTable)
+			.set({ lastSeenQuestionTimestamp: new Date() })
+			.where(
+				and(
+					eq(wishTable.id, params.wishId),
+					// make sure only the owner can do this
+					eq(wishTable.userId, locals.user.id)
+				)
+			);
 	}
 };
