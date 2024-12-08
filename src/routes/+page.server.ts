@@ -1,4 +1,4 @@
-import { listTable } from '$lib/server/db/schema.js';
+import { listTable } from '$lib/server/db/schema/list.js';
 import { redirect } from '@sveltejs/kit';
 import { nanoid } from 'nanoid';
 

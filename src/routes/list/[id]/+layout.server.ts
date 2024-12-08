@@ -1,4 +1,4 @@
-import { listTable } from '$lib/server/db/schema.js';
+import { listTable } from '$lib/server/db/schema/list.js';
 import { error } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 

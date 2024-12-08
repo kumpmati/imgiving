@@ -1,4 +1,4 @@
-import { userTable } from '$lib/server/db/schema.js';
+import { userTable } from '$lib/server/db/schema/user.js';
 import { fail, redirect } from '@sveltejs/kit';
 import { nanoid } from 'nanoid';
 import { z } from 'zod';

@@ -1,6 +1,6 @@
 // See https://svelte.dev/docs/kit/types#app.d.ts
 
-import type { User } from '$lib/server/db/schema';
+import type { User } from '$lib/server/db/schema/user';
 import type { DrizzleD1Database } from 'drizzle-orm/d1';
 
 // for information about these interfaces
