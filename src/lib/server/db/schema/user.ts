@@ -5,7 +5,7 @@ export const userTable = pgTable(
 	{
 		id: text('id').primaryKey(),
 		name: text('name').notNull(),
-		createdAt: timestamp('created_at', { withTimezone: true }).notNull()
+		createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow()
 	},
 	(table) => ({
 		createdAtIndex: index('user_created_at_index').on(table.createdAt)
