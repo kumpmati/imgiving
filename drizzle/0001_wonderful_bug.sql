@@ -1,0 +1,1 @@
+CREATE INDEX `list_created_at_index` ON `lists` (`created_at`);
