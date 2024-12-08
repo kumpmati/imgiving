@@ -16,7 +16,7 @@
 
 	<nav>
 		<Button size="icon" variant="outline" class="w-auto px-2">
-			5
+			{data.members.length}
 			<TablerUsers width={16} height={16} />
 		</Button>
 	</nav>
