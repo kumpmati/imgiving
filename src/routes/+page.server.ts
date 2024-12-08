@@ -1,15 +1,15 @@
 import { listTable } from '$lib/server/db/schema.js';
-
-export const load = async ({ locals }) => {
-	const rows = await locals.db.select().from(listTable);
-
-	return { rows };
-};
+import { redirect } from '@sveltejs/kit';
+import { nanoid } from 'nanoid';
 
 export const actions = {
 	default: async ({ request, locals }) => {
 		const raw = Object.fromEntries(await request.formData()) as { name: string };
 
-		await locals.db.insert(listTable).values({ id: raw.name, createdAt: new Date() });
+		const id = nanoid(15);
+
+		await locals.db.insert(listTable).values({ id, name: raw.name, createdAt: new Date() });
+
+		redirect(302, `/list/${id}`);
 	}
 };
