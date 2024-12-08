@@ -1,11 +1,11 @@
-import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import { index, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 
-export const userTable = sqliteTable(
+export const userTable = pgTable(
 	'users',
 	{
 		id: text('id').primaryKey(),
 		name: text('name').notNull(),
-		createdAt: integer('created_at', { mode: 'timestamp_ms' }).notNull()
+		createdAt: timestamp('created_at', { withTimezone: true }).notNull()
 	},
 	(table) => ({
 		createdAtIndex: index('user_created_at_index').on(table.createdAt)

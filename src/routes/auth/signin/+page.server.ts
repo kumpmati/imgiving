@@ -3,13 +3,14 @@ import { fail, redirect } from '@sveltejs/kit';
 import { nanoid } from 'nanoid';
 import { z } from 'zod';
 import dayjs from 'dayjs';
+import { db } from '$lib/server/db/index.js';
 
 const createUserSchema = z.object({
 	name: z.string().max(40).min(1)
 });
 
 export const actions = {
-	default: async ({ locals, request, cookies }) => {
+	default: async ({ request, cookies }) => {
 		// TODO: handle multiple accounts on one user
 
 		const raw = Object.fromEntries(await request.formData());
@@ -21,7 +22,7 @@ export const actions = {
 
 		const userId = `u:${nanoid(32)}`;
 
-		await locals.db
+		await db
 			.insert(userTable)
 			.values({ id: userId, name: parsed.data.name, createdAt: new Date() });
 

@@ -25,12 +25,12 @@ pages_build_output_dir = ".svelte-kit/cloudflare"
 
 # Bind a D1 database. D1 is Cloudflare’s native serverless SQL database.
 # Docs: https://developers.cloudflare.com/pages/functions/bindings/#d1-databases
-[[d1_databases]]
-binding = "DB"
-database_name = "giftea"
-preview_database_id = "DB" # Required for Pages local development
-database_id = "b9396f9c-4137-4a52-84bc-0b9ff5e62e66"
-migrations_dir = "./drizzle"
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "giftea"
+# preview_database_id = "DB" # Required for Pages local development
+# database_id = "b9396f9c-4137-4a52-84bc-0b9ff5e62e66"
+# migrations_dir = "./drizzle"
 
 # Bind a Durable Object. Durable objects are a scale-to-zero compute primitive based on the actor model.
 # Durable Objects can live for as long as needed. Use these when you need a long-running "server", such as in realtime apps.

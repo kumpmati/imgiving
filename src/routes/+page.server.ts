@@ -1,3 +1,4 @@
+import { db } from '$lib/server/db';
 import { listTable } from '$lib/server/db/schema/list.js';
 import { redirect } from '@sveltejs/kit';
 import { nanoid } from 'nanoid';
@@ -12,7 +13,7 @@ export const actions = {
 
 		const id = nanoid(15);
 
-		await locals.db.insert(listTable).values({
+		await db.insert(listTable).values({
 			id,
 			name: raw.name,
 			authorId: locals.user.id,
