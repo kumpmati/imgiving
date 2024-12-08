@@ -1,5 +1,8 @@
+import { relations } from 'drizzle-orm';
 import { userTable } from './user';
-import { index, pgTable, primaryKey, text, timestamp } from 'drizzle-orm/pg-core';
+import { index, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
+import { listUserTable } from './listUser';
+import { wishTable } from './wish';
 
 export const listTable = pgTable(
 	'lists',
@@ -19,21 +22,7 @@ export const listTable = pgTable(
 export type List = typeof listTable.$inferSelect;
 export type ListInsert = typeof listTable.$inferInsert;
 
-export const listUserTable = pgTable(
-	'list_users',
-	{
-		listId: text('list_id')
-			.references(() => listTable.id, { onDelete: 'cascade' })
-			.notNull(),
-		userId: text('user_id')
-			.references(() => userTable.id, { onDelete: 'cascade' })
-			.notNull(),
-		createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow()
-	},
-	(table) => ({
-		// list id is first in the composite key so that index is best optimised for finding all list members
-		pk: primaryKey({ columns: [table.listId, table.userId] })
-	})
-);
-
-export type ListUser = typeof listUserTable.$inferSelect;
+export const listRelations = relations(listTable, ({ many }) => ({
+	users: many(listUserTable),
+	wishes: many(wishTable)
+}));
