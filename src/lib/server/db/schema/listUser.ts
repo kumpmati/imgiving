@@ -12,7 +12,7 @@ export const listUserTable = pgTable(
 		userId: text('user_id')
 			.references(() => userTable.id, { onDelete: 'cascade' })
 			.notNull(),
-		createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow()
+		joinedAt: timestamp('joined_at', { withTimezone: true }).notNull().defaultNow()
 	},
 	(table) => ({
 		// list id is first in the composite key so that index is best optimised for finding all list members

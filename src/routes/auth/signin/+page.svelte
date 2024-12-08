@@ -5,8 +5,8 @@
 	import Input from '$ui/input/input.svelte';
 </script>
 
-<main class="mx-auto flex h-full w-full max-w-lg flex-col justify-center p-4">
-	<Card.Root>
+<main>
+	<Card.Root class="absolute left-1/2 top-1/2 w-full max-w-md -translate-x-1/2 -translate-y-1/2">
 		<Card.Header>
 			<Card.Title>Create account</Card.Title>
 			<Card.Description>Don't worry, only a name is needed!</Card.Description>

@@ -22,6 +22,34 @@
       "when": 1733671541401,
       "tag": "0002_redundant_clint_barton",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1733673040214,
+      "tag": "0003_cooing_silver_sable",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1733686164120,
+      "tag": "0004_bumpy_mariko_yashida",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1733697993801,
+      "tag": "0005_magical_blizzard",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1733699874771,
+      "tag": "0006_free_tigra",
+      "breakpoints": true
     }
   ]
 }

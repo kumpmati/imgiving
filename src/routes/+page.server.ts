@@ -1,7 +1,8 @@
+import { listId } from '$lib/id.js';
 import { db } from '$lib/server/db';
-import { listTable, listUserTable } from '$lib/server/db/schema/list.js';
+import { listTable } from '$lib/server/db/schema/list.js';
+import { listUserTable } from '$lib/server/db/schema/listUser';
 import { redirect } from '@sveltejs/kit';
-import { nanoid } from 'nanoid';
 
 export const actions = {
 	default: async ({ request, locals }) => {
@@ -9,9 +10,10 @@ export const actions = {
 			redirect(302, '/auth/signin');
 		}
 
+		// TODO: validation
 		const raw = Object.fromEntries(await request.formData()) as { name: string };
 
-		const id = nanoid(15);
+		const id = listId();
 
 		// TODO: do these in a transaction
 		await db.insert(listTable).values({

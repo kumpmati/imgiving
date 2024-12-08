@@ -1,7 +1,8 @@
 import { index, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 import { userTable } from './user';
 import { listTable } from './list';
-import { relations } from 'drizzle-orm';
+import { relations, sql } from 'drizzle-orm';
+import { wishCommentTable, wishQuestionTable } from './wishComments';
 
 export const wishTable = pgTable(
 	'wishes',
@@ -18,19 +19,29 @@ export const wishTable = pgTable(
 		description: text('description'),
 		price: text('price'),
 
-		updatedAt: timestamp('updated_at', { withTimezone: true }),
+		// used to keep track which questions the owner has seen
+		lastSeenQuestionTimestamp: timestamp('last_seen_question', { withTimezone: true })
+			.notNull()
+			.defaultNow(),
+
+		updatedAt: timestamp('updated_at', { withTimezone: true })
+			.default(sql`NULL`)
+			.$onUpdateFn(() => new Date()), // auto-update when this table is updated
 		createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow()
 	},
 	(table) => ({
 		listIdIndex: index('wish_list_id_index').on(table.listId),
-		userIdIndex: index('wish_user_id_index').on(table.userId)
+		userIdIndex: index('wish_user_id_index').on(table.userId),
+		createdAtIndex: index('wish_created_at_index').on(table.createdAt)
 	})
 );
 
 export type Wish = typeof wishTable.$inferSelect;
 export type WishInsert = typeof wishTable.$inferInsert;
 
-export const wishRelations = relations(wishTable, ({ one }) => ({
+export const wishRelations = relations(wishTable, ({ one, many }) => ({
 	list: one(listTable, { fields: [wishTable.listId], references: [listTable.id] }),
-	user: one(userTable, { fields: [wishTable.userId], references: [userTable.id] })
+	user: one(userTable, { fields: [wishTable.userId], references: [userTable.id] }),
+	questions: many(wishQuestionTable),
+	comments: many(wishCommentTable)
 }));
