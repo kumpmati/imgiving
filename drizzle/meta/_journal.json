@@ -15,6 +15,13 @@
       "when": 1733616281653,
       "tag": "0001_wonderful_bug",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1733617952961,
+      "tag": "0002_lying_wiccan",
+      "breakpoints": true
     }
   ]
 }
