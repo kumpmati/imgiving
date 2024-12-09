@@ -8,6 +8,8 @@
 	import { Button } from '$ui/button';
 	import Chat from '$lib/components/chat/Chat.svelte';
 	import { Badge } from '$ui/badge';
+	import { cn } from '$lib/utils';
+	import { enhance } from '$app/forms';
 
 	let { data } = $props();
 </script>
@@ -46,8 +48,8 @@
 		</form>
 	</main>
 {:else}
-	<ListHeader variant="subpage">
-		<Button href="/list/{data.list.id}" variant="ghost" size="icon">
+	<ListHeader variant="embedded">
+		<Button href="/list/{data.list.id}" variant="outline" size="icon">
 			<TablerArrowLeft class="size-4" />
 		</Button>
 
@@ -55,6 +57,8 @@
 
 		{#if data.wish.price}
 			<Badge class="h-fit">{data.wish.price}</Badge>
+		{:else}
+			<div></div>
 		{/if}
 	</ListHeader>
 
@@ -62,9 +66,12 @@
 		<div class="flex flex-col gap-3">
 			<section class="flex w-full flex-col gap-1 rounded-md border bg-card p-4">
 				<small class="text-sm text-muted-foreground">Description</small>
-				<p class="text-base">{data.wish.description || '<no description>'}</p>
+				<p class={cn('text-base', !data.wish.description && 'italic')}>
+					{data.wish.description || '< No description >'}
+				</p>
 			</section>
 
+			<h3 class="text-center text-lg font-semibold">Giver chat</h3>
 			<Chat
 				description="You can discuss the wish here with others, {data.wish.user
 					.name} cannot see these messages."
@@ -76,13 +83,24 @@
 
 		<WishGivers
 			class="max-w-sm"
-			givers={[
-				{ id: 'a', name: 'Dr. Ivo Robotnik', createdAt: new Date() },
-				{ id: 'b', name: 'Cheese Gonzales', createdAt: new Date() },
-				{ id: 'x', name: 'Lorem Ipsum', createdAt: new Date() },
-				{ id: '1', name: 'Dolor at cat', createdAt: new Date() },
-				{ id: '2', name: 'Lowly Worm', createdAt: new Date() }
-			]}
+			currentUserId={data.user?.id}
+			givers={data.givers.map((g) => ({ id: g.userId, name: g.user.name, status: g.status }))}
 		/>
+
+		<div class="flex gap-2">
+			<Button variant="secondary" href="/list/{data.list.id}/wish/{data.wish.id}/questions">
+				<TablerHelp class="size-4" /> Questions
+			</Button>
+
+			<form class="contents" method="post" action="?/toggle_pending_status" use:enhance>
+				<Button type="submit">
+					{#if data.wishStatus}
+						Remove from buylist
+					{:else}
+						Add to buylist
+					{/if}
+				</Button>
+			</form>
+		</div>
 	</main>
 {/if}

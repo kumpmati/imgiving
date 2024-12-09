@@ -50,6 +50,13 @@
       "when": 1733699874771,
       "tag": "0006_free_tigra",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1733756357583,
+      "tag": "0007_short_vin_gonzales",
+      "breakpoints": true
     }
   ]
 }

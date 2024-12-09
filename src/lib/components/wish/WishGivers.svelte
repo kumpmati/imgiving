@@ -1,15 +1,16 @@
 <script lang="ts">
 	import TablerCircleDashedCheck from '~icons/tabler/circle-dashed-check';
 	import TablerCircleCheck from '~icons/tabler/circle-check';
-	import type { User } from '$lib/server/db/schema';
+	import type { WishStatus } from '$lib/server/db/schema';
 	import { cn } from '$lib/utils';
 
 	type Props = {
-		givers: User[];
+		givers: { id: string; name: string; status: WishStatus['status'] }[];
+		currentUserId?: string;
 		class?: string;
 	};
 
-	let { givers, class: className }: Props = $props();
+	let { givers, currentUserId, class: className }: Props = $props();
 </script>
 
 <div class={cn('flex h-fit flex-col gap-1 rounded-md border bg-card p-4', className)}>
@@ -26,7 +27,14 @@
 
 	<ul class="flex flex-col">
 		{#each givers as giver (giver.id)}
-			<li>{giver.name}</li>
+			{@const isMe = giver.id === currentUserId}
+			<li>
+				{giver.name}
+
+				{#if isMe}
+					<span class="text-muted-foreground">(You)</span>
+				{/if}
+			</li>
 		{/each}
 	</ul>
 </div>

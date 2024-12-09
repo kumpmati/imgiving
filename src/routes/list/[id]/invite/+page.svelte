@@ -37,7 +37,12 @@
 							{@const isMe = data.user?.id === member.userId}
 							<tr class="border-b bg-slate-100 text-sm last:border-b-0 hover:bg-slate-200">
 								<td class="p-1 pl-3">
-									{isMe ? 'You' : member.user.name}
+									{member.user.name}
+
+									{#if isMe}
+										<span class="text-muted-foreground"> (You) </span>
+									{/if}
+
 									{#if isOwner}
 										<span class="text-muted-foreground"> (Owner) </span>
 									{/if}

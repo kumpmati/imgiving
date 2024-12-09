@@ -3,7 +3,7 @@
 	import type { Snippet } from 'svelte';
 
 	type Props = {
-		variant: 'home' | 'subpage';
+		variant: 'home' | 'subpage' | 'embedded';
 		children?: Snippet;
 		sticky?: boolean;
 	};
@@ -14,7 +14,8 @@
 <header
 	class={cn(
 		'm-3 mb-0 flex items-center justify-between rounded-md border border-dashed border-red-500 bg-background p-2',
-		variant === 'subpage' ? 'border-solid border-slate-200 shadow-md' : '',
+		variant === 'subpage' && 'border-solid border-slate-200 shadow-md',
+		variant === 'embedded' && 'border-none p-0 shadow-none',
 		sticky && 'sticky top-3'
 	)}
 >

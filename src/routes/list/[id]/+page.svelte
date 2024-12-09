@@ -1,19 +1,24 @@
 <script lang="ts">
+	import TablerCircleCheck from '~icons/tabler/circle-check';
+	import TablerCircleCheckFilled from '~icons/tabler/circle-check-filled';
+	import TablerHelp from '~icons/tabler/help';
 	import { enhance } from '$app/forms';
 	import ListHeader from '$lib/components/ListHeader.svelte';
 	import ListLogo from '$lib/components/ListLogo.svelte';
 	import WishCard from '$lib/components/wish/WishCard.svelte';
 	import WishForm from '$lib/components/wish/WishForm.svelte';
-	import Button, { buttonVariants } from '$ui/button/button.svelte';
+	import { buttonVariants } from '$ui/button/button.svelte';
 	import * as Dialog from '$ui/dialog';
 	import * as Tabs from '$ui/tabs';
 	import TablerPlus from '~icons/tabler/plus';
 	import TablerUsers from '~icons/tabler/users';
+	import { Button } from '$ui/button';
+	import { cn } from '$lib/utils';
+	import * as Table from '$ui/table';
+	import { Badge } from '$ui/badge';
+	import BuylistTable from '$lib/components/buylist/BuylistTable.svelte';
 
 	let { data } = $props();
-
-	// TODO: save tab in url (hash / query param)
-	let tab = $state<'all'>('all');
 
 	let showAddDialog = $state(false);
 </script>
@@ -45,8 +50,8 @@
 	</nav>
 </ListHeader>
 
-<main class="grid grid-cols-[auto,1fr] gap-4 p-3">
-	<section class="flex min-w-80 max-w-sm flex-col rounded-lg p-4">
+<main class="grid grid-cols-1 gap-4 p-3 md:grid-cols-[auto,1fr]">
+	<section class="flex min-w-80 flex-col rounded-lg p-4 md:max-w-sm">
 		<div class="mb-4 flex items-center justify-between">
 			<h2 class="text-lg font-semibold">My wishes ({data.ownWishes.length})</h2>
 			<Dialog.Root bind:open={showAddDialog}>
@@ -100,21 +105,31 @@
 		</ul>
 	</section>
 	<section class="flex flex-col rounded-xl border bg-card p-4">
-		<Tabs.Root bind:value={tab}>
-			<Tabs.List>
-				<Tabs.Trigger value="all">All wishes</Tabs.Trigger>
-			</Tabs.List>
+		<Tabs.Root value="all">
+			<div class="flex items-center justify-between">
+				<Tabs.List>
+					<Tabs.Trigger value="all">All wishes</Tabs.Trigger>
+					<Tabs.Trigger value="buylist">
+						My buylist ({#await data.streamed.buylist}...{:then bl}{bl.length}{/await})
+					</Tabs.Trigger>
+				</Tabs.List>
+			</div>
 
 			<Tabs.Content value="all">
-				{#await data.streamed.allWishes then allWishes}
+				{#await data.streamed.allWishes}
+					<p>Loading...</p>
+				{:then allWishes}
 					<ul class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-2">
 						{#each allWishes as wish (wish.id)}
 							<li>
 								<WishCard
 									href="/list/{data.list.id}/wish/{wish.id}"
-									recipient={wish.user.name}
+									recipient={wish.username}
 									name={wish.name}
 									price={wish.price}
+									comments={wish.numComments}
+									questions={wish.numQuestions}
+									numGivers={wish.numGivers || 0}
 									class="h-full"
 								/>
 							</li>
@@ -126,6 +141,19 @@
 					</ul>
 				{:catch err}
 					<p>Something went wrong</p>
+				{/await}
+			</Tabs.Content>
+
+			<Tabs.Content value="buylist">
+				{#await data.streamed.buylist}
+					<p>loading...</p>
+				{:then buylist}
+					<div class="overflow-hidden rounded-md">
+						<BuylistTable
+							rows={buylist.toSorted((a, b) => b.status.localeCompare(a.status))}
+							listId={data.list.id}
+						/>
+					</div>
 				{/await}
 			</Tabs.Content>
 		</Tabs.Root>

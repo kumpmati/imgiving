@@ -13,20 +13,25 @@ export const load = async ({ params, locals }) => {
 		error(404, 'wish not found');
 	}
 
-	const [unread] = await db
-		.select({ numUnread: count(wishQuestionTable) })
-		.from(wishQuestionTable)
-		.where(
-			and(
-				eq(wishQuestionTable.wishId, params.wishId),
-				gte(wishQuestionTable.createdAt, wish.lastSeenQuestionTimestamp)
-			)
-		)
-		.groupBy(wishQuestionTable.wishId);
+	const isOwner = locals.user?.id === wish.userId;
+
+	// TODO: clean up
+	const [unread] = isOwner
+		? await db
+				.select({ numUnread: count(wishQuestionTable) })
+				.from(wishQuestionTable)
+				.where(
+					and(
+						eq(wishQuestionTable.wishId, params.wishId),
+						gte(wishQuestionTable.createdAt, wish.lastSeenQuestionTimestamp)
+					)
+				)
+				.groupBy(wishQuestionTable.wishId)
+		: [];
 
 	return {
 		wish,
-		isOwner: locals.user?.id === wish.userId,
+		isOwner,
 		numUnreadQuestions: unread?.numUnread ?? 0
 	};
 };

@@ -3,7 +3,7 @@ import { listTable } from '$lib/server/db/schema/list.js';
 import { wishTable } from '$lib/server/db/schema/wish.js';
 import { wishQuestionTable } from '$lib/server/db/schema/wishComments.js';
 import { error } from '@sveltejs/kit';
-import { and, count, eq, getTableColumns, gte, not } from 'drizzle-orm';
+import { and, count, eq, getTableColumns, gte } from 'drizzle-orm';
 
 export const load = async ({ params, locals }) => {
 	if (!locals.user) error(403, 'not signed in'); // TODO: handle auth redirect
@@ -40,17 +40,6 @@ export const load = async ({ params, locals }) => {
 
 	return {
 		list,
-		ownWishes,
-
-		streamed: {
-			allWishes: db.query.wishTable.findMany({
-				where: and(
-					eq(wishTable.listId, params.id),
-					// exclude own wishes
-					not(eq(wishTable.userId, locals.user.id))
-				),
-				with: { user: { columns: { name: true } } }
-			})
-		}
+		ownWishes
 	};
 };

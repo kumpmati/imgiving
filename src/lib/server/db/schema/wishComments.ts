@@ -8,10 +8,10 @@ export const wishQuestionTable = pgTable(
 	{
 		id: text('id').primaryKey(),
 		wishId: text('wish_id')
-			.references(() => wishTable.id)
+			.references(() => wishTable.id, { onDelete: 'cascade' })
 			.notNull(),
 		userId: text('user_id')
-			.references(() => userTable.id)
+			.references(() => userTable.id, { onDelete: 'cascade' })
 			.notNull(),
 		message: text('message').notNull(),
 		createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow()
@@ -33,10 +33,10 @@ export const wishCommentTable = pgTable(
 	{
 		id: text('id').primaryKey(),
 		wishId: text('wish_id')
-			.references(() => wishTable.id)
+			.references(() => wishTable.id, { onDelete: 'cascade' })
 			.notNull(),
 		userId: text('user_id')
-			.references(() => userTable.id)
+			.references(() => userTable.id, { onDelete: 'cascade' })
 			.notNull(),
 		message: text('message').notNull(),
 		createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow()

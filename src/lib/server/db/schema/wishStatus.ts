@@ -1,7 +1,7 @@
 import { pgTable, primaryKey, text, timestamp } from 'drizzle-orm/pg-core';
 import { wishTable } from './wish';
 import { userTable } from './user';
-import { sql } from 'drizzle-orm';
+import { relations, sql } from 'drizzle-orm';
 
 export const wishStatusTable = pgTable(
 	'wish_status',
@@ -24,3 +24,7 @@ export const wishStatusTable = pgTable(
 );
 
 export type WishStatus = typeof wishStatusTable.$inferSelect;
+
+export const wishStatusRelations = relations(wishStatusTable, ({ one }) => ({
+	user: one(userTable, { fields: [wishStatusTable.userId], references: [userTable.id] })
+}));
