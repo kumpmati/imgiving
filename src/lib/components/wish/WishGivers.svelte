@@ -3,6 +3,7 @@
 	import TablerCircleCheck from '~icons/tabler/circle-check';
 	import type { WishStatus } from '$lib/server/db/schema';
 	import { cn } from '$lib/utils';
+	import { plural } from '$lib/plural';
 
 	type Props = {
 		givers: { id: string; name: string; status: WishStatus['status'] }[];
@@ -22,7 +23,7 @@
 		{:else}
 			<TablerCircleDashedCheck class="size-4" />
 		{/if}
-		<span>{givers.length} want{givers.length === 1 ? 's' : ''} to give this</span>
+		<span>{givers.length} {plural(givers.length) ? 'are' : 'is'} giving this</span>
 	</div>
 
 	<ul class="flex flex-col">

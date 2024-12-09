@@ -1,7 +1,4 @@
 <script lang="ts">
-	import TablerCircleCheck from '~icons/tabler/circle-check';
-	import TablerCircleCheckFilled from '~icons/tabler/circle-check-filled';
-	import TablerHelp from '~icons/tabler/help';
 	import { enhance } from '$app/forms';
 	import ListHeader from '$lib/components/ListHeader.svelte';
 	import ListLogo from '$lib/components/ListLogo.svelte';
@@ -13,10 +10,9 @@
 	import TablerPlus from '~icons/tabler/plus';
 	import TablerUsers from '~icons/tabler/users';
 	import { Button } from '$ui/button';
-	import { cn } from '$lib/utils';
-	import * as Table from '$ui/table';
-	import { Badge } from '$ui/badge';
 	import BuylistTable from '$lib/components/buylist/BuylistTable.svelte';
+	import TableCell from '$ui/table/table-cell.svelte';
+	import { plural } from '$lib/plural';
 
 	let { data } = $props();
 
@@ -50,8 +46,8 @@
 	</nav>
 </ListHeader>
 
-<main class="grid grid-cols-1 gap-4 p-3 md:grid-cols-[auto,1fr]">
-	<section class="flex min-w-80 flex-col rounded-lg p-4 md:max-w-sm">
+<main class="grid grid-cols-1 gap-4 p-3 lg:grid-cols-[auto,1fr]">
+	<section class="flex min-w-80 flex-col rounded-lg p-4 lg:max-w-sm">
 		<div class="mb-4 flex items-center justify-between">
 			<h2 class="text-lg font-semibold">My wishes ({data.ownWishes.length})</h2>
 			<Dialog.Root bind:open={showAddDialog}>
@@ -98,6 +94,7 @@
 						href="/list/{data.list.id}/wish/{wish.id}"
 						name={wish.name}
 						price={wish.price}
+						description={wish.description}
 						unreadQuestions={wish.numUnreadQuestions}
 					/>
 				</li>

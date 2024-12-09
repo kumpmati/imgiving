@@ -1,5 +1,5 @@
 <script lang="ts">
-	import TablerCircleCheckFilled from '~icons/tabler/circle-check-filled';
+	import TablerCheck from '~icons/tabler/check';
 	import TablerHelp from '~icons/tabler/help';
 	import type { Wish, WishStatus } from '$lib/server/db/schema';
 	import { Badge } from '$ui/badge';
@@ -8,13 +8,16 @@
 	import { cn } from '$lib/utils';
 	import { enhance } from '$app/forms';
 	import { flip } from 'svelte/animate';
+	import { plural } from '$lib/plural';
+	import type { Snippet } from 'svelte';
 
 	type Props = {
 		listId: string;
 		rows: (Wish & { recipient: string; status: WishStatus['status'] })[];
+		footer?: Snippet;
 	};
 
-	let { rows, listId }: Props = $props();
+	let { rows, listId, footer }: Props = $props();
 </script>
 
 <Table.Root>
@@ -25,23 +28,23 @@
 				animate:flip={{ duration: 200 }}
 				class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
 			>
-				<Table.Cell class="w-0 align-top">
+				<Table.Cell class="hidden w-0 align-top sm:table-cell">
 					<p
 						class={cn('py-1 text-base text-muted-foreground', isDone && 'line-through opacity-50')}
 					>
 						{wish.recipient}
 					</p>
 				</Table.Cell>
-				<Table.Cell>
+				<Table.Cell class="align-top">
 					<a
 						href="/list/{listId}/wish/{wish.id}"
 						class={cn(
-							'flex w-fit flex-col px-2 py-1 text-base font-semibold hover:text-primary/75',
+							'flex w-fit min-w-32 flex-col px-2 py-1 text-base font-semibold hover:text-slate-600',
 							isDone && 'opacity-50'
 						)}
 					>
-						<div class="flex items-center gap-2">
-							<span class={isDone ? 'line-through' : ''}>
+						<div class="flex flex-wrap items-center">
+							<span class={cn('mr-2', isDone ? 'line-through' : '')}>
 								{wish.name}
 							</span>
 
@@ -50,7 +53,9 @@
 							{/if}
 						</div>
 
-						<p class="text-sm text-muted-foreground">{wish.description || '-'}</p>
+						<p class="text-sm text-muted-foreground">
+							{wish.description}
+						</p>
 					</a>
 				</Table.Cell>
 				<Table.Cell class="w-0">
@@ -58,7 +63,7 @@
 						<Button
 							variant="secondary"
 							size="icon"
-							class="px-3"
+							class="hidden px-3 sm:flex"
 							href="/list/{listId}/wish/{wish.id}/questions"
 							title="Ask a question"
 						>
@@ -80,7 +85,7 @@
 								{#if wish.status === 'pending'}
 									Mark as done
 								{:else}
-									<TablerCircleCheckFilled /> Done
+									<TablerCheck /> Done
 								{/if}
 							</Button>
 						</form>
@@ -95,4 +100,12 @@
 			</Table.Row>
 		{/each}
 	</Table.Body>
+
+	{#if footer}
+		<Table.Footer>
+			<Table.Row>
+				{@render footer()}
+			</Table.Row>
+		</Table.Footer>
+	{/if}
 </Table.Root>
