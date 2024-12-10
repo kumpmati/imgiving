@@ -4,17 +4,14 @@
 	import { Button } from '$ui/button';
 	import { Input } from '$ui/input';
 	import * as Table from '$ui/table';
-	import { superActions } from 'sveltekit-superactions';
-	import type { WishEndpoint } from './+server.js';
-	import { page } from '$app/stores';
-	import { debounce } from '$lib/debounce.js';
+	import { Badge } from '$ui/badge/index.js';
 
 	let { data } = $props();
-
-	const actions = superActions<WishEndpoint>($page.url.pathname);
-
-	const debouncedUpdatePrice = debounce(actions.editWishPrice, 1000);
 </script>
+
+<svelte:head>
+	<title>My wishes - {data.list.name}</title>
+</svelte:head>
 
 <Table.Root>
 	<Table.Header>
@@ -32,17 +29,9 @@
 					<p class="text-base font-semibold leading-none">{wish.name}</p>
 				</Table.Cell>
 				<Table.Cell>
-					<Input
-						name="price"
-						value={wish.price}
-						class="w-20 bg-card"
-						placeholder="0 €"
-						onkeydown={(e) =>
-							debouncedUpdatePrice({
-								wishId: wish.id,
-								value: e.currentTarget.value || null
-							})}
-					/>
+					{#if wish.price}
+						<Badge>{wish.price}</Badge>
+					{/if}
 				</Table.Cell>
 				<Table.Cell class="text-right">
 					<form method="post" class="contents" action="?/delete_wish">

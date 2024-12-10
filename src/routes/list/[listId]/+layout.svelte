@@ -4,6 +4,10 @@
 	let { data, children } = $props();
 </script>
 
+<svelte:head>
+	<title>{data.list.name}</title>
+</svelte:head>
+
 <main class="mx-auto flex max-w-2xl flex-col">
 	<Step icon="0." text="Start" href="/list/{data.list.id}">
 		{@render children()}

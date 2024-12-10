@@ -11,6 +11,10 @@
 	let { data } = $props();
 </script>
 
+<svelte:head>
+	<title>Choose gifts - {data.list.name}</title>
+</svelte:head>
+
 <Table.Root>
 	<Table.Header>
 		<Table.Row>

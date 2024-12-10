@@ -16,6 +16,10 @@
 	const actions = superActions<ShopEndpoint>($page.url.pathname);
 </script>
 
+<svelte:head>
+	<title>Shopping list - {data.list.name}</title>
+</svelte:head>
+
 <Table.Root>
 	<Table.Header>
 		<Table.Row>
@@ -30,11 +34,11 @@
 			{@const isDone = wish.status === 'confirmed'}
 
 			<Table.Row>
-				<Table.Cell>
+				<Table.Cell class="align-baseline">
 					<div class="flex gap-4">
 						<Checkbox
 							name="checked"
-							class="mt-1"
+							class="mt-[3px]"
 							checked={wish.status === 'confirmed'}
 							onCheckedChange={() =>
 								actions.toggleBuylistChecked({ wishId: wish.id }).then(() => invalidateAll())}
@@ -59,12 +63,14 @@
 				</Table.Cell>
 				<Table.Cell class="align-baseline">
 					<div class="flex gap-1">
-						<Button variant="outline" class="px-2" title="Questions">
+						<Button variant="outline" size="sm" class="gap-1 px-2" title="Questions">
 							<TablerHelp />
+							{wish.numQuestions}
 						</Button>
 
-						<Button variant="outline" class="px-2" title="Comments">
+						<Button variant="outline" size="sm" class="gap-1 px-2" title="Comments">
 							<TablerMessage />
+							{wish.numComments}
 						</Button>
 					</div>
 				</Table.Cell>

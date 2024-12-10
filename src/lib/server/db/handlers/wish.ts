@@ -65,7 +65,9 @@ export const getBuylist = async (listId: string, userId: string) => {
 		.select({
 			...getTableColumns(wishTable),
 			status: wishStatusTable.status,
-			recipient: userTable.name
+			recipient: userTable.name,
+			numQuestions: countDistinct(wishQuestionTable),
+			numComments: countDistinct(wishCommentTable)
 		})
 		.from(wishTable)
 		.where(and(eq(wishTable.listId, listId)))
@@ -74,5 +76,7 @@ export const getBuylist = async (listId: string, userId: string) => {
 			and(eq(wishTable.id, wishStatusTable.wishId), eq(wishStatusTable.userId, userId))
 		)
 		.innerJoin(userTable, eq(wishTable.userId, userTable.id)) // we can inner join since all wishes have a user;
+		.leftJoin(wishQuestionTable, eq(wishTable.id, wishQuestionTable.wishId))
+		.leftJoin(wishCommentTable, eq(wishTable.id, wishCommentTable.wishId))
 		.groupBy(wishTable.id, wishStatusTable.status, userTable.id);
 };
