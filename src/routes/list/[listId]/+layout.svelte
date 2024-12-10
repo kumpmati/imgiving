@@ -1,4 +1,5 @@
 <script lang="ts">
+	import WishlistNav from '$lib/components/WishlistNav.svelte';
 	import Step from './Step.svelte';
 
 	let { data, children } = $props();
@@ -7,6 +8,12 @@
 <svelte:head>
 	<title>{data.list.name}</title>
 </svelte:head>
+
+<WishlistNav
+	wishlistId={data.list.id}
+	wishlistName={data.list.name}
+	numUsers={data.list.users.length}
+/>
 
 <main class="mx-auto flex max-w-2xl flex-col">
 	<Step icon="0." text="Start" href="/list/{data.list.id}">
