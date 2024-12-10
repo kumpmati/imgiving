@@ -34,7 +34,7 @@
 		<p class="w-fit text-4xl font-extrabold">{text}</p>
 	</a>
 
-	{#if line}
+	{#if line && active}
 		<div
 			class="absolute left-8 top-16 m-0 h-[calc(100%-64px)] w-[2px] bg-gradient-to-b from-slate-500 to-slate-100"
 		></div>

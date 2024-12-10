@@ -4,7 +4,7 @@
 	let { data, children } = $props();
 </script>
 
-<main class="mx-auto flex max-w-3xl flex-col">
+<main class="mx-auto flex max-w-2xl flex-col">
 	<Step icon="0." text="Start" href="/list/{data.list.id}">
 		{@render children()}
 	</Step>
