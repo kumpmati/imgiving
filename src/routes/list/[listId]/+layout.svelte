@@ -19,7 +19,7 @@
 	>
 		{@render children()}
 	</Step>
-	<Step icon="3." text="Shopping list" href="/list/{data.list.id}/shop">
+	<Step icon="3." text="Shopping list" href="/list/{data.list.id}/shop" line={false}>
 		{@render children()}
 	</Step>
 </main>
