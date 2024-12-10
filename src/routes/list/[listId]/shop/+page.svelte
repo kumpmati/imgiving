@@ -24,7 +24,7 @@
 	<Table.Header>
 		<Table.Row>
 			<Table.Head>Name</Table.Head>
-			<Table.Head class="min-w-20"></Table.Head>
+			<Table.Head class="hidden min-w-20 sm:table-cell"></Table.Head>
 			<Table.Head class="w-0"></Table.Head>
 		</Table.Row>
 	</Table.Header>
@@ -38,7 +38,7 @@
 					<div class="flex gap-4">
 						<Checkbox
 							name="checked"
-							class="mt-[3px]"
+							class="mt-[3px] bg-card"
 							checked={wish.status === 'confirmed'}
 							onCheckedChange={() =>
 								actions.toggleBuylistChecked({ wishId: wish.id }).then(() => invalidateAll())}
@@ -56,7 +56,7 @@
 						</div>
 					</div>
 				</Table.Cell>
-				<Table.Cell class="align-baseline">
+				<Table.Cell class="hidden align-baseline sm:table-cell">
 					{#if wish.price}
 						<Badge class="w-max">{wish.price}</Badge>
 					{/if}

@@ -21,32 +21,33 @@
 
 <div class="relative flex flex-col">
 	<a
+		data-sveltekit-keepfocus
 		{href}
 		class={cn(
-			'flex items-baseline gap-2 text-left transition-none hover:text-primary hover:transition-colors',
-			active ? 'text-black' : 'text-slate-200'
+			'flex w-fit items-baseline gap-2 text-left text-2xl transition-none hover:text-primary hover:transition-colors sm:text-4xl',
+			active ? 'text-black' : 'hidden text-slate-200 sm:flex'
 		)}
 		{...rest}
 	>
-		<p class="flex size-16 flex-shrink-0 items-center justify-center p-2 text-4xl font-extrabold">
+		<p class="hidden size-16 flex-shrink-0 items-center justify-center p-2 font-extrabold sm:flex">
 			{icon}
 		</p>
-		<p class="w-fit text-4xl font-extrabold">{text}</p>
+		<p class="w-fit font-extrabold">{text}</p>
 	</a>
 
 	{#if line && active}
 		<div
-			class="absolute left-8 top-16 m-0 h-[calc(100%-64px)] w-[2px] bg-gradient-to-b from-slate-500 to-slate-100"
+			class="absolute left-8 top-16 m-0 hidden h-[calc(100%-64px)] w-[2px] bg-gradient-to-b from-slate-500 to-slate-100 sm:block"
 		></div>
 	{/if}
 
 	{#if active}
-		<div class="ml-[72px]">
+		<div class="sm:ml-[72px]">
 			{#if description}
-				<p class="text-lg font-semibold text-muted-foreground">{description}</p>
+				<p class="text-base font-semibold text-muted-foreground sm:text-lg">{description}</p>
 			{/if}
 
-			<div class="mb-16 mt-8 h-[calc-size(auto)]" in:fly={{ y: -10, duration: 250 }}>
+			<div class="mb-16 mt-4 h-[calc-size(auto)] sm:mt-8" in:fly={{ y: -10, duration: 250 }}>
 				{@render children()}
 			</div>
 		</div>

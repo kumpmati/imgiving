@@ -18,9 +18,9 @@
 <Table.Root>
 	<Table.Header>
 		<Table.Row>
-			<Table.Head class="w-0">Recipient</Table.Head>
+			<Table.Head class="hidden w-0 sm:table-cell">Recipient</Table.Head>
 			<Table.Head>Name</Table.Head>
-			<Table.Head class="w-0">Price</Table.Head>
+			<Table.Head class="hidden w-0 sm:table-cell">Price</Table.Head>
 			<Table.Head class="w-0"></Table.Head>
 		</Table.Row>
 	</Table.Header>
@@ -31,14 +31,24 @@
 
 			<Table.Row class={status ? 'bg-green-50 text-green-600 hover:bg-green-100' : ''}>
 				<Table.Cell
-					class={cn('text-base text-muted-foreground', status && 'font-semibold text-green-600')}
+					class={cn(
+						'hidden text-base text-muted-foreground sm:table-cell',
+						status && 'font-semibold text-green-600'
+					)}
 				>
 					{wish.username}
 				</Table.Cell>
 				<Table.Cell>
-					<p class="text-base font-semibold leading-none">{wish.name}</p>
+					<div class="flex flex-col">
+						<small
+							class={cn('text-sm text-muted-foreground sm:hidden', status && 'text-green-600')}
+						>
+							{wish.username}
+						</small>
+						<p class="text-base font-semibold leading-none">{wish.name}</p>
+					</div>
 				</Table.Cell>
-				<Table.Cell>
+				<Table.Cell class="hidden sm:table-cell">
 					{#if wish.price}
 						<Badge class="w-max">{wish.price}</Badge>
 					{/if}
@@ -58,6 +68,7 @@
 								type="submit"
 								variant={status ? 'default' : 'outline'}
 								class={cn('px-2', status && 'bg-green-600 hover:bg-green-700')}
+								title="{wish.numGivers} are giving this"
 							>
 								{#if status}
 									<TablerCircleCheckFilled class="size-4" />

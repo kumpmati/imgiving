@@ -1,4 +1,5 @@
 import { getListWithUsers } from '$lib/server/db/handlers/list.js';
+import { getBuylist } from '$lib/server/db/handlers/wish';
 import { error } from '@sveltejs/kit';
 
 export const load = async ({ locals, params }) => {
@@ -9,7 +10,11 @@ export const load = async ({ locals, params }) => {
 		error(404, 'list not found');
 	}
 
+	// TODO: parallelize or stream
+	const buylist = await getBuylist(params.listId, locals.user.id);
+
 	return {
-		list
+		list,
+		buylist
 	};
 };
