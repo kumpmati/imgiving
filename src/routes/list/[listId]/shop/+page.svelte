@@ -31,9 +31,10 @@
 
 			<Table.Row>
 				<Table.Cell>
-					<div class="flex items-baseline gap-4">
+					<div class="flex gap-4">
 						<Checkbox
 							name="checked"
+							class="mt-1"
 							checked={wish.status === 'confirmed'}
 							onCheckedChange={() =>
 								actions.toggleBuylistChecked({ wishId: wish.id }).then(() => invalidateAll())}
@@ -51,12 +52,12 @@
 						</div>
 					</div>
 				</Table.Cell>
-				<Table.Cell>
+				<Table.Cell class="align-baseline">
 					{#if wish.price}
 						<Badge class="w-max">{wish.price}</Badge>
 					{/if}
 				</Table.Cell>
-				<Table.Cell>
+				<Table.Cell class="align-baseline">
 					<div class="flex gap-1">
 						<Button variant="outline" class="px-2" title="Questions">
 							<TablerHelp />
