@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import WishlistNav from '$lib/components/WishlistNav.svelte';
-	import { cn } from '$lib/utils';
 	import { Button } from '$ui/button';
+	import { fly } from 'svelte/transition';
 	import FloatingShoppingList from './FloatingShoppingList.svelte';
 	import Step from './Step.svelte';
 	import TablerArrowRight from '~icons/tabler/arrow-right';
@@ -80,10 +80,15 @@
 		{/if}
 	</div>
 
-	<section class="sticky top-8 ml-auto mt-16 hidden h-fit w-80 flex-col gap-8 lg:flex">
-		<FloatingShoppingList
-			users={data.list.users.filter((u) => u.userId !== data.user?.id).length}
-			items={data.buylist}
-		/>
-	</section>
+	{#if currentStepIndex > 1}
+		<section
+			class="sticky top-8 ml-auto mt-16 hidden h-fit w-80 flex-col gap-8 lg:flex"
+			transition:fly={{ x: 5, duration: 250 }}
+		>
+			<FloatingShoppingList
+				users={data.list.users.filter((u) => u.userId !== data.user?.id).length}
+				items={data.buylist}
+			/>
+		</section>
+	{/if}
 </main>
