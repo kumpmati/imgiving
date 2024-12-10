@@ -44,10 +44,15 @@
 	{#if active}
 		<div class="sm:ml-[72px]">
 			{#if description}
-				<p class="text-base font-semibold text-muted-foreground sm:text-lg">{description}</p>
+				<p
+					class="text-base font-semibold text-muted-foreground sm:text-lg"
+					in:fly|global={{ duration: 300, y: -10 }}
+				>
+					{description}
+				</p>
 			{/if}
 
-			<div class="mb-16 mt-4 sm:mt-6" in:fly={{ y: -10, duration: 250 }}>
+			<div class="mb-16 mt-4 sm:mt-6" in:fly={{ y: -10, duration: 300, delay: 50 }}>
 				{@render children()}
 			</div>
 		</div>
