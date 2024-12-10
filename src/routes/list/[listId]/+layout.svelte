@@ -82,7 +82,7 @@
 
 	{#if currentStepIndex > 0}
 		<section
-			class="sticky top-8 ml-auto mt-16 hidden h-fit w-80 flex-col gap-8 lg:flex"
+			class="sticky top-16 ml-auto mt-16 hidden h-fit w-80 flex-col gap-8 lg:flex"
 			transition:fly={{ x: 5, duration: 250 }}
 		>
 			<FloatingShoppingList

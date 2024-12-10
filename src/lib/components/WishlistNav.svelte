@@ -12,7 +12,7 @@
 	let { wishlistId, wishlistName, numUsers }: Props = $props();
 </script>
 
-<header class="flex items-center justify-between p-4">
+<header class="z-10 flex items-center justify-between p-4 sm:sticky sm:top-0">
 	<Logo href="/" />
 
 	<nav class="flex items-center gap-2">

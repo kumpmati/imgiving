@@ -1,8 +1,7 @@
-import { joinList, leaveList } from '$lib/server/db/handlers/listUser.js';
 import { createWish, getOwnWishes } from '$lib/server/db/handlers/wish.js';
 import { db } from '$lib/server/db/index.js';
 import { wishTable } from '$lib/server/db/schema/wish.js';
-import { error, redirect } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
 
 export const load = async ({ locals, params }) => {
@@ -16,20 +15,6 @@ export const load = async ({ locals, params }) => {
 };
 
 export const actions = {
-	join_list: async ({ locals, params }) => {
-		if (!locals.user) error(403); // TODO: handle auth redirect
-
-		await joinList(params.listId, locals.user.id);
-	},
-
-	leave_list: async ({ locals, params }) => {
-		if (!locals.user) error(403); // TODO: handle auth redirect
-
-		await leaveList(params.listId, locals.user.id);
-
-		redirect(302, '/');
-	},
-
 	add_wish: async ({ params, locals, request }) => {
 		if (!locals.user) return error(403);
 
