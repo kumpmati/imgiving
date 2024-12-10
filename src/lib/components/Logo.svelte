@@ -8,7 +8,7 @@
 	let { href }: Props = $props();
 </script>
 
-<a {href} class="flex items-center gap-1 text-xl font-semibold text-red-600">
+<a {href} class="flex items-center gap-1 text-xl font-semibold text-red-600" title="Giftari">
 	<TablerGiftFilled width={24} height={24} />
-	Giftari
+	<span class="hidden sm:inline">Giftari</span>
 </a>
