@@ -15,8 +15,6 @@
 	const actions = superActions<ListEndpoint>('/list');
 
 	let { open = $bindable(), list, currentUserId }: Props = $props();
-
-	let isMember = $derived(list.users.find((u) => u.userId === currentUserId));
 </script>
 
 <Dialog.Root bind:open controlledOpen>
@@ -26,20 +24,11 @@
 			<Dialog.Description>You must join the wishlist before continuing.</Dialog.Description>
 		</Dialog.Header>
 
-		{#if !isMember}
-			<div class="flex gap-2">
-				<Button variant="secondary" href="/">Back</Button>
-				<Button
-					class="w-full"
-					onclick={() => actions.joinList(list.id).then(() => invalidateAll())}
-				>
-					Join
-				</Button>
-			</div>
-		{:else}
-			<Button variant="destructive" class="w-full" onclick={() => actions.leaveList(list.id)}>
-				Leave wishlist
+		<div class="flex gap-2">
+			<Button variant="secondary" href="/">Back</Button>
+			<Button class="w-full" onclick={() => actions.joinList(list.id).then(() => invalidateAll())}>
+				Join
 			</Button>
-		{/if}
+		</div>
 	</Dialog.Content>
 </Dialog.Root>
