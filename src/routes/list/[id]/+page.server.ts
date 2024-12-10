@@ -1,61 +1,18 @@
-import { wishId } from '$lib/id.js';
+import { getListMember, joinList } from '$lib/server/db/handlers/listUser.js';
+import { createWish, getAllWishesWithCounts, getBuylist } from '$lib/server/db/handlers/wish.js';
 import { db } from '$lib/server/db/index.js';
-import {
-	userTable,
-	wishQuestionTable,
-	wishCommentTable,
-	wishStatusTable
-} from '$lib/server/db/schema';
-import { listUserTable } from '$lib/server/db/schema/listUser.js';
-import { wishTable } from '$lib/server/db/schema/wish.js';
+import { wishStatusTable } from '$lib/server/db/schema';
 import { error, fail } from '@sveltejs/kit';
-import { and, countDistinct, eq, getTableColumns, not } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 
 export const load = async ({ params, locals }) => {
 	if (!locals.user) error(403, 'unauthorized'); // TODO: handle auth redirect
 
-	// don't await so this is streamed to frontend
-	const allWishes = db
-		.select({
-			...getTableColumns(wishTable),
-			username: userTable.name,
-			numQuestions: countDistinct(wishQuestionTable),
-			numComments: countDistinct(wishCommentTable),
-			numGivers: countDistinct(wishStatusTable)
-		})
-		.from(wishTable)
-		.where(
-			and(
-				eq(wishTable.listId, params.id),
-				// exclude own wishes
-				not(eq(wishTable.userId, locals.user.id))
-			)
-		)
-		.leftJoin(wishQuestionTable, eq(wishTable.id, wishQuestionTable.wishId))
-		.leftJoin(wishCommentTable, eq(wishTable.id, wishCommentTable.wishId))
-		.leftJoin(wishStatusTable, eq(wishTable.id, wishStatusTable.wishId))
-		.innerJoin(userTable, eq(wishTable.userId, userTable.id)) // we can inner join since all wishes have a user;
-		.groupBy(wishTable.id, userTable.id);
-
-	const buylist = await db
-		.select({
-			...getTableColumns(wishTable),
-			status: wishStatusTable.status,
-			recipient: userTable.name
-		})
-		.from(wishTable)
-		.where(and(eq(wishTable.listId, params.id)))
-		.innerJoin(
-			wishStatusTable,
-			and(eq(wishTable.id, wishStatusTable.wishId), eq(wishStatusTable.userId, locals.user.id))
-		)
-		.innerJoin(userTable, eq(wishTable.userId, userTable.id)) // we can inner join since all wishes have a user;
-		.groupBy(wishTable.id, wishStatusTable.status, userTable.id);
-
 	return {
 		streamed: {
-			allWishes,
-			buylist
+			allWishes: getAllWishesWithCounts(params.id, locals.user.id),
+			// TODO: re-enable streaming? (messes up some animations)
+			buylist: await getBuylist(params.id, locals.user.id)
 		}
 	};
 };
@@ -64,15 +21,12 @@ export const actions = {
 	join: async ({ locals, params }) => {
 		if (!locals.user) return fail(403); // TODO: handle auth redirect
 
-		const existing = await db.query.listUserTable.findFirst({
-			where: and(eq(listUserTable.listId, params.id), eq(listUserTable.userId, locals.user.id))
-		});
-
+		const existing = await getListMember(params.id, locals.user.id);
 		if (existing) {
 			return; // do nothing
 		}
 
-		await db.insert(listUserTable).values({ listId: params.id, userId: locals.user.id });
+		await joinList(params.id, locals.user.id);
 	},
 
 	add_wish: async ({ locals, request, params }) => {
@@ -81,8 +35,7 @@ export const actions = {
 		// TODO: validation
 		const raw = Object.fromEntries(await request.formData());
 
-		await db.insert(wishTable).values({
-			id: wishId(),
+		await createWish({
 			listId: params.id,
 			userId: locals.user.id,
 			name: raw.name.toString(),
