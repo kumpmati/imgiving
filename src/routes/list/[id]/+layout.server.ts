@@ -12,6 +12,6 @@ export const load = async ({ params, locals }) => {
 
 	return {
 		list,
-		ownWishes: getOwnWishes(params.id, locals.user.id)
+		ownWishes: await getOwnWishes(params.id, locals.user.id)
 	};
 };
