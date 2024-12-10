@@ -13,7 +13,7 @@
 </script>
 
 <header class="z-10 flex items-center justify-between p-4 sm:sticky sm:top-0">
-	<Logo href="/" />
+	<Logo href="/list/{wishlistId}" />
 
 	<nav class="flex items-center gap-2">
 		<p class="text-sm leading-none">{wishlistName}</p>
