@@ -1,20 +1,12 @@
 <script lang="ts">
-	import ListLayout from './ListLayout.svelte';
-
 	let { data } = $props();
 </script>
 
-<ListLayout>
-	{#snippet start()}
-		<p>start</p>
-	{/snippet}
-	{#snippet wish()}
-		<p>wish</p>
-	{/snippet}
-	{#snippet give()}
-		<p>give</p>
-	{/snippet}
-	{#snippet shop()}
-		<p>shop</p>
-	{/snippet}
-</ListLayout>
+<h2 class="text-2xl font-semibold">{data.list.name}</h2>
+
+<small class="text-sm text-muted-foreground">Members ({data.list.users.length})</small>
+<ul>
+	{#each data.list.users as user (user.userId)}
+		<li>{user.user.name}</li>
+	{/each}
+</ul>

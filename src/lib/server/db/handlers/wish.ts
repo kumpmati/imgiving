@@ -1,4 +1,4 @@
-import { and, count, countDistinct, eq, getTableColumns, gte, not } from 'drizzle-orm';
+import { and, asc, count, countDistinct, eq, getTableColumns, gte, not } from 'drizzle-orm';
 import { db } from '..';
 import {
 	userTable,
@@ -27,17 +27,15 @@ export const getOwnWishes = async (listId: string, userId: string) => {
 				gte(wishQuestionTable.createdAt, wishTable.lastSeenQuestionTimestamp)
 			)
 		)
-		.groupBy(wishTable.id);
+		.groupBy(wishTable.id)
+		.orderBy(asc(wishTable.createdAt));
 };
 
 /**
  * Returns all the wishes in a list except for the given user id.
  * Each wish has the question, comment and giver count included.
- *
- * @param listId wishlist id
- * @param excludeUserId user id to exclude
  */
-export const getAllWishesWithCounts = async (listId: string, excludeUserId: string) => {
+export const getAllWishesWithCounts = async (listId: string, userId: string) => {
 	return db
 		.select({
 			...getTableColumns(wishTable),
@@ -47,7 +45,7 @@ export const getAllWishesWithCounts = async (listId: string, excludeUserId: stri
 			numGivers: countDistinct(wishStatusTable)
 		})
 		.from(wishTable)
-		.where(and(eq(wishTable.listId, listId), not(eq(wishTable.userId, excludeUserId))))
+		.where(and(eq(wishTable.listId, listId), not(eq(wishTable.userId, userId))))
 		.leftJoin(wishQuestionTable, eq(wishTable.id, wishQuestionTable.wishId))
 		.leftJoin(wishCommentTable, eq(wishTable.id, wishCommentTable.wishId))
 		.leftJoin(wishStatusTable, eq(wishTable.id, wishStatusTable.wishId))

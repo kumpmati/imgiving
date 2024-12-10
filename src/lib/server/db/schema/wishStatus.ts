@@ -23,6 +23,7 @@ export const wishStatusTable = pgTable(
 	})
 );
 
+export type WishStatusInsert = typeof wishStatusTable.$inferInsert;
 export type WishStatus = typeof wishStatusTable.$inferSelect;
 
 export const wishStatusRelations = relations(wishStatusTable, ({ one }) => ({
