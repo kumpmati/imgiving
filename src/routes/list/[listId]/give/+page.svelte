@@ -68,7 +68,7 @@
 								type="submit"
 								variant={status ? 'default' : 'outline'}
 								class={cn('px-2', status && 'bg-green-600 hover:bg-green-700')}
-								title="{wish.numGivers} are giving this"
+								title="{wish.numGivers} are giving {wish.name} to {wish.username}"
 							>
 								{#if status}
 									<TablerCircleCheckFilled class="size-4" />

@@ -6,16 +6,13 @@
 	import FloatingShoppingList from './FloatingShoppingList.svelte';
 	import Step from './Step.svelte';
 	import TablerArrowRight from '~icons/tabler/arrow-right';
+	import JoinWishlistDialog from './JoinWishlistDialog.svelte';
 
 	let { data, children } = $props();
 
 	const steps = [
 		{
 			href: `/list/${data.list.id}`,
-			label: 'Start'
-		},
-		{
-			href: `/list/${data.list.id}/wish`,
 			label: 'I wish for...'
 		},
 		{
@@ -31,8 +28,7 @@
 	];
 
 	const stepButtonLabels = [
-		[null, 'Start'],
-		['Back to start', 'Choose gifts for others'],
+		[null, 'Choose gifts for others'],
 		['Back to my gifts', 'Shopping list'],
 		["Back to others' gifts", null]
 	];
@@ -53,11 +49,13 @@
 	numUsers={data.list.users.length}
 />
 
-<main class="mx-auto flex w-full gap-8 p-4 sm:max-w-6xl">
+<JoinWishlistDialog open={!data.member} list={data.list} currentUserId={data.user?.id} />
+
+<main class="mx-auto mt-8 flex w-full gap-8 p-4 sm:max-w-6xl">
 	<section class="flex w-full flex-col sm:max-w-2xl">
 		{#each steps as step, i (step.href)}
 			<Step
-				icon="{i}."
+				icon="{i + 1}."
 				text={step.label}
 				href={step.href}
 				description={step.description}
@@ -68,7 +66,9 @@
 		{/each}
 	</section>
 
-	<div class="fixed bottom-4 left-0 flex w-full gap-2 px-4 sm:hidden">
+	<div
+		class="fixed bottom-0 left-0 grid w-full grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-2 bg-background px-4 pb-4 sm:hidden"
+	>
 		{#if previousStep && buttonLabels[0]}
 			<Button variant="secondary" href={previousStep.href} class="w-full">{buttonLabels[0]}</Button>
 		{/if}
@@ -80,7 +80,7 @@
 		{/if}
 	</div>
 
-	{#if currentStepIndex > 1}
+	{#if currentStepIndex > 0}
 		<section
 			class="sticky top-8 ml-auto mt-16 hidden h-fit w-80 flex-col gap-8 lg:flex"
 			transition:fly={{ x: 5, duration: 250 }}

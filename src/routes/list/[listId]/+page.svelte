@@ -1,29 +1,70 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
+	import TablerX from '~icons/tabler/x';
+	import TablerPlus from '~icons/tabler/plus';
 	import { Button } from '$ui/button';
+	import { Input } from '$ui/input';
+	import * as Table from '$ui/table';
+	import { Badge } from '$ui/badge/index.js';
 
 	let { data } = $props();
 </script>
 
 <svelte:head>
-	<title>{data.list.name}</title>
+	<title>My wishes - {data.list.name}</title>
 </svelte:head>
 
-<h2 class="text-2xl font-semibold">{data.list.name}</h2>
+<Table.Root>
+	<Table.Header>
+		<Table.Row>
+			<Table.Head>Name*</Table.Head>
+			<Table.Head class="w-0">Price</Table.Head>
+			<Table.Head class="w-0"></Table.Head>
+		</Table.Row>
+	</Table.Header>
 
-<small class="text-sm text-muted-foreground">Members ({data.list.users.length})</small>
-<ul>
-	{#each data.list.users as user (user.userId)}
-		<li>{user.user.name}</li>
-	{/each}
-</ul>
+	<Table.Body>
+		{#each data.wishes as wish (wish.id)}
+			<Table.Row>
+				<Table.Cell>
+					<p class="text-base font-semibold leading-none">{wish.name}</p>
+				</Table.Cell>
+				<Table.Cell>
+					{#if wish.price}
+						<Badge>{wish.price}</Badge>
+					{/if}
+				</Table.Cell>
+				<Table.Cell class="text-right">
+					<form method="post" class="contents" action="?/delete_wish">
+						<input type="hidden" name="id" value={wish.id} />
+						<Button variant="ghost" size="icon" type="submit">
+							<TablerX class="size-4" />
+						</Button>
+					</form>
+				</Table.Cell>
+			</Table.Row>
+		{/each}
 
-{#if !data.list.users.find((u) => u.userId === data.user?.id)}
-	<form method="post" action="?/join_list" use:enhance>
-		<Button type="submit">Join wishlist</Button>
-	</form>
-{:else if data.list.authorId !== data.user?.id}
-	<form method="post" action="?/leave_list" use:enhance>
-		<Button type="submit" variant="destructive">Leave wishlist</Button>
-	</form>
-{/if}
+		<Table.Row>
+			<Table.Cell>
+				<Input
+					form="new_row_form"
+					required
+					name="name"
+					class="bg-card"
+					placeholder="Headphones, socks, ..."
+				/>
+			</Table.Cell>
+			<Table.Cell>
+				<Input form="new_row_form" name="price" class="w-20 bg-card" placeholder="0 €" />
+			</Table.Cell>
+			<Table.Cell>
+				<Button form="new_row_form" type="submit">
+					<span class="hidden sm:inline">Add</span>
+					<TablerPlus class="size-4" />
+				</Button>
+			</Table.Cell>
+		</Table.Row>
+	</Table.Body>
+</Table.Root>
+
+<form id="new_row_form" class="contents" method="post" action="?/add_wish"></form>
