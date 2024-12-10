@@ -15,7 +15,7 @@
 	numUsers={data.list.users.length}
 />
 
-<main class="mx-auto flex max-w-2xl flex-col">
+<main class="mx-auto flex max-w-2xl flex-col p-4">
 	<Step icon="0." text="Start" href="/list/{data.list.id}">
 		{@render children()}
 	</Step>
