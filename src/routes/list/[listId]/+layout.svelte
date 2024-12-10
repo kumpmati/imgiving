@@ -51,7 +51,7 @@
 
 <JoinWishlistDialog open={!data.member} list={data.list} currentUserId={data.user?.id} />
 
-<main class="mx-auto mt-8 flex w-full gap-8 p-4 sm:max-w-6xl">
+<main class="mx-auto flex w-full gap-8 p-4 sm:mt-8 sm:max-w-6xl">
 	<section class="flex w-full flex-col sm:max-w-2xl">
 		{#each steps as step, i (step.href)}
 			<Step
