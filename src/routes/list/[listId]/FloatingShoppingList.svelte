@@ -13,11 +13,14 @@
 	let uniqueUsers = $derived(unique(items.map((i) => i.recipient)));
 </script>
 
-<div class="flex flex-col gap-2 rounded-md border border-dashed p-4">
+<div class="flex w-full flex-col gap-2 rounded-md border border-dashed p-4">
 	<div class="flex items-center justify-between">
 		<p class="text-base font-semibold">Shopping list</p>
 
-		<div class="flex items-center gap-1 text-sm text-muted-foreground">
+		<div
+			class="flex items-center gap-1 text-sm text-muted-foreground"
+			title="You have gifts for {uniqueUsers.length}/{users} people in this wishlist"
+		>
 			{uniqueUsers.length}/{users}
 			<TablerUsers class="size-4" />
 		</div>

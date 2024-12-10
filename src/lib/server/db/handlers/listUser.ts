@@ -11,3 +11,9 @@ export const getListMember = async (listId: string, userId: string) => {
 export const joinList = async (listId: string, userId: string) => {
 	return db.insert(listUserTable).values({ listId, userId });
 };
+
+export const leaveList = async (listId: string, userId: string) => {
+	return db
+		.delete(listUserTable)
+		.where(and(eq(listUserTable.listId, listId), eq(listUserTable.userId, userId)));
+};

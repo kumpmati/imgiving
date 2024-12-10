@@ -47,7 +47,7 @@
 				<p class="text-base font-semibold text-muted-foreground sm:text-lg">{description}</p>
 			{/if}
 
-			<div class="mb-16 mt-4 h-[calc-size(auto)] sm:mt-8" in:fly={{ y: -10, duration: 250 }}>
+			<div class="mb-16 mt-4 sm:mt-6" in:fly={{ y: -10, duration: 250 }}>
 				{@render children()}
 			</div>
 		</div>

@@ -16,17 +16,17 @@
 		},
 		{
 			href: `/list/${data.list.id}/wish`,
-			label: 'What do you wish for?'
+			label: 'I wish for...'
 		},
 		{
 			href: `/list/${data.list.id}/give`,
-			label: 'What would you like to give?',
-			description: "Don't worry, the recipients won't know what you've picked."
+			label: 'I want to give...',
+			description: "The recipients won't know what you've picked."
 		},
 		{
 			href: `/list/${data.list.id}/shop`,
 			label: 'Shopping list',
-			description: "Keep track of what you've bought so far."
+			description: "Keep track of what you're buying."
 		}
 	];
 
@@ -80,23 +80,10 @@
 		{/if}
 	</div>
 
-	<section class="sticky top-8 ml-auto mt-16 hidden h-fit flex-col gap-8 lg:flex">
-		<ol type="1" class="h-fit w-80 list-decimal pl-5 text-sm text-muted-foreground">
-			{#each steps as step (step.href)}
-				<li>
-					<a
-						href={step.href}
-						class={cn(
-							'hover:text-primary',
-							$page.url.pathname === step.href && 'font-semibold text-primary'
-						)}
-					>
-						{step.label}
-					</a>
-				</li>
-			{/each}
-		</ol>
-
-		<FloatingShoppingList users={data.list.users.length} items={data.buylist} />
+	<section class="sticky top-8 ml-auto mt-16 hidden h-fit w-80 flex-col gap-8 lg:flex">
+		<FloatingShoppingList
+			users={data.list.users.filter((u) => u.userId !== data.user?.id).length}
+			items={data.buylist}
+		/>
 	</section>
 </main>
