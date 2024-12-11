@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { unique } from '$lib/array';
 	import type { WishStatus } from '$lib/server/db/schema';
+	import { flip } from 'svelte/animate';
 	import TablerUsers from '~icons/tabler/users';
 
 	type Props = {
@@ -29,7 +30,10 @@
 	{#if items.length > 0}
 		<ul class="max-w-80 list-disc pl-5 text-muted-foreground">
 			{#each items as item (item.id)}
-				<li class={item.status === 'confirmed' ? 'line-through' : ''}>
+				<li
+					class={item.status === 'confirmed' ? 'line-through' : ''}
+					animate:flip={{ duration: 200 }}
+				>
 					<span class="text-sm font-semibold">{item.name}</span> ({item.recipient})
 				</li>
 			{/each}

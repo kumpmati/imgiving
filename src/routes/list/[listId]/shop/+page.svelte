@@ -9,11 +9,18 @@
 	import { page } from '$app/stores';
 	import { invalidateAll } from '$app/navigation';
 	import { Badge } from '$ui/badge';
-	import Button from '$ui/button/button.svelte';
+	import { buttonVariants } from '$ui/button/button.svelte';
+	import * as Sheet from '$ui/sheet/index.js';
+	import Chat from '$lib/components/chat/Chat.svelte';
+	import type { ChatMessage } from '$lib/chat.js';
+	import type { ListEndpoint } from '../../+server.js';
 
 	let { data } = $props();
 
 	const actions = superActions<ShopEndpoint>($page.url.pathname);
+	let messageActions = superActions<ListEndpoint>('/list');
+
+	let messages = $state<ChatMessage[]>([]);
 </script>
 
 <svelte:head>
@@ -63,15 +70,87 @@
 				</Table.Cell>
 				<Table.Cell class="align-baseline">
 					<div class="flex gap-1">
-						<Button variant="outline" size="sm" class="gap-1 px-2" title="Questions">
-							<TablerHelp />
-							{wish.numQuestions}
-						</Button>
+						<Sheet.Root
+							onOpenChange={(open) => {
+								if (open) {
+									messages = [];
+									messageActions.getWishQuestions({ wishId: wish.id }).then((d) => (messages = d));
+								}
+							}}
+						>
+							<Sheet.Trigger
+								class={cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'gap-1 px-2')}
+								title="Questions"
+							>
+								<TablerHelp />
+								{wish.numQuestions}
+							</Sheet.Trigger>
 
-						<Button variant="outline" size="sm" class="gap-1 px-2" title="Comments">
-							<TablerMessage />
-							{wish.numComments}
-						</Button>
+							<Sheet.Content side="right">
+								<Sheet.Header>
+									<Sheet.Title class="inline-flex items-center gap-1">
+										<TablerHelp />
+										{wish.name}
+									</Sheet.Title>
+									<Sheet.Description>
+										Questions are anonymous and visible to everyone including the recipient ({wish.recipient}).
+									</Sheet.Description>
+								</Sheet.Header>
+
+								<Chat
+									wishId={wish.id}
+									description={null}
+									currentUserId={data.user?.id}
+									{messages}
+									formaction="?/send_question"
+									onsubmit={() => {
+										messageActions
+											.getWishQuestions({ wishId: wish.id })
+											.then((d) => (messages = d));
+									}}
+								/>
+							</Sheet.Content>
+						</Sheet.Root>
+
+						<Sheet.Root
+							onOpenChange={(open) => {
+								if (open) {
+									messages = [];
+									messageActions.getWishComments({ wishId: wish.id }).then((d) => (messages = d));
+								}
+							}}
+						>
+							<Sheet.Trigger
+								class={cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'gap-1 px-2')}
+								title="Comments"
+							>
+								<TablerMessage />
+								{wish.numComments}
+							</Sheet.Trigger>
+
+							<Sheet.Content side="right">
+								<Sheet.Header>
+									<Sheet.Title class="inline-flex items-center gap-1">
+										<TablerMessage />
+										{wish.name}
+									</Sheet.Title>
+									<Sheet.Description>
+										Comments can be seen by everyone else except the recipient ({wish.recipient})
+									</Sheet.Description>
+								</Sheet.Header>
+
+								<Chat
+									wishId={wish.id}
+									description={null}
+									currentUserId={data.user?.id}
+									{messages}
+									formaction="?/send_comment"
+									onsubmit={() => {
+										messageActions.getWishComments({ wishId: wish.id }).then((d) => (messages = d));
+									}}
+								/>
+							</Sheet.Content>
+						</Sheet.Root>
 					</div>
 				</Table.Cell>
 			</Table.Row>

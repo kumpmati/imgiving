@@ -18,7 +18,7 @@
 
 	<p
 		class={cn(
-			'w-fit max-w-[80%] rounded-md bg-slate-200 px-2 py-1 text-base',
+			'w-fit max-w-[80%] rounded-md bg-slate-200 px-3 py-1.5 text-base shadow-sm',
 			isOwn && 'bg-orange-200'
 		)}
 	>

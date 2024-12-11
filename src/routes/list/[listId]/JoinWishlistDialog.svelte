@@ -9,12 +9,11 @@
 	type Props = {
 		open: boolean;
 		list: List & { users: { userId: string }[] };
-		currentUserId: string | undefined;
 	};
 
 	const actions = superActions<ListEndpoint>('/list');
 
-	let { open = $bindable(), list, currentUserId }: Props = $props();
+	let { open = $bindable(), list }: Props = $props();
 </script>
 
 <Dialog.Root bind:open controlledOpen>

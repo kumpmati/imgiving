@@ -1,5 +1,4 @@
-<script>
-	import TablerMessage2Question from '~icons/tabler/message-2-question';
+<script lang="ts">
 	import TablerCircleCheckFilled from '~icons/tabler/circle-check-filled';
 	import TablerCircleCheck from '~icons/tabler/circle-check';
 	import { Badge } from '$ui/badge';
@@ -53,33 +52,24 @@
 						<Badge class="w-max">{wish.price}</Badge>
 					{/if}
 				</Table.Cell>
-				<Table.Cell>
-					<div class="flex gap-1">
-						{#if wish.numComments + wish.numQuestions > 0}
-							<Badge class="w-max">
-								<TablerMessage2Question />
-								{wish.numComments + wish.numQuestions}
-							</Badge>
-						{/if}
+				<Table.Cell class="text-right">
+					<form method="post" action="?/toggle_wish_status" class="contents" use:enhance>
+						<input type="hidden" name="id" value={wish.id} />
+						<Button
+							type="submit"
+							variant={status ? 'default' : 'outline'}
+							class={cn('px-2', status && 'bg-green-600 hover:bg-green-700')}
+							title="{wish.numGivers} are giving {wish.name} to {wish.username}"
+						>
+							{#if status}
+								<TablerCircleCheckFilled class="size-4" />
+							{:else}
+								<TablerCircleCheck class="size-4" />
+							{/if}
 
-						<form method="post" action="?/toggle_wish_status" class="contents" use:enhance>
-							<input type="hidden" name="id" value={wish.id} />
-							<Button
-								type="submit"
-								variant={status ? 'default' : 'outline'}
-								class={cn('px-2', status && 'bg-green-600 hover:bg-green-700')}
-								title="{wish.numGivers} are giving {wish.name} to {wish.username}"
-							>
-								{#if status}
-									<TablerCircleCheckFilled class="size-4" />
-								{:else}
-									<TablerCircleCheck class="size-4" />
-								{/if}
-
-								{wish.numGivers}
-							</Button>
-						</form>
-					</div>
+							<span class="w-[1ch]">{wish.numGivers}</span>
+						</Button>
+					</form>
 				</Table.Cell>
 			</Table.Row>
 		{:else}

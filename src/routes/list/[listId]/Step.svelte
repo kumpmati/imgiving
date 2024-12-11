@@ -29,7 +29,7 @@
 		)}
 		{...rest}
 	>
-		<p class="hidden h-12 w-16 flex-shrink-0 items-center justify-center font-extrabold sm:flex">
+		<p class="hidden h-14 w-16 flex-shrink-0 items-center justify-center font-extrabold sm:flex">
 			{icon}
 		</p>
 		<p class="w-fit font-extrabold">{text}</p>
@@ -37,7 +37,7 @@
 
 	{#if line && active}
 		<div
-			class="absolute left-8 top-12 m-0 hidden h-[calc(100%-64px)] w-[2px] bg-gradient-to-b from-slate-500 to-slate-100 sm:block"
+			class="absolute left-8 top-14 m-0 hidden h-[calc(100%-64px)] w-[2px] bg-gradient-to-b from-slate-500 to-slate-100 sm:block"
 		></div>
 	{/if}
 

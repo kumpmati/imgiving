@@ -1,5 +1,7 @@
 import { getListWithUsers } from '$lib/server/db/handlers/list.js';
 import { getListMember } from '$lib/server/db/handlers/listUser.js';
+import { getUnreadQuestions } from '$lib/server/db/handlers/questions.js';
+
 import { getBuylist } from '$lib/server/db/handlers/wish';
 import { error } from '@sveltejs/kit';
 
@@ -16,5 +18,13 @@ export const load = async ({ locals, params }) => {
 		error(404, 'list not found');
 	}
 
-	return { list, buylist, member };
+	return {
+		list,
+		buylist,
+		member,
+
+		streamed: {
+			unreadQuestions: getUnreadQuestions(params.listId, locals.user.id)
+		}
+	};
 };

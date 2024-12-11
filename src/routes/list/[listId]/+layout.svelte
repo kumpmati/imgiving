@@ -13,11 +13,11 @@
 	const steps = [
 		{
 			href: `/list/${data.list.id}`,
-			label: 'I wish for...'
+			label: 'I wish for ...'
 		},
 		{
 			href: `/list/${data.list.id}/give`,
-			label: 'I want to give...',
+			label: "I'm going to give ...",
 			description: "The recipients won't know what you've picked."
 		},
 		{
@@ -43,13 +43,25 @@
 	<title>{data.list.name}</title>
 </svelte:head>
 
-<WishlistNav
-	wishlistId={data.list.id}
-	wishlistName={data.list.name}
-	numUsers={data.list.users.length}
-/>
+{#await data.streamed.unreadQuestions}
+	<WishlistNav
+		wishlistId={data.list.id}
+		wishlistName={data.list.name}
+		numUsers={data.list.users.length}
+		unreadQuestions={[]}
+	/>
+{:then unreadQuestions}
+	<WishlistNav
+		wishlistId={data.list.id}
+		wishlistName={data.list.name}
+		numUsers={data.list.users.length}
+		{unreadQuestions}
+	/>
 
-<JoinWishlistDialog open={!data.member} list={data.list} currentUserId={data.user?.id} />
+	{$inspect(unreadQuestions)}
+{/await}
+
+<JoinWishlistDialog open={!data.member} list={data.list} />
 
 <main class="mx-auto flex w-full gap-8 p-4 sm:mt-8 sm:max-w-6xl">
 	<section class="flex w-full flex-col sm:max-w-2xl">

@@ -4,26 +4,30 @@
 	import Button from '$ui/button/button.svelte';
 	import Input from '$ui/input/input.svelte';
 	import Message from './Message.svelte';
-
-	type ChatMessage = {
-		id: string;
-		message: string;
-		userId: string;
-		createdAt: Date;
-	};
+	import type { ChatMessage } from '$lib/chat';
 
 	type Props = {
+		wishId: string;
 		description: string | null;
 		currentUserId: string | undefined;
 		messages: ChatMessage[] | Promise<ChatMessage[]>;
 		formaction: string;
 		hideMessageInput?: boolean;
+		onsubmit?: () => void;
 	};
 
-	let { description, formaction, currentUserId, messages, hideMessageInput }: Props = $props();
+	let {
+		wishId,
+		description,
+		formaction,
+		currentUserId,
+		messages,
+		hideMessageInput = false,
+		onsubmit
+	}: Props = $props();
 </script>
 
-<div class="flex h-full flex-col gap-2">
+<div class="flex flex-col gap-2">
 	<p class="mx-auto mb-5 max-w-64 text-center text-xs text-muted-foreground">{description}</p>
 
 	<ul class="flex h-full flex-col gap-1">
@@ -41,7 +45,18 @@
 	</ul>
 
 	{#if !hideMessageInput}
-		<form class="mt-4 flex gap-2" method="post" action={formaction} use:enhance>
+		<form
+			class="mt-4 flex gap-2"
+			method="post"
+			action={formaction}
+			use:enhance={() => {
+				return async ({ update }) => {
+					await update();
+					onsubmit?.();
+				};
+			}}
+		>
+			<input type="hidden" name="id" value={wishId} />
 			<Input
 				required
 				name="message"

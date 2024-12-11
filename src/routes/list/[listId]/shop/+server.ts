@@ -3,12 +3,12 @@ import { error } from '@sveltejs/kit';
 import { endpoint, zod } from 'sveltekit-superactions';
 import { z } from 'zod';
 
-const toggleCheckedSchema = z.object({
+const schema = z.object({
 	wishId: z.string()
 });
 
 export const POST = endpoint({
-	toggleBuylistChecked: zod(toggleCheckedSchema, async ({ locals }, body) => {
+	toggleBuylistChecked: zod(schema, async ({ locals }, body) => {
 		if (!locals.user) error(403); // TODO: handle auth redirect
 
 		const existing = await getWishStatus(body.wishId, locals.user.id);
