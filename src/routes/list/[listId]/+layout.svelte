@@ -57,8 +57,6 @@
 		numUsers={data.list.users.length}
 		{unreadQuestions}
 	/>
-
-	{$inspect(unreadQuestions)}
 {/await}
 
 <JoinWishlistDialog open={!data.member} list={data.list} />
