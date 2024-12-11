@@ -3,6 +3,7 @@
 	import { Button } from '$ui/button';
 	import * as Card from '$ui/card';
 	import Input from '$ui/input/input.svelte';
+	import { enhance } from '$app/forms';
 
 	let { data } = $props();
 </script>
@@ -25,7 +26,7 @@
 				In order to coordinate gifts, you need to create a wishlist.
 			</Card.Description>
 		</Card.Header>
-		<form method="post" class="contents">
+		<form method="post" class="contents" use:enhance>
 			<Card.Content>
 				<Input type="text" name="name" required placeholder="Wishlist name" />
 			</Card.Content>

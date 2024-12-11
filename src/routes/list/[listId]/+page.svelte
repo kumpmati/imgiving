@@ -5,6 +5,7 @@
 	import { Input } from '$ui/input';
 	import * as Table from '$ui/table';
 	import { Badge } from '$ui/badge/index.js';
+	import { enhance } from '$app/forms';
 
 	let { data } = $props();
 </script>
@@ -34,7 +35,7 @@
 					{/if}
 				</Table.Cell>
 				<Table.Cell class="text-right">
-					<form method="post" class="contents" action="?/delete_wish">
+					<form method="post" class="contents" action="?/delete_wish" use:enhance>
 						<input type="hidden" name="id" value={wish.id} />
 						<Button variant="ghost" size="icon" type="submit">
 							<TablerX class="size-4" />
@@ -67,4 +68,4 @@
 	</Table.Body>
 </Table.Root>
 
-<form id="new_row_form" class="contents" method="post" action="?/add_wish"></form>
+<form id="new_row_form" class="contents" method="post" action="?/add_wish" use:enhance></form>
