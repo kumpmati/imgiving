@@ -31,8 +31,8 @@ export const wishQuestionRelations = relations(wishQuestionTable, ({ one }) => (
 export const wishQuestionSchema = createSelectSchema(wishQuestionTable);
 export const wishQuestionInsertSchema = createInsertSchema(wishQuestionTable);
 
-export type Wishquestion = z.infer<typeof wishQuestionSchema>;
-export type WishquestionInsert = z.infer<typeof wishQuestionInsertSchema>;
+export type WishQuestion = z.infer<typeof wishQuestionSchema>;
+export type WishQuestionInsert = z.infer<typeof wishQuestionInsertSchema>;
 
 export const wishCommentTable = pgTable(
 	'wish_comments',
