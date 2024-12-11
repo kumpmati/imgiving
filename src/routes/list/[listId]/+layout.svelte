@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import WishlistNav from '$lib/components/WishlistNav.svelte';
+	import WishlistNav from './WishlistNav.svelte';
 	import { Button } from '$ui/button';
 	import { fly } from 'svelte/transition';
 	import FloatingShoppingList from './FloatingShoppingList.svelte';
@@ -45,16 +45,20 @@
 
 {#await data.streamed.unreadQuestions}
 	<WishlistNav
+		currentUserId={data.user?.id}
+		wishlistAuthorId={data.list.authorId}
 		wishlistId={data.list.id}
 		wishlistName={data.list.name}
-		numUsers={data.list.users.length}
+		users={data.list.users}
 		unreadQuestions={[]}
 	/>
 {:then unreadQuestions}
 	<WishlistNav
+		currentUserId={data.user?.id}
+		wishlistAuthorId={data.list.authorId}
 		wishlistId={data.list.id}
 		wishlistName={data.list.name}
-		numUsers={data.list.users.length}
+		users={data.list.users}
 		{unreadQuestions}
 	/>
 {/await}
