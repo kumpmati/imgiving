@@ -3,6 +3,8 @@ import { userTable } from './user';
 import { listTable } from './list';
 import { relations, sql } from 'drizzle-orm';
 import { wishCommentTable, wishQuestionTable } from './wishComments';
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
+import type { z } from 'zod';
 
 export const wishTable = pgTable(
 	'wishes',
@@ -36,12 +38,15 @@ export const wishTable = pgTable(
 	]
 );
 
-export type Wish = typeof wishTable.$inferSelect;
-export type WishInsert = typeof wishTable.$inferInsert;
-
 export const wishRelations = relations(wishTable, ({ one, many }) => ({
 	list: one(listTable, { fields: [wishTable.listId], references: [listTable.id] }),
 	user: one(userTable, { fields: [wishTable.userId], references: [userTable.id] }),
 	questions: many(wishQuestionTable),
 	comments: many(wishCommentTable)
 }));
+
+export const wishSchema = createSelectSchema(wishTable);
+export const wishInsertSchema = createInsertSchema(wishTable);
+
+export type Wish = z.infer<typeof wishSchema>;
+export type WishInsert = z.infer<typeof wishInsertSchema>;

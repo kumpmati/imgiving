@@ -2,6 +2,8 @@ import { relations } from 'drizzle-orm';
 import { index, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 import { listUserTable } from './listUser';
 import { wishTable } from './wish';
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
+import type { z } from 'zod';
 
 export const userTable = pgTable(
 	'users',
@@ -13,10 +15,13 @@ export const userTable = pgTable(
 	(table) => [index('user_created_at_index').on(table.createdAt)]
 );
 
-export type User = typeof userTable.$inferSelect;
-export type UserInsert = typeof userTable.$inferInsert;
-
 export const userRelations = relations(userTable, ({ many }) => ({
 	lists: many(listUserTable),
 	wishes: many(wishTable)
 }));
+
+export const userSchema = createSelectSchema(userTable);
+export const userInsertSchema = createInsertSchema(userTable);
+
+export type User = z.infer<typeof userSchema>;
+export type UserInsert = z.infer<typeof userInsertSchema>;

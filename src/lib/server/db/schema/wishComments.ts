@@ -2,6 +2,8 @@ import { index, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 import { userTable } from './user';
 import { relations } from 'drizzle-orm';
 import { wishTable } from './wish';
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
+import { z } from 'zod';
 
 export const wishQuestionTable = pgTable(
 	'wish_questions',
@@ -47,9 +49,13 @@ export const wishCommentTable = pgTable(
 	]
 );
 
-export type WishComment = typeof wishCommentTable.$inferSelect;
-
 export const wishCommentRelations = relations(wishCommentTable, ({ one }) => ({
 	wish: one(wishTable, { fields: [wishCommentTable.wishId], references: [wishTable.id] }),
 	user: one(userTable, { fields: [wishCommentTable.userId], references: [userTable.id] })
 }));
+
+export const wishCommentSchema = createSelectSchema(wishCommentTable);
+export const wishCommentInsertSchema = createInsertSchema(wishCommentTable);
+
+export type WishComment = z.infer<typeof wishCommentSchema>;
+export type WishCommentInsert = z.infer<typeof wishCommentInsertSchema>;

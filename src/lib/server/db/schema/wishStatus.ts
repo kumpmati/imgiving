@@ -2,6 +2,8 @@ import { pgTable, primaryKey, text, timestamp } from 'drizzle-orm/pg-core';
 import { wishTable } from './wish';
 import { userTable } from './user';
 import { relations, sql } from 'drizzle-orm';
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
+import type { z } from 'zod';
 
 export const wishStatusTable = pgTable(
 	'wish_status',
@@ -21,9 +23,12 @@ export const wishStatusTable = pgTable(
 	(table) => [primaryKey({ columns: [table.wishId, table.userId] })]
 );
 
-export type WishStatusInsert = typeof wishStatusTable.$inferInsert;
-export type WishStatus = typeof wishStatusTable.$inferSelect;
-
 export const wishStatusRelations = relations(wishStatusTable, ({ one }) => ({
 	user: one(userTable, { fields: [wishStatusTable.userId], references: [userTable.id] })
 }));
+
+export const wishStatusSchema = createSelectSchema(wishStatusTable);
+export const wishStatusInsertSchema = createInsertSchema(wishStatusTable);
+
+export type WishStatus = z.infer<typeof wishStatusSchema>;
+export type WishStatusInsert = z.infer<typeof wishStatusInsertSchema>;

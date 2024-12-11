@@ -2,6 +2,8 @@ import { pgTable, primaryKey, text, timestamp } from 'drizzle-orm/pg-core';
 import { listTable } from './list';
 import { userTable } from './user';
 import { relations } from 'drizzle-orm';
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
+import type { z } from 'zod';
 
 export const listUserTable = pgTable(
 	'list_users',
@@ -20,9 +22,13 @@ export const listUserTable = pgTable(
 	]
 );
 
-export type ListUser = typeof listUserTable.$inferSelect;
-
 export const listUserRelations = relations(listUserTable, ({ one }) => ({
 	list: one(listTable, { fields: [listUserTable.listId], references: [listTable.id] }),
 	user: one(userTable, { fields: [listUserTable.userId], references: [userTable.id] })
 }));
+
+export const listUserSchema = createSelectSchema(listUserTable);
+export const listUserInsertSchema = createInsertSchema(listUserTable);
+
+export type ListUser = z.infer<typeof listUserSchema>;
+export type ListUserInsert = z.infer<typeof listUserInsertSchema>;
