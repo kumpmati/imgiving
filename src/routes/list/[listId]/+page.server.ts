@@ -1,3 +1,4 @@
+import { getListMember } from '$lib/server/db/handlers/listUser.js';
 import { createWish, getOwnWishes } from '$lib/server/db/handlers/wish.js';
 import { db } from '$lib/server/db/index.js';
 import { wishInsertSchema, wishSchema, wishTable } from '$lib/server/db/schema/wish.js';
@@ -5,7 +6,7 @@ import { error } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
 
 export const load = async ({ locals, params }) => {
-	if (!locals.user) error(403, 'unauthorized'); // TODO: handle auth redirect?
+	if (!locals.user) error(401, 'unauthorized'); // TODO: handle auth redirect?
 
 	const wishes = await getOwnWishes(params.listId, locals.user.id);
 
@@ -16,7 +17,8 @@ export const load = async ({ locals, params }) => {
 
 export const actions = {
 	add_wish: async ({ params, locals, request }) => {
-		if (!locals.user) error(403);
+		if (!locals.user) error(401);
+		if (!(await getListMember(params.listId, locals.user.id))) error(403);
 
 		const raw = Object.fromEntries(await request.formData());
 
@@ -35,8 +37,9 @@ export const actions = {
 		});
 	},
 
-	delete_wish: async ({ locals, request }) => {
-		if (!locals.user) error(403);
+	delete_wish: async ({ params, locals, request }) => {
+		if (!locals.user) error(401);
+		if (!(await getListMember(params.listId, locals.user.id))) error(403);
 
 		const raw = Object.fromEntries(await request.formData());
 

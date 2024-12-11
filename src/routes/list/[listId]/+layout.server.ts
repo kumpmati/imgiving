@@ -6,7 +6,7 @@ import { getBuylist } from '$lib/server/db/handlers/wish';
 import { error } from '@sveltejs/kit';
 
 export const load = async ({ locals, params }) => {
-	if (!locals.user) error(403, 'not signed in'); // TODO: handle auth redirect
+	if (!locals.user) error(401, 'not signed in'); // TODO: handle auth redirect
 
 	const [list, buylist, member] = await Promise.all([
 		getListWithUsers(params.listId),

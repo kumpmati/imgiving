@@ -48,7 +48,9 @@
 							class="mt-[3px] bg-card"
 							checked={wish.status === 'confirmed'}
 							onCheckedChange={() =>
-								actions.toggleBuylistChecked({ wishId: wish.id }).then(() => invalidateAll())}
+								actions
+									.toggleBuylistChecked({ listId: data.list.id, wishId: wish.id })
+									.then(() => invalidateAll())}
 						/>
 
 						<div class={cn('flex flex-col', isDone && 'line-through')}>
@@ -74,7 +76,9 @@
 							onOpenChange={(open) => {
 								if (open) {
 									messages = [];
-									messageActions.getWishQuestions({ wishId: wish.id }).then((d) => (messages = d));
+									messageActions
+										.getWishQuestions({ listId: data.list.id, wishId: wish.id })
+										.then((d) => (messages = d));
 								}
 							}}
 						>
@@ -105,7 +109,7 @@
 									formaction="?/send_question"
 									onsubmit={() => {
 										messageActions
-											.getWishQuestions({ wishId: wish.id })
+											.getWishQuestions({ listId: data.list.id, wishId: wish.id })
 											.then((d) => (messages = d));
 									}}
 								/>
@@ -116,7 +120,9 @@
 							onOpenChange={(open) => {
 								if (open) {
 									messages = [];
-									messageActions.getWishComments({ wishId: wish.id }).then((d) => (messages = d));
+									messageActions
+										.getWishComments({ listId: data.list.id, wishId: wish.id })
+										.then((d) => (messages = d));
 								}
 							}}
 						>
@@ -146,7 +152,9 @@
 									{messages}
 									formaction="?/send_comment"
 									onsubmit={() => {
-										messageActions.getWishComments({ wishId: wish.id }).then((d) => (messages = d));
+										messageActions
+											.getWishComments({ listId: data.list.id, wishId: wish.id })
+											.then((d) => (messages = d));
 									}}
 								/>
 							</Sheet.Content>
