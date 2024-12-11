@@ -6,6 +6,7 @@ import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import type { z } from 'zod';
 import { sessionTable } from './session';
 
+// TODO: add column to distinguish verified users (allows cleaning up anonymous users)
 export const userTable = pgTable(
 	'users',
 	{
