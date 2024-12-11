@@ -1,8 +1,8 @@
 import { listId } from '$lib/id.js';
 import { db } from '$lib/server/db';
-import { listTable } from '$lib/server/db/schema/list.js';
+import { listInsertSchema, listTable } from '$lib/server/db/schema/list.js';
 import { listUserTable } from '$lib/server/db/schema/listUser';
-import { redirect } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 
 export const actions = {
 	default: async ({ request, locals }) => {
@@ -10,15 +10,19 @@ export const actions = {
 			redirect(302, '/auth/signin');
 		}
 
-		// TODO: validation
-		const raw = Object.fromEntries(await request.formData()) as { name: string };
+		const raw = Object.fromEntries(await request.formData());
+
+		const parsed = listInsertSchema.pick({ name: true }).safeParse(raw);
+		if (!parsed.success) {
+			error(400, 'invalid name');
+		}
 
 		const id = listId();
 
 		// TODO: do these in a transaction
 		await db.insert(listTable).values({
 			id,
-			name: raw.name,
+			name: parsed.data.name,
 			authorId: locals.user.id
 		});
 

@@ -5,6 +5,7 @@ import {
 	getWishStatus,
 	getWishStatuses
 } from '$lib/server/db/handlers/wishStatus.js';
+import { wishStatusInsertSchema } from '$lib/server/db/schema/wishStatus.js';
 import { error } from '@sveltejs/kit';
 
 export const load = async ({ locals, params }) => {
@@ -23,16 +24,20 @@ export const actions = {
 	toggle_wish_status: async ({ request, locals }) => {
 		if (!locals.user) error(403);
 
-		// TODO: validation
-		const { id } = Object.fromEntries(await request.formData());
+		const raw = Object.fromEntries(await request.formData());
+
+		const parsed = wishStatusInsertSchema.pick({ wishId: true }).safeParse(raw);
+		if (!parsed.success) {
+			error(400, 'invalid wish id');
+		}
 
 		// TODO: error handling
-		const existing = await getWishStatus(id.toString(), locals.user.id);
+		const existing = await getWishStatus(parsed.data.wishId, locals.user.id);
 		if (existing) {
-			await deleteWishStatus(id.toString(), locals.user.id);
+			await deleteWishStatus(parsed.data.wishId, locals.user.id);
 		} else {
 			await createWishStatus({
-				wishId: id.toString(),
+				wishId: parsed.data.wishId,
 				userId: locals.user.id,
 				status: 'pending'
 			});

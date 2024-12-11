@@ -54,7 +54,7 @@
 				</Table.Cell>
 				<Table.Cell class="text-right">
 					<form method="post" action="?/toggle_wish_status" class="contents" use:enhance>
-						<input type="hidden" name="id" value={wish.id} />
+						<input type="hidden" name="wishId" value={wish.id} />
 						<Button
 							type="submit"
 							variant={status ? 'default' : 'outline'}

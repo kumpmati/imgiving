@@ -1,5 +1,5 @@
 import { userTable } from '$lib/server/db/schema/user.js';
-import { fail, redirect } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import { z } from 'zod';
 import dayjs from 'dayjs';
 import { db } from '$lib/server/db/index.js';
@@ -13,12 +13,11 @@ export const actions = {
 	default: async ({ request, cookies }) => {
 		// TODO: handle multiple accounts on one user
 
-		// TODO: validation
 		const raw = Object.fromEntries(await request.formData());
 
 		const parsed = createUserSchema.safeParse(raw);
 		if (!parsed.success) {
-			return fail(400);
+			return error(400, 'invalid name');
 		}
 
 		const id = userId();
