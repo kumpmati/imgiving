@@ -45,7 +45,7 @@
 		<div class="sm:ml-[72px]">
 			{#if description}
 				<p
-					class="text-base font-semibold text-muted-foreground sm:text-lg"
+					class="text-sm font-semibold text-muted-foreground sm:text-base"
 					in:fly|global={{ duration: 300, y: -10 }}
 				>
 					{description}

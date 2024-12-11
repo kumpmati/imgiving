@@ -18,7 +18,7 @@
 		{
 			href: `/list/${data.list.id}/give`,
 			label: "I'm going to give ...",
-			description: "The recipients won't know what you've picked."
+			description: "(The recipients won't know what you've picked)"
 		},
 		{
 			href: `/list/${data.list.id}/shop`,
