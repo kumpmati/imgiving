@@ -63,9 +63,9 @@
 						</div>
 					</div>
 				</Table.Cell>
-				<Table.Cell class="hidden align-baseline sm:table-cell">
+				<Table.Cell class="hidden align-top sm:table-cell">
 					{#if wish.price}
-						<Badge class="w-max">{wish.price}</Badge>
+						<Badge class="mt-1 w-max">{wish.price}</Badge>
 					{/if}
 				</Table.Cell>
 				<Table.Cell class="align-baseline">
