@@ -1,4 +1,5 @@
 import { chatMessageId } from '$lib/id';
+import { getListMember } from '$lib/server/db/handlers/listUser';
 import { db } from '$lib/server/db/index.js';
 import {
 	wishCommentInsertSchema,
@@ -9,8 +10,9 @@ import {
 import { error } from '@sveltejs/kit';
 
 export const actions = {
-	send_question: async ({ request, locals }) => {
-		if (!locals.user) error(403);
+	send_question: async ({ params, request, locals }) => {
+		if (!locals.user) error(401);
+		if (!(await getListMember(params.listId, locals.user.id))) error(403);
 
 		const raw = Object.fromEntries(await request.formData());
 
@@ -27,8 +29,9 @@ export const actions = {
 		});
 	},
 
-	send_comment: async ({ request, locals }) => {
-		if (!locals.user) error(403);
+	send_comment: async ({ params, request, locals }) => {
+		if (!locals.user) error(401);
+		if (!(await getListMember(params.listId, locals.user.id))) error(403);
 
 		const raw = Object.fromEntries(await request.formData());
 

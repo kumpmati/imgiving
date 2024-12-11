@@ -1,5 +1,5 @@
 import { db } from '$lib/server/db';
-import { joinList, leaveList } from '$lib/server/db/handlers/listUser';
+import { getListMember, joinList, leaveList } from '$lib/server/db/handlers/listUser';
 import { wishCommentTable, wishQuestionTable } from '$lib/server/db/schema';
 import { error, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
@@ -8,24 +8,27 @@ import { endpoint, zod } from 'sveltekit-superactions';
 import { z } from 'zod';
 
 const schema = z.object({
+	listId: z.string(),
 	wishId: z.string()
 });
 
 export const POST = endpoint({
 	joinList: zod(z.string(), async ({ locals }, listId) => {
-		if (!locals.user) error(403); // TODO: handle auth redirect
+		if (!locals.user) error(401); // TODO: handle auth redirect
 		await joinList(listId, locals.user.id);
 	}),
 
 	leaveList: zod(z.string(), async ({ locals }, listId) => {
-		if (!locals.user) error(403); // TODO: handle auth redirect
+		if (!locals.user) error(401); // TODO: handle auth redirect
 		await leaveList(listId, locals.user.id);
 		redirect(302, '/');
 	}),
 
 	getWishQuestions: zod(schema, async ({ locals }, body) => {
-		if (!locals.user) error(403); // TODO: handle auth redirect
+		if (!locals.user) error(401); // TODO: handle auth redirect
+		if (!(await getListMember(body.listId, locals.user.id))) error(403);
 
+		// TODO: make sure the given listId matches the wish's list
 		return await db
 			.select()
 			.from(wishQuestionTable)
@@ -34,8 +37,10 @@ export const POST = endpoint({
 	}),
 
 	getWishComments: zod(schema, async ({ locals }, body) => {
-		if (!locals.user) error(403); // TODO: handle auth redirect
+		if (!locals.user) error(401); // TODO: handle auth redirect
+		if (!(await getListMember(body.listId, locals.user.id))) error(403);
 
+		// TODO: make sure the given listId matches the wish's list
 		return await db
 			.select()
 			.from(wishCommentTable)
