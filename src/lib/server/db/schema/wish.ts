@@ -29,11 +29,11 @@ export const wishTable = pgTable(
 			.$onUpdateFn(() => new Date()), // auto-update when this table is updated
 		createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow()
 	},
-	(table) => ({
-		listIdIndex: index('wish_list_id_index').on(table.listId),
-		userIdIndex: index('wish_user_id_index').on(table.userId),
-		createdAtIndex: index('wish_created_at_index').on(table.createdAt)
-	})
+	(table) => [
+		index('wish_list_id_index').on(table.listId),
+		index('wish_user_id_index').on(table.userId),
+		index('wish_created_at_index').on(table.createdAt)
+	]
 );
 
 export type Wish = typeof wishTable.$inferSelect;

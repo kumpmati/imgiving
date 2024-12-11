@@ -14,10 +14,10 @@ export const listUserTable = pgTable(
 			.notNull(),
 		joinedAt: timestamp('joined_at', { withTimezone: true }).notNull().defaultNow()
 	},
-	(table) => ({
+	(table) => [
 		// list id is first in the composite key so that index is best optimised for finding all list members
-		pk: primaryKey({ columns: [table.listId, table.userId] })
-	})
+		primaryKey({ columns: [table.listId, table.userId] })
+	]
 );
 
 export type ListUser = typeof listUserTable.$inferSelect;

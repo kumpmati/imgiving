@@ -14,9 +14,7 @@ export const listTable = pgTable(
 			.notNull(),
 		createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow()
 	},
-	(table) => ({
-		createdAtIndex: index('list_created_at_index').on(table.createdAt)
-	})
+	(table) => [index('list_created_at_index').on(table.createdAt)]
 );
 
 export type List = typeof listTable.$inferSelect;

@@ -10,9 +10,7 @@ export const userTable = pgTable(
 		name: text('name').notNull(),
 		createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow()
 	},
-	(table) => ({
-		createdAtIndex: index('user_created_at_index').on(table.createdAt)
-	})
+	(table) => [index('user_created_at_index').on(table.createdAt)]
 );
 
 export type User = typeof userTable.$inferSelect;

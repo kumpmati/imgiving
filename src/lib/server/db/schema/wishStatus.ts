@@ -18,9 +18,7 @@ export const wishStatusTable = pgTable(
 			.$onUpdateFn(() => new Date()), // auto-update when this table is updated
 		createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow()
 	},
-	(table) => ({
-		pk: primaryKey({ columns: [table.wishId, table.userId] })
-	})
+	(table) => [primaryKey({ columns: [table.wishId, table.userId] })]
 );
 
 export type WishStatusInsert = typeof wishStatusTable.$inferInsert;

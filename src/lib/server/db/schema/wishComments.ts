@@ -16,10 +16,10 @@ export const wishQuestionTable = pgTable(
 		message: text('message').notNull(),
 		createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow()
 	},
-	(table) => ({
-		wishIdIndex: index('wish_question_wish_id_index').on(table.wishId),
-		createdAtIndex: index('wish_question_created_at_index').on(table.createdAt)
-	})
+	(table) => [
+		index('wish_question_wish_id_index').on(table.wishId),
+		index('wish_question_created_at_index').on(table.createdAt)
+	]
 );
 
 export type WishQuestion = typeof wishQuestionTable.$inferSelect;
@@ -41,10 +41,10 @@ export const wishCommentTable = pgTable(
 		message: text('message').notNull(),
 		createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow()
 	},
-	(table) => ({
-		wishIdIndex: index('wish_comment_wish_id_index').on(table.wishId),
-		createdAtIndex: index('wish_comment_created_at_index').on(table.createdAt)
-	})
+	(table) => [
+		index('wish_comment_wish_id_index').on(table.wishId),
+		index('wish_comment_created_at_index').on(table.createdAt)
+	]
 );
 
 export type WishComment = typeof wishCommentTable.$inferSelect;
