@@ -3,6 +3,8 @@ import { userTable } from './user';
 import { listTable } from './list';
 import { relations, sql } from 'drizzle-orm';
 import { wishCommentTable, wishQuestionTable } from './wishComments';
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
+import type { z } from 'zod';
 
 export const wishTable = pgTable(
 	'wishes',
@@ -29,15 +31,12 @@ export const wishTable = pgTable(
 			.$onUpdateFn(() => new Date()), // auto-update when this table is updated
 		createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow()
 	},
-	(table) => ({
-		listIdIndex: index('wish_list_id_index').on(table.listId),
-		userIdIndex: index('wish_user_id_index').on(table.userId),
-		createdAtIndex: index('wish_created_at_index').on(table.createdAt)
-	})
+	(table) => [
+		index('wish_list_id_index').on(table.listId),
+		index('wish_user_id_index').on(table.userId),
+		index('wish_created_at_index').on(table.createdAt)
+	]
 );
-
-export type Wish = typeof wishTable.$inferSelect;
-export type WishInsert = typeof wishTable.$inferInsert;
 
 export const wishRelations = relations(wishTable, ({ one, many }) => ({
 	list: one(listTable, { fields: [wishTable.listId], references: [listTable.id] }),
@@ -45,3 +44,9 @@ export const wishRelations = relations(wishTable, ({ one, many }) => ({
 	questions: many(wishQuestionTable),
 	comments: many(wishCommentTable)
 }));
+
+export const wishSchema = createSelectSchema(wishTable);
+export const wishInsertSchema = createInsertSchema(wishTable);
+
+export type Wish = z.infer<typeof wishSchema>;
+export type WishInsert = z.infer<typeof wishInsertSchema>;

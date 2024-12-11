@@ -2,6 +2,8 @@ import { index, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 import { userTable } from './user';
 import { relations } from 'drizzle-orm';
 import { wishTable } from './wish';
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
+import { z } from 'zod';
 
 export const wishQuestionTable = pgTable(
 	'wish_questions',
@@ -16,17 +18,21 @@ export const wishQuestionTable = pgTable(
 		message: text('message').notNull(),
 		createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow()
 	},
-	(table) => ({
-		wishIdIndex: index('wish_question_wish_id_index').on(table.wishId),
-		createdAtIndex: index('wish_question_created_at_index').on(table.createdAt)
-	})
+	(table) => [
+		index('wish_question_wish_id_index').on(table.wishId),
+		index('wish_question_created_at_index').on(table.createdAt)
+	]
 );
-
-export type WishQuestion = typeof wishQuestionTable.$inferSelect;
 
 export const wishQuestionRelations = relations(wishQuestionTable, ({ one }) => ({
 	wish: one(wishTable, { fields: [wishQuestionTable.wishId], references: [wishTable.id] })
 }));
+
+export const wishQuestionSchema = createSelectSchema(wishQuestionTable);
+export const wishQuestionInsertSchema = createInsertSchema(wishQuestionTable);
+
+export type Wishquestion = z.infer<typeof wishQuestionSchema>;
+export type WishquestionInsert = z.infer<typeof wishQuestionInsertSchema>;
 
 export const wishCommentTable = pgTable(
 	'wish_comments',
@@ -41,15 +47,19 @@ export const wishCommentTable = pgTable(
 		message: text('message').notNull(),
 		createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow()
 	},
-	(table) => ({
-		wishIdIndex: index('wish_comment_wish_id_index').on(table.wishId),
-		createdAtIndex: index('wish_comment_created_at_index').on(table.createdAt)
-	})
+	(table) => [
+		index('wish_comment_wish_id_index').on(table.wishId),
+		index('wish_comment_created_at_index').on(table.createdAt)
+	]
 );
-
-export type WishComment = typeof wishCommentTable.$inferSelect;
 
 export const wishCommentRelations = relations(wishCommentTable, ({ one }) => ({
 	wish: one(wishTable, { fields: [wishCommentTable.wishId], references: [wishTable.id] }),
 	user: one(userTable, { fields: [wishCommentTable.userId], references: [userTable.id] })
 }));
+
+export const wishCommentSchema = createSelectSchema(wishCommentTable);
+export const wishCommentInsertSchema = createInsertSchema(wishCommentTable);
+
+export type WishComment = z.infer<typeof wishCommentSchema>;
+export type WishCommentInsert = z.infer<typeof wishCommentInsertSchema>;
