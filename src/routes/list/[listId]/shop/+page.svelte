@@ -31,7 +31,7 @@
 	<Table.Header>
 		<Table.Row>
 			<Table.Head>Name</Table.Head>
-			<Table.Head class="hidden min-w-20 sm:table-cell"></Table.Head>
+			<Table.Head class="hidden w-0 min-w-20 sm:table-cell"></Table.Head>
 			<Table.Head class="w-0"></Table.Head>
 		</Table.Row>
 	</Table.Header>
