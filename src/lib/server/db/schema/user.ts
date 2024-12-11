@@ -4,7 +4,9 @@ import { listUserTable } from './listUser';
 import { wishTable } from './wish';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import type { z } from 'zod';
+import { sessionTable } from './session';
 
+// TODO: add column to distinguish verified users (allows cleaning up anonymous users)
 export const userTable = pgTable(
 	'users',
 	{
@@ -16,6 +18,7 @@ export const userTable = pgTable(
 );
 
 export const userRelations = relations(userTable, ({ many }) => ({
+	sessions: many(sessionTable),
 	lists: many(listUserTable),
 	wishes: many(wishTable)
 }));
