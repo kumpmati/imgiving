@@ -2,14 +2,13 @@
 	import TablerGiftFilled from '~icons/tabler/gift-filled';
 
 	type Props = {
-		name: string;
 		href: string;
 	};
 
-	let { name, href }: Props = $props();
+	let { href }: Props = $props();
 </script>
 
-<a {href} class="flex items-center gap-2 text-xl font-semibold text-red-500">
+<a {href} class="flex items-center gap-1 text-xl font-semibold text-red-600" title="Giftari">
 	<TablerGiftFilled width={24} height={24} />
-	{name}
+	<span class="hidden sm:inline">Giftari</span>
 </a>
