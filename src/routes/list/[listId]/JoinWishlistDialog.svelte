@@ -5,6 +5,9 @@
 	import { superActions } from 'sveltekit-superactions';
 	import type { ListEndpoint } from '../+server';
 	import { invalidateAll } from '$app/navigation';
+	import { getContext } from 'svelte';
+	import { Toasts } from '$lib/components/toasts/state.svelte';
+	import { toastKey } from '$lib/components/toasts/context';
 
 	type Props = {
 		open: boolean;
@@ -12,6 +15,7 @@
 	};
 
 	const actions = superActions<ListEndpoint>('/list');
+	const t = getContext<Toasts>(toastKey);
 
 	let { open = $bindable(), list }: Props = $props();
 </script>
@@ -25,7 +29,14 @@
 
 		<div class="flex gap-2">
 			<Button variant="secondary" href="/">Back</Button>
-			<Button class="w-full" onclick={() => actions.joinList(list.id).then(() => invalidateAll())}>
+			<Button
+				class="w-full"
+				onclick={() =>
+					actions
+						.joinList(list.id)
+						.then(() => invalidateAll())
+						.then(() => t.success(`Welcome to ${list.name}!`))}
+			>
 				Join
 			</Button>
 		</div>

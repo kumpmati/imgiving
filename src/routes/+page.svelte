@@ -1,11 +1,16 @@
-<script>
+<script lang="ts">
 	import TablerPlus from '~icons/tabler/plus';
 	import { Button } from '$ui/button';
 	import * as Card from '$ui/card';
 	import Input from '$ui/input/input.svelte';
 	import { enhance } from '$app/forms';
+	import { toastKey } from '$lib/components/toasts/context.js';
+	import { getContext } from 'svelte';
+	import { Toasts } from '$lib/components/toasts/state.svelte.js';
 
 	let { data } = $props();
+
+	const t = getContext<Toasts>(toastKey);
 </script>
 
 <main
@@ -26,7 +31,15 @@
 				In order to coordinate gifts, you need to create a wishlist.
 			</Card.Description>
 		</Card.Header>
-		<form method="post" class="contents" use:enhance>
+		<form
+			method="post"
+			class="contents"
+			use:enhance={() => {
+				return async ({ update }) => {
+					update().then(() => t.success('Wishlist created'));
+				};
+			}}
+		>
 			<Card.Content>
 				<Input type="text" name="name" required placeholder="Wishlist name" />
 			</Card.Content>
