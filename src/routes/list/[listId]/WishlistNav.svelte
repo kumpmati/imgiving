@@ -13,6 +13,7 @@
 	import relativeTime from 'dayjs/plugin/relativeTime';
 	import { superActions } from 'sveltekit-superactions';
 	import type { ListEndpoint } from '../+server';
+	import Avatar from '$lib/components/Avatar.svelte';
 
 	dayjs.extend(relativeTime);
 
@@ -114,18 +115,24 @@
 					<Table.Header>
 						<Table.Row>
 							<Table.Head>Name</Table.Head>
-							<Table.Head class="w-32">Joined</Table.Head>
+							<Table.Head class="w-36">Joined</Table.Head>
 						</Table.Row>
 					</Table.Header>
 					<Table.Body>
 						{#each users as user (user.userId)}
 							<Table.Row>
 								<Table.Cell>
-									{user.user.name}
+									<div class="inline-flex items-center gap-2 align-middle">
+										<Avatar userId={user.userId} />
 
-									{#if user.userId === currentUserId}
-										<span class="text-muted-foreground">(You)</span>
-									{/if}
+										<span>
+											{user.user.name}
+
+											{#if user.userId === currentUserId}
+												<span class="text-muted-foreground">(You)</span>
+											{/if}
+										</span>
+									</div>
 								</Table.Cell>
 								<Table.Cell>{dayjs(user.joinedAt).fromNow()}</Table.Cell>
 							</Table.Row>
