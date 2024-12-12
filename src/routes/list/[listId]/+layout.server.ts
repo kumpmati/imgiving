@@ -1,7 +1,6 @@
 import { getListWithUsers } from '$lib/server/db/handlers/list.js';
 import { getListMember } from '$lib/server/db/handlers/listUser.js';
 import { getUnreadQuestions } from '$lib/server/db/handlers/questions.js';
-
 import { getBuylist } from '$lib/server/db/handlers/wish';
 import { error } from '@sveltejs/kit';
 

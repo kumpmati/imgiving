@@ -6,8 +6,13 @@
 	import * as Table from '$ui/table';
 	import { Badge } from '$ui/badge/index.js';
 	import { enhance } from '$app/forms';
+	import { getContext } from 'svelte';
+	import { toastKey } from '$lib/components/toasts/context';
+	import { Toasts } from '$lib/components/toasts/state.svelte';
 
 	let { data } = $props();
+
+	const t = getContext<Toasts>(toastKey);
 </script>
 
 <svelte:head>
@@ -35,7 +40,21 @@
 					{/if}
 				</Table.Cell>
 				<Table.Cell class="text-right">
-					<form method="post" class="contents" action="?/delete_wish" use:enhance>
+					<form
+						method="post"
+						class="contents"
+						action="?/delete_wish"
+						use:enhance={() => {
+							return async ({ update }) => {
+								update().then(() =>
+									t.info(
+										`Removed '${wish.name}'`,
+										'The wish has also been removed from any shopping lists.'
+									)
+								);
+							};
+						}}
+					>
 						<input type="hidden" name="id" value={wish.id} />
 						<Button variant="ghost" size="icon" type="submit">
 							<TablerX class="size-4" />

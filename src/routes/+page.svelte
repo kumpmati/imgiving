@@ -36,7 +36,7 @@
 			class="contents"
 			use:enhance={() => {
 				return async ({ update }) => {
-					update().then((d) => t.success('Wishlist created'));
+					update().then(() => t.success('Wishlist created'));
 				};
 			}}
 		>
