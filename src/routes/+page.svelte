@@ -13,6 +13,10 @@
 	const t = getContext<Toasts>(toastKey);
 </script>
 
+<svelte:head>
+	<title>Giftari - Gift coordination made easy</title>
+</svelte:head>
+
 <main
 	class="absolute left-1/2 top-1/2 mx-auto flex w-full max-w-md -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-2 p-4"
 >
