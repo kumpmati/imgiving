@@ -17,7 +17,7 @@
 <Table.Root>
 	<Table.Header>
 		<Table.Row>
-			<Table.Head class="hidden w-0 sm:table-cell">Recipient</Table.Head>
+			<Table.Head class="hidden w-0 sm:table-cell">Give to</Table.Head>
 			<Table.Head>Name</Table.Head>
 			<Table.Head class="hidden w-0 sm:table-cell">Price</Table.Head>
 			<Table.Head class="w-0"></Table.Head>
