@@ -26,8 +26,8 @@
 	</section>
 
 	<p class="max-w-[50ch] text-center text-muted-foreground">
-		Giftari is free to use for individuals and non-commercial purposes. If you'd like to donate to
-		help cover running costs, you can
+		Giftari is free to use for individuals and non-commercial purposes, and doesn't have ads. If you
+		like, you can help cover running costs by
 		<a
 			href="https://buymeacoffee.com/kumpmati"
 			target="_blank"
@@ -35,7 +35,7 @@
 			class="inline-flex items-center gap-1 font-semibold text-primary hover:underline"
 		>
 			<TablerCoffee class="size-4" />
-			Buy me a coffee.
+			Buying me a coffee.
 		</a>
 	</p>
 </main>

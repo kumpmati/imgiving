@@ -16,6 +16,6 @@
 	<Button
 		variant="link"
 		href="/support"
-		class={cn($page.url.pathname === '/support' && 'font-semibold underline')}>Support us</Button
+		class={cn($page.url.pathname === '/support' && 'font-semibold underline')}>Support</Button
 	>
 </Nav>
