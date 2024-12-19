@@ -13,6 +13,7 @@
 	import relativeTime from 'dayjs/plugin/relativeTime';
 	import { superActions } from 'sveltekit-superactions';
 	import type { ListEndpoint } from '../+server';
+	import Nav from '$lib/components/Nav.svelte';
 
 	dayjs.extend(relativeTime);
 
@@ -42,105 +43,101 @@
 	});
 </script>
 
-<header class="z-10 flex items-center justify-between p-4 sm:sticky sm:top-0">
-	<Logo href="/list/{wishlistId}" />
+<Nav href="/list/{wishlistId}">
+	<p class="text-sm leading-none">{wishlistName}</p>
 
-	<nav class="flex items-center gap-2">
-		<p class="text-sm leading-none">{wishlistName}</p>
+	<Dialog.Root>
+		<Dialog.Trigger
+			class={cn(
+				buttonVariants({ variant: unreadQuestions.length > 0 ? 'destructive' : 'outline' }),
+				'gap-1 px-2',
+				unreadQuestions.length > 0 && 'px-3'
+			)}
+		>
+			{unreadQuestions.length || ''}
 
-		<Dialog.Root>
-			<Dialog.Trigger
-				class={cn(
-					buttonVariants({ variant: unreadQuestions.length > 0 ? 'destructive' : 'outline' }),
-					'gap-1 px-2',
-					unreadQuestions.length > 0 && 'px-3'
-				)}
-			>
-				{unreadQuestions.length || ''}
+			{#if unreadQuestions.length > 0}
+				<TablerBellRingingFilled />
+			{:else}
+				<TablerBell />
+			{/if}
+		</Dialog.Trigger>
 
-				{#if unreadQuestions.length > 0}
-					<TablerBellRingingFilled />
+		<Dialog.Content>
+			<Dialog.Header>
+				<Dialog.Title>Unread messages</Dialog.Title>
+				<Dialog.Description>Any questions on your wishes will appear here.</Dialog.Description>
+			</Dialog.Header>
+
+			<ul class="flex flex-col gap-4">
+				{#each Object.entries(groupedByWish) as [wishId, questions] (wishId)}
+					<li>
+						<div class="flex flex-col">
+							<p class="text-lg font-semibold">{questions[0].wishName}</p>
+
+							<ul class="ml-2 flex flex-col gap-2">
+								{#each questions as q (q.id)}
+									<li>
+										<Message isOwn={false} sameAuthorAsPrevious text={q.message} />
+									</li>
+								{/each}
+							</ul>
+						</div>
+					</li>
 				{:else}
-					<TablerBell />
-				{/if}
-			</Dialog.Trigger>
+					<p class="text-muted-foreground">All caught up!</p>
+				{/each}
+			</ul>
+		</Dialog.Content>
+	</Dialog.Root>
 
-			<Dialog.Content>
-				<Dialog.Header>
-					<Dialog.Title>Unread messages</Dialog.Title>
-					<Dialog.Description>Any questions on your wishes will appear here.</Dialog.Description>
-				</Dialog.Header>
+	<Dialog.Root>
+		<Dialog.Trigger
+			class={cn(buttonVariants({ variant: 'outline' }), 'gap-1 px-2')}
+			title="{users} members"
+		>
+			{users.length}
+			<TablerUsers />
+		</Dialog.Trigger>
 
-				<ul class="flex flex-col gap-4">
-					{#each Object.entries(groupedByWish) as [wishId, questions] (wishId)}
-						<li>
-							<div class="flex flex-col">
-								<p class="text-lg font-semibold">{questions[0].wishName}</p>
+		<Dialog.Content>
+			<Dialog.Header>
+				<Dialog.Title>Members</Dialog.Title>
+				<Dialog.Description>
+					There are {users.length} people in {wishlistName}
+				</Dialog.Description>
+			</Dialog.Header>
 
-								<ul class="ml-2 flex flex-col gap-2">
-									{#each questions as q (q.id)}
-										<li>
-											<Message isOwn={false} sameAuthorAsPrevious text={q.message} />
-										</li>
-									{/each}
-								</ul>
-							</div>
-						</li>
-					{:else}
-						<p class="text-muted-foreground">All caught up!</p>
-					{/each}
-				</ul>
-			</Dialog.Content>
-		</Dialog.Root>
-
-		<Dialog.Root>
-			<Dialog.Trigger
-				class={cn(buttonVariants({ variant: 'outline' }), 'gap-1 px-2')}
-				title="{users} members"
-			>
-				{users.length}
-				<TablerUsers />
-			</Dialog.Trigger>
-
-			<Dialog.Content>
-				<Dialog.Header>
-					<Dialog.Title>Members</Dialog.Title>
-					<Dialog.Description>
-						There are {users.length} people in {wishlistName}
-					</Dialog.Description>
-				</Dialog.Header>
-
-				<Table.Root>
-					<Table.Header>
+			<Table.Root>
+				<Table.Header>
+					<Table.Row>
+						<Table.Head>Name</Table.Head>
+						<Table.Head class="w-32">Joined</Table.Head>
+					</Table.Row>
+				</Table.Header>
+				<Table.Body>
+					{#each users as user (user.userId)}
 						<Table.Row>
-							<Table.Head>Name</Table.Head>
-							<Table.Head class="w-32">Joined</Table.Head>
+							<Table.Cell>
+								{user.user.name}
+
+								{#if user.userId === currentUserId}
+									<span class="text-muted-foreground">(You)</span>
+								{/if}
+							</Table.Cell>
+							<Table.Cell>{dayjs(user.joinedAt).fromNow()}</Table.Cell>
 						</Table.Row>
-					</Table.Header>
-					<Table.Body>
-						{#each users as user (user.userId)}
-							<Table.Row>
-								<Table.Cell>
-									{user.user.name}
+					{/each}
+				</Table.Body>
+			</Table.Root>
 
-									{#if user.userId === currentUserId}
-										<span class="text-muted-foreground">(You)</span>
-									{/if}
-								</Table.Cell>
-								<Table.Cell>{dayjs(user.joinedAt).fromNow()}</Table.Cell>
-							</Table.Row>
-						{/each}
-					</Table.Body>
-				</Table.Root>
-
-				<Button
-					variant="destructive"
-					onclick={() => actions.leaveList(wishlistId, { followRedirects: true })}
-					disabled={wishlistAuthorId === currentUserId}
-				>
-					Leave wishlist
-				</Button>
-			</Dialog.Content>
-		</Dialog.Root>
-	</nav>
-</header>
+			<Button
+				variant="destructive"
+				onclick={() => actions.leaveList(wishlistId, { followRedirects: true })}
+				disabled={wishlistAuthorId === currentUserId}
+			>
+				Leave wishlist
+			</Button>
+		</Dialog.Content>
+	</Dialog.Root>
+</Nav>
