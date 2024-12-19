@@ -1,29 +1,24 @@
 <script>
-	import Nav from '$lib/components/Nav.svelte';
 	import { Button } from '$ui/button';
-
-	import TablerPlus from '~icons/tabler/plus';
 	import TablerList from '~icons/tabler/list';
 	import TablerCheckbox from '~icons/tabler/checkbox';
 	import TablerShoppingCart from '~icons/tabler/shopping-cart';
 	import TablerGiftFilled from '~icons/tabler/gift-filled';
 	import TablerGiftCardFilled from '~icons/tabler/gift-card-filled';
 	import Section from './Section.svelte';
+	import MainNav from './MainNav.svelte';
 </script>
 
 <svelte:head>
 	<title>Giftari - Gift coordination made easy</title>
 </svelte:head>
 
-<Nav href="/" class="fixed">
-	<Button variant="link" href="/for-companies">For companies</Button>
-	<Button variant="link" href="/about">About</Button>
-</Nav>
+<MainNav />
 
 <section class="relative flex flex-col items-center overflow-hidden p-4 pb-24">
 	<div id="hero-bg" class="absolute left-0 top-0 -z-10 h-full w-full"></div>
 
-	<div class="relative mt-32 w-full sm:mt-40">
+	<div class="relative mt-32 w-full sm:mt-48">
 		<img
 			src="/wave1.svg"
 			alt="ribbon graphic"
@@ -61,7 +56,7 @@
 		<p class="text-muted-foreground">There's three simple steps:</p>
 	</div>
 
-	<section class="mx-auto mt-32 flex w-full max-w-6xl flex-col items-center gap-32 pb-64 lg:gap-56">
+	<section class="mx-auto mt-24 flex w-full max-w-6xl flex-col items-center gap-32 pb-64 lg:gap-56">
 		<Section textPosition="left">
 			{#snippet title()}
 				<TablerList class="size-6 text-slate-500" /> List your wishes
