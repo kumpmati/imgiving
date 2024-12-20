@@ -78,20 +78,23 @@
 							</p>
 						</div>
 					{:else}
-						<div class="flex flex-col gap-2 rounded-lg border bg-slate-100 p-4">
-							<Label class="flex w-full flex-col gap-1">
-								First name
-								<Input name="user_name" required placeholder="Steve" class="bg-card" />
-							</Label>
+						<div class="flex flex-col gap-1 font-medium">
+							<small class="text-sm">Account</small>
+							<div class="flex flex-col gap-2 rounded-lg border bg-slate-100 p-4">
+								<Label class="flex w-full flex-col gap-1">
+									First name
+									<Input name="user_name" required placeholder="Steve" class="bg-card" />
+								</Label>
 
-							<small class="text-slate-500">
-								This will create an anonymous account that is deleted after 30 days <i>unless</i> you
-								add an email address to it.
-							</small>
+								<small class="text-slate-500">
+									This will create an anonymous account that is deleted after 30 days <i>unless</i> you
+									add a sign-in method.
+								</small>
+							</div>
 						</div>
 					{/if}
 
-					<Label class="flex w-full flex-col gap-1">
+					<Label class="mt-4 flex w-full flex-col gap-1">
 						Wishlist name
 						<Input name="wishlist_name" placeholder="Family christmas 2024" />
 					</Label>
