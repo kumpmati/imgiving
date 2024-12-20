@@ -1,15 +1,12 @@
 <script>
 	import TablerGiftFilled from '~icons/tabler/gift-filled';
 	import TablerGiftCardFilled from '~icons/tabler/gift-card-filled';
-	import MainNav from '../MainNav.svelte';
 	import TablerCoffee from '~icons/tabler/coffee';
 </script>
 
 <svelte:head>
 	<title>Giftari - Support</title>
 </svelte:head>
-
-<MainNav />
 
 <main class="mx-auto flex max-w-6xl flex-col items-center p-4">
 	<section class="relative mt-16 flex flex-col items-center p-4 pb-24">

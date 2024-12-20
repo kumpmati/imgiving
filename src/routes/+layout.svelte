@@ -4,12 +4,18 @@
 	import Toaster from '$lib/components/toasts/Toaster.svelte';
 	import { setContext } from 'svelte';
 	import { toastKey } from '$lib/components/toasts/context';
+	import { setUserContext } from '$lib/state/user.svelte';
 
-	let { children } = $props();
+	let { children, data } = $props();
 
-	const state = setContext(toastKey, new Toasts());
+	const toastState = setContext(toastKey, new Toasts());
+	const userState = setUserContext(data.user);
+
+	$effect(() => {
+		userState.current = data.user;
+	});
 </script>
 
-<Toaster {state} />
+<Toaster state={toastState} />
 
 {@render children()}

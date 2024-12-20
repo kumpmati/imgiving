@@ -1,3 +1,4 @@
+import { redirectToSignIn } from '$lib/return.js';
 import { getListMember } from '$lib/server/db/handlers/listUser.js';
 import { createWish, getOwnWishes } from '$lib/server/db/handlers/wish.js';
 import { db } from '$lib/server/db/index.js';
@@ -5,8 +6,8 @@ import { wishInsertSchema, wishSchema, wishTable } from '$lib/server/db/schema/w
 import { error } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
 
-export const load = async ({ locals, params }) => {
-	if (!locals.user) error(401, 'unauthorized'); // TODO: handle auth redirect?
+export const load = async ({ locals, params, url }) => {
+	if (!locals.user) return redirectToSignIn(url);
 
 	const wishes = await getOwnWishes(params.listId, locals.user.id);
 

@@ -1,11 +1,15 @@
-<script>
+<script lang="ts">
 	import { page } from '$app/stores';
 	import Nav from '$lib/components/Nav.svelte';
+	import { getUserContext } from '$lib/state/user.svelte';
 	import { cn } from '$lib/utils';
 	import { Button } from '$ui/button';
+	import TablerUser from '~icons/tabler/user';
+
+	const userState = getUserContext();
 </script>
 
-<Nav href="/" class={cn($page.url.pathname === '/' && 'fixed')}>
+<Nav title="Giftari" href="/" class={cn($page.url.pathname === '/' && 'absolute')}>
 	<Button
 		variant="link"
 		href="/for-companies"
@@ -18,4 +22,12 @@
 		href="/support"
 		class={cn($page.url.pathname === '/support' && 'font-semibold underline')}>Support</Button
 	>
+
+	{#if userState.current}
+		<Button variant="outline" href="/account" size="icon">
+			<TablerUser />
+		</Button>
+	{:else}
+		<Button variant="outline" href="/auth/signin">Sign In</Button>
+	{/if}
 </Nav>

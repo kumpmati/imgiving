@@ -17,7 +17,7 @@
 <Table.Root>
 	<Table.Header>
 		<Table.Row>
-			<Table.Head class="hidden w-0 sm:table-cell">Give to</Table.Head>
+			<Table.Head class="hidden w-0 min-w-16 sm:table-cell">Give to</Table.Head>
 			<Table.Head>Name</Table.Head>
 			<Table.Head class="hidden w-0 sm:table-cell">Price</Table.Head>
 			<Table.Head class="w-0"></Table.Head>
@@ -75,7 +75,7 @@
 		{:else}
 			<Table.Row>
 				<Table.Cell colspan={4}>
-					<p class="text-muted-foreground">No wishes found</p>
+					<p class="text-muted-foreground my-4 text-center">No wishes found</p>
 				</Table.Cell>
 			</Table.Row>
 		{/each}

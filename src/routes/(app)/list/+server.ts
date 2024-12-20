@@ -14,18 +14,18 @@ const schema = z.object({
 
 export const POST = endpoint({
 	joinList: zod(z.string(), async ({ locals }, listId) => {
-		if (!locals.user) error(401); // TODO: handle auth redirect
+		if (!locals.user) error(401);
 		await joinList(listId, locals.user.id);
 	}),
 
 	leaveList: zod(z.string(), async ({ locals }, listId) => {
-		if (!locals.user) error(401); // TODO: handle auth redirect
+		if (!locals.user) error(401);
 		await leaveList(listId, locals.user.id);
 		redirect(302, '/');
 	}),
 
 	getWishQuestions: zod(schema, async ({ locals }, body) => {
-		if (!locals.user) error(401); // TODO: handle auth redirect
+		if (!locals.user) error(401);
 		if (!(await getListMember(body.listId, locals.user.id))) error(403);
 
 		// TODO: make sure the given listId matches the wish's list
@@ -37,7 +37,7 @@ export const POST = endpoint({
 	}),
 
 	getWishComments: zod(schema, async ({ locals }, body) => {
-		if (!locals.user) error(401); // TODO: handle auth redirect
+		if (!locals.user) error(401);
 		if (!(await getListMember(body.listId, locals.user.id))) error(403);
 
 		// TODO: make sure the given listId matches the wish's list

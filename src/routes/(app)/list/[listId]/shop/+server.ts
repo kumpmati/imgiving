@@ -11,7 +11,7 @@ const schema = z.object({
 
 export const POST = endpoint({
 	toggleBuylistChecked: zod(schema, async ({ locals }, body) => {
-		if (!locals.user) error(401); // TODO: handle auth redirect
+		if (!locals.user) error(401);
 		if (!(await getListMember(body.listId, locals.user.id))) error(403);
 
 		// TODO: make sure the wish is inside the given list

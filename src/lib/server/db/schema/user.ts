@@ -6,15 +6,19 @@ import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import type { z } from 'zod';
 import { sessionTable } from './session';
 
-// TODO: add column to distinguish verified users (allows cleaning up anonymous users)
 export const userTable = pgTable(
 	'users',
 	{
 		id: text('id').primaryKey(),
 		name: text('name').notNull(),
+		googleId: text('google_id'),
+		verifiedAt: timestamp('verified_at', { withTimezone: true }),
 		createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow()
 	},
-	(table) => [index('user_created_at_index').on(table.createdAt)]
+	(table) => [
+		index('user_created_at_index').on(table.createdAt),
+		index('user_verified_at_index').on(table.verifiedAt)
+	]
 );
 
 export const userRelations = relations(userTable, ({ many }) => ({

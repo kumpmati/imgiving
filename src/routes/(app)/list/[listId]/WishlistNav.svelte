@@ -1,7 +1,6 @@
 <script lang="ts">
 	import TablerUsers from '~icons/tabler/users';
 	import { Button, buttonVariants } from '$ui/button';
-	import Logo from '$lib/components/Logo.svelte';
 	import type { ListUser, WishQuestion } from '$lib/server/db/schema';
 	import TablerBell from '~icons/tabler/bell';
 	import TablerBellRingingFilled from '~icons/tabler/bell-ringing-filled';
@@ -43,9 +42,7 @@
 	});
 </script>
 
-<Nav href="/list/{wishlistId}">
-	<p class="text-sm leading-none">{wishlistName}</p>
-
+<Nav title={wishlistName} href="/" titleHref="/list/{wishlistId}">
 	<Dialog.Root>
 		<Dialog.Trigger
 			class={cn(
