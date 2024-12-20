@@ -11,10 +11,10 @@ export const wishTable = pgTable(
 	{
 		id: text('id').primaryKey(),
 		listId: text('list_id')
-			.references(() => listTable.id)
+			.references(() => listTable.id, { onDelete: 'cascade' })
 			.notNull(),
 		userId: text('user_id')
-			.references(() => userTable.id)
+			.references(() => userTable.id, { onDelete: 'cascade' })
 			.notNull(),
 
 		name: text('name').notNull(),
