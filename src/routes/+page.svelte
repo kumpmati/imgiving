@@ -1,5 +1,5 @@
-<script>
-	import { Button } from '$ui/button';
+<script lang="ts">
+	import { Button, buttonVariants } from '$ui/button';
 	import TablerList from '~icons/tabler/list';
 	import TablerCheckbox from '~icons/tabler/checkbox';
 	import TablerShoppingCart from '~icons/tabler/shopping-cart';
@@ -7,6 +7,15 @@
 	import TablerGiftCardFilled from '~icons/tabler/gift-card-filled';
 	import Section from './Section.svelte';
 	import MainNav from './MainNav.svelte';
+	import Input from '$ui/input/input.svelte';
+	import { Label } from '$ui/label';
+	import * as Dialog from '$ui/dialog';
+	import { enhance } from '$app/forms';
+
+	let { data, form } = $props();
+
+	$inspect(form);
+	let wishlistDialogOpen = $state(false);
 </script>
 
 <svelte:head>
@@ -42,7 +51,66 @@
 	<p class="mt-2 font-medium text-slate-500 sm:mt-8">And free for personal use!</p>
 
 	<div class="mt-11 grid grid-cols-1 gap-2 sm:grid-cols-2">
-		<Button href="/list/create" size="lg">Create wishlist</Button>
+		<Dialog.Root bind:open={wishlistDialogOpen}>
+			<Dialog.Trigger class={buttonVariants({ size: 'lg' })}>Create wishlist</Dialog.Trigger>
+			<Dialog.Content>
+				<Dialog.Header>
+					<Dialog.Title>Create wishlist</Dialog.Title>
+					<Dialog.Description>
+						You can invite others after the wishlist has been created
+					</Dialog.Description>
+				</Dialog.Header>
+
+				<form
+					method="post"
+					action="?/create_list"
+					use:enhance={() => {
+						return async ({ update, result }) => {
+							if (result.type === 'success') {
+								wishlistDialogOpen = false;
+							}
+
+							await update();
+						};
+					}}
+					class="mt-4 flex flex-col gap-4"
+				>
+					{#if data.user}
+						<div class="mx-auto flex items-center gap-2">
+							<p class="text-muted-foreground">
+								Signed in as <strong class="text-primary">{data.user.name}</strong>
+							</p>
+							<Button data-sveltekit-preload-data="off" variant="outline" href="/auth/signout">
+								Sign out
+							</Button>
+						</div>
+					{:else}
+						<div class="flex flex-col gap-2 rounded-lg border bg-slate-100 p-4">
+							<Label class="flex w-full flex-col gap-1">
+								First name
+								<Input name="user_name" required placeholder="Steve" class="bg-card" />
+							</Label>
+
+							<small class="text-slate-500">
+								This will create an anonymous account that is deleted after 30 days <i>unless</i> you
+								add an email address to it.
+							</small>
+						</div>
+					{/if}
+
+					<Label class="flex w-full flex-col gap-1">
+						Wishlist name
+						<Input name="wishlist_name" placeholder="Family christmas 2024" />
+					</Label>
+
+					{#if form?.message}
+						<p class="text-red-600">{form.message}</p>
+					{/if}
+
+					<Button type="submit" class="mt-2">Create wishlist</Button>
+				</form>
+			</Dialog.Content>
+		</Dialog.Root>
 		<Button href="/#how-does-it-work" variant="secondary" size="lg">How does it work?</Button>
 	</div>
 </section>
