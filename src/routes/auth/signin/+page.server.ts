@@ -20,8 +20,6 @@ export const actions = {
 		const { session, token } = await createUserAndSession(parsed.data.name);
 		setSessionTokenCookie(e, token, session.expiresAt);
 
-		const backUrl = getBackUrl(e.url);
-
-		redirect(302, backUrl ?? '/');
+		redirect(302, getBackUrl(e.url) ?? '/');
 	}
 };

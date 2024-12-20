@@ -10,6 +10,7 @@
 	import { enhance } from '$app/forms';
 	import * as Alert from '$ui/alert';
 	import TablerAlertCircle from '~icons/tabler/alert-circle';
+	import TablerBrandGoogleFilled from '~icons/tabler/brand-google-filled';
 
 	dayjs.extend(relativeTime);
 
@@ -30,7 +31,7 @@
 		</Card.Header>
 		<Card.Content class="flex flex-col">
 			{#if !data.user?.verifiedAt}
-				<Alert.Root variant="destructive">
+				<Alert.Root variant="destructive" class="mb-4">
 					<TablerAlertCircle class="size-4" />
 					<Alert.Title>Unverified account</Alert.Title>
 					<Alert.Description>
@@ -41,27 +42,58 @@
 				</Alert.Root>
 			{/if}
 
-			<Dialog.Root>
-				<Dialog.Trigger class={cn(buttonVariants({ variant: 'destructive' }), 'mt-8 w-fit')}>
-					Sign Out
-				</Dialog.Trigger>
+			<p class="mb-2 text-muted-foreground">Sign-in methods</p>
 
-				<Dialog.Content>
-					<Dialog.Header>
-						<Dialog.Title>Are you sure?</Dialog.Title>
-						<Dialog.Description>
-							You haven't added any sign-in methods to this account, and could lose all access to
-							your data.
-						</Dialog.Description>
-					</Dialog.Header>
-					<Dialog.Footer>
-						<Dialog.Close class={buttonVariants({ variant: 'secondary' })}>Cancel</Dialog.Close>
-						<Button data-sveltekit-preload-data="off" href="/auth/signout" variant="destructive">
-							Sign out
-						</Button>
-					</Dialog.Footer>
-				</Dialog.Content>
-			</Dialog.Root>
+			<div class="flex items-center gap-2">
+				<Button
+					href="/auth/google/signin?back=/account"
+					data-sveltekit-preload-data="off"
+					class="w-fit"
+					variant="outline"
+					disabled={!!data.user?.googleId}
+				>
+					<TablerBrandGoogleFilled class="size-4" /> Google
+				</Button>
+
+				{#if data.user?.googleId}
+					<p>Connected</p>
+				{:else}
+					<p>Not connected</p>
+				{/if}
+			</div>
+
+			{#if !data.user?.googleId}
+				<Dialog.Root>
+					<Dialog.Trigger class={cn(buttonVariants({ variant: 'destructive' }), 'mt-8 w-fit')}>
+						Sign Out
+					</Dialog.Trigger>
+
+					<Dialog.Content>
+						<Dialog.Header>
+							<Dialog.Title>Are you sure?</Dialog.Title>
+							<Dialog.Description>
+								You haven't added any sign-in methods to this account, and could lose all access to
+								your data.
+							</Dialog.Description>
+						</Dialog.Header>
+						<Dialog.Footer>
+							<Dialog.Close class={buttonVariants({ variant: 'secondary' })}>Cancel</Dialog.Close>
+							<Button data-sveltekit-preload-data="off" href="/auth/signout" variant="destructive">
+								Sign out
+							</Button>
+						</Dialog.Footer>
+					</Dialog.Content>
+				</Dialog.Root>
+			{:else}
+				<Button
+					data-sveltekit-preload-data="off"
+					href="/auth/signout"
+					variant="destructive"
+					class="mt-8 w-fit"
+				>
+					Sign out
+				</Button>
+			{/if}
 		</Card.Content>
 	</Card.Root>
 

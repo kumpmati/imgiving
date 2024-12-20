@@ -28,6 +28,6 @@
 			<TablerUser />
 		</Button>
 	{:else}
-		<Button variant="secondary" href="/auth/signin">Sign In</Button>
+		<Button variant="outline" href="/auth/signin">Sign In</Button>
 	{/if}
 </Nav>

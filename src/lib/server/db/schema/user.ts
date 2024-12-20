@@ -11,6 +11,7 @@ export const userTable = pgTable(
 	{
 		id: text('id').primaryKey(),
 		name: text('name').notNull(),
+		googleId: text('google_id'),
 		verifiedAt: timestamp('verified_at', { withTimezone: true }),
 		createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow()
 	},
