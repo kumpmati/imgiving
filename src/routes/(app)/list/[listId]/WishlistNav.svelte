@@ -1,12 +1,11 @@
 <script lang="ts">
 	import TablerUsers from '~icons/tabler/users';
 	import { Button, buttonVariants } from '$ui/button';
-	import type { List, ListUser, WishQuestion } from '$lib/server/db/schema';
+	import type { List, ListUser, Wish } from '$lib/server/db/schema';
 	import TablerBell from '~icons/tabler/bell';
 	import TablerBellRingingFilled from '~icons/tabler/bell-ringing-filled';
 	import { cn } from '$lib/utils';
 	import * as Dialog from '$ui/dialog';
-	import Message from '$lib/components/chat/Message.svelte';
 	import * as Table from '$ui/table';
 	import dayjs from 'dayjs';
 	import relativeTime from 'dayjs/plugin/relativeTime';
@@ -18,6 +17,9 @@
 	import Label from '$ui/label/label.svelte';
 	import { page } from '$app/stores';
 	import { getToast } from '$lib/components/toasts/context';
+	import { getChatContext } from '$lib/components/chat/context.svelte';
+	import TablerMessageCircle from '~icons/tabler/message-circle';
+	import { sum } from '$lib/math';
 
 	dayjs.extend(relativeTime);
 
@@ -25,26 +27,19 @@
 		currentUserId: string | undefined;
 		list: List;
 		users: (Pick<ListUser, 'userId' | 'joinedAt'> & { user: { name: string } })[];
-		unreadQuestions: (WishQuestion & { wishName: string })[];
+		wishes: (Wish & { numQuestions: number })[];
 	};
 
+	const chat = getChatContext();
 	const toast = getToast();
 	const actions = superActions<ListEndpoint>('/list');
 
-	let { currentUserId, list, users, unreadQuestions }: Props = $props();
+	let { currentUserId, list, users, wishes }: Props = $props();
 
 	let joinLink = $derived(`${$page.url.origin}/join/${list.publicShareLink}`);
 
-	let groupedByWish = $derived.by(() => {
-		const groups: Record<string, Props['unreadQuestions']> = {};
-
-		unreadQuestions.forEach((q) => {
-			groups[q.wishId] ??= [];
-			groups[q.wishId].push(q);
-		});
-
-		return groups;
-	});
+	let notificationsOpen = $state(false);
+	let numUnreadQuestions = $derived(sum(wishes.map((q) => q.numQuestions)));
 
 	const copyJoinLink = async () => {
 		await navigator.clipboard.writeText(joinLink);
@@ -53,48 +48,56 @@
 </script>
 
 <Nav title={list.name} href="/" titleHref="/list/{list.id}">
-	<Dialog.Root>
+	<Dialog.Root bind:open={notificationsOpen}>
 		<Dialog.Trigger
 			class={cn(
-				buttonVariants({ variant: unreadQuestions.length > 0 ? 'destructive' : 'outline' }),
+				buttonVariants({ variant: numUnreadQuestions > 0 ? 'destructive' : 'outline' }),
 				'gap-1 px-2',
-				unreadQuestions.length > 0 && 'px-3'
+				numUnreadQuestions > 0 && 'px-3'
 			)}
 		>
-			{unreadQuestions.length || ''}
+			{numUnreadQuestions || ''}
 
-			{#if unreadQuestions.length > 0}
+			{#if numUnreadQuestions > 0}
 				<TablerBellRingingFilled />
 			{:else}
 				<TablerBell />
 			{/if}
 		</Dialog.Trigger>
 
-		<Dialog.Content>
+		<Dialog.Content class="max-w-sm">
 			<Dialog.Header>
 				<Dialog.Title>Unread messages</Dialog.Title>
 				<Dialog.Description>Any questions on your wishes will appear here.</Dialog.Description>
 			</Dialog.Header>
 
-			<ul class="flex flex-col gap-4">
-				{#each Object.entries(groupedByWish) as [wishId, questions] (wishId)}
-					<li>
-						<div class="flex flex-col">
-							<p class="text-lg font-semibold">{questions[0].wishName}</p>
-
-							<ul class="ml-2 flex flex-col gap-2">
-								{#each questions as q (q.id)}
-									<li>
-										<Message isOwn={false} sameAuthorAsPrevious text={q.message} />
-									</li>
-								{/each}
-							</ul>
-						</div>
-					</li>
-				{:else}
-					<p class="text-muted-foreground">All caught up!</p>
-				{/each}
-			</ul>
+			<Table.Root>
+				<Table.Body>
+					{#each wishes as wish (wish.id)}
+						{@const hasUnread = wish.numQuestions > 0}
+						<Table.Row class={hasUnread ? 'hover:bg-red-50' : ''}>
+							<Table.Cell class={cn('text-base font-medium', hasUnread && 'text-red-600')}>
+								{wish.name}
+							</Table.Cell>
+							<Table.Cell class="w-0 text-right">
+								<Button
+									onclick={() => {
+										chat.openQuestions(wish.id, wish.listId);
+										notificationsOpen = false;
+									}}
+									variant={hasUnread ? 'destructive' : 'outline'}
+									class="px-2"
+								>
+									{wish.numQuestions || ''}
+									<TablerMessageCircle class="size-4" />
+								</Button>
+							</Table.Cell>
+						</Table.Row>
+					{:else}
+						<p class="text-muted-foreground">All caught up!</p>
+					{/each}
+				</Table.Body>
+			</Table.Root>
 		</Dialog.Content>
 	</Dialog.Root>
 

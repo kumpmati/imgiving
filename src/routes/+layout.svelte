@@ -5,8 +5,12 @@
 	import { setContext } from 'svelte';
 	import { toastKey } from '$lib/components/toasts/context';
 	import { setUserContext } from '$lib/state/user.svelte';
+	import { chatSheetKey } from '$lib/components/chat/context.svelte';
+	import { ChatSheetState } from '$lib/components/chat/state.svelte';
 
 	let { children, data } = $props();
+
+	setContext(chatSheetKey, new ChatSheetState());
 
 	const toastState = setContext(toastKey, new Toasts());
 	const userState = setUserContext(data.user);

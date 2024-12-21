@@ -9,4 +9,4 @@
 	let { class: className }: Props = $props();
 </script>
 
-<TablerLoader2 class={cn('animate-spin', className)} />
+<TablerLoader2 class={cn('inline-flex animate-spin', className)} />

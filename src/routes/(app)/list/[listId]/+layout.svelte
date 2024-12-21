@@ -6,6 +6,7 @@
 	import FloatingShoppingList from './FloatingShoppingList.svelte';
 	import Step from './Step.svelte';
 	import TablerArrowRight from '~icons/tabler/arrow-right';
+	import ChatSheet from '$lib/components/chat/ChatSheet.svelte';
 
 	let { data, children } = $props();
 
@@ -42,19 +43,16 @@
 	<title>{data.list.name}</title>
 </svelte:head>
 
+<ChatSheet />
+
 {#await data.streamed.unreadQuestions}
-	<WishlistNav
-		currentUserId={data.user?.id}
-		list={data.list}
-		users={data.list.users}
-		unreadQuestions={[]}
-	/>
+	<WishlistNav currentUserId={data.user?.id} list={data.list} users={data.list.users} wishes={[]} />
 {:then unreadQuestions}
 	<WishlistNav
 		currentUserId={data.user?.id}
 		list={data.list}
 		users={data.list.users}
-		{unreadQuestions}
+		wishes={unreadQuestions}
 	/>
 {/await}
 
