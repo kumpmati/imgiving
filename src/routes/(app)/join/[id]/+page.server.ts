@@ -19,7 +19,7 @@ export const load = async ({ params, locals }) => {
 
 	return {
 		list,
-		member: locals.user ? getListMember(list.id, locals.user.id) : null
+		member: locals.user ? await getListMember(list.id, locals.user.id) : null
 	};
 };
 

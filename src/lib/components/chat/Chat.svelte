@@ -26,7 +26,7 @@
 	});
 </script>
 
-<div class="flex h-full max-h-[80vh] flex-col gap-2">
+<div class="flex h-[calc(100%-5rem)] flex-col gap-2">
 	<p class="mx-auto mb-5 max-w-64 text-center text-xs text-muted-foreground">{description}</p>
 
 	<ul bind:this={listElement} class="flex h-full flex-col gap-1 overflow-y-auto">
