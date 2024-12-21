@@ -17,7 +17,7 @@
 </script>
 
 <form
-	class="contents"
+	class="flex flex-col gap-2"
 	method="post"
 	{action}
 	use:enhance={() => {
@@ -28,9 +28,13 @@
 		};
 	}}
 >
+	<p class="text-sm font-medium">
+		Create temporary account <small class="text-muted-foreground">(deleted after 30 days)</small>
+	</p>
+
 	<Label>
 		<Input type="text" name="name" required placeholder="First name" maxlength={40} />
-		<small class="text-muted-foreground"> Create anonymous account (deleted after 30 days) </small>
+		<small class="text-muted-foreground"></small>
 	</Label>
 
 	<Button type="submit" class="mt-2 w-full" disabled={loading}>
@@ -42,9 +46,9 @@
 	</Button>
 </form>
 
-<div class="flex items-center gap-2">
+<div class="my-2 flex items-center gap-2">
 	<div class="w-full border-b"></div>
-	<small class="my-4 shrink-0 text-center text-muted-foreground">Or continue with</small>
+	<small class="shrink-0 text-center text-muted-foreground">Or continue with</small>
 	<div class="w-full border-b"></div>
 </div>
 

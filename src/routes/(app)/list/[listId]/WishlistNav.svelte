@@ -67,7 +67,7 @@
 
 		<Dialog.Content class="max-w-sm">
 			<Dialog.Header>
-				<Dialog.Title>Unread messages</Dialog.Title>
+				<Dialog.Title>Unread questions</Dialog.Title>
 				<Dialog.Description>Any questions on your wishes will appear here.</Dialog.Description>
 			</Dialog.Header>
 
@@ -94,7 +94,7 @@
 							</Table.Cell>
 						</Table.Row>
 					{:else}
-						<p class="text-muted-foreground">All caught up!</p>
+						<p class="text-muted-foreground">You don't have any wishes yet.</p>
 					{/each}
 				</Table.Body>
 			</Table.Root>
@@ -153,7 +153,7 @@
 
 	{#if list.authorId === currentUserId}
 		<Dialog.Root>
-			<Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>
+			<Dialog.Trigger class={buttonVariants()}>
 				Share
 				<TablerShare class="size-4" />
 			</Dialog.Trigger>
@@ -161,7 +161,9 @@
 			<Dialog.Content>
 				<Dialog.Header>
 					<Dialog.Title>Share wishlist</Dialog.Title>
-					<Dialog.Description>Invite other users to this wishlist</Dialog.Description>
+					<Dialog.Description
+						>Invite other users to this wishlist by giving them this link.</Dialog.Description
+					>
 				</Dialog.Header>
 
 				<div class="flex w-full items-end gap-2">
