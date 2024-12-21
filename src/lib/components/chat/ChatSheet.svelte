@@ -13,18 +13,19 @@
 	const user = getUserContext();
 
 	$effect(() => {
-		ctx.current.wish; // reactive dependency
+		ctx.current.wish; // run when wish changes
 
-		// IMPORTANT: everything must be inside untrack,
+		// IMPORTANT: everything here must be inside untrack,
 		// otherwise the invalidation results in an infinite fetch loop!
 		untrack(() => {
-			// mark questions as seen if user is the owner
-			if (ctx.current.type === 'questions' && ctx.current.wish) {
-				if (ctx.current.wish.userId === user.current?.id) {
-					ctx
-						.markQuestionsAsSeen(ctx.current.wish!.id, ctx.current.wish!.listId)
-						.then(() => invalidateAll());
-				}
+			if (
+				ctx.current.type === 'questions' &&
+				ctx.current.wish &&
+				ctx.current.wish.userId === user.current?.id
+			) {
+				ctx
+					.markQuestionsAsSeen(ctx.current.wish!.id, ctx.current.wish!.listId)
+					.then(() => invalidateAll());
 			}
 		});
 	});

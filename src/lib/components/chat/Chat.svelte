@@ -17,8 +17,6 @@
 	let listElement = $state<HTMLUListElement>();
 	let newMessage = $state('');
 
-	$inspect(messages);
-
 	$effect(() => {
 		messages.length; // run scroll effect when messages are added
 
