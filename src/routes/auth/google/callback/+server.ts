@@ -1,4 +1,3 @@
-import { getBackUrl } from '$lib/return.js';
 import { setSessionTokenCookie } from '$lib/server/auth/cookies.js';
 import { google } from '$lib/server/auth/google.js';
 import { createUserAndSession } from '$lib/server/auth/helpers.js';
@@ -24,6 +23,9 @@ export const GET = async (event) => {
 		error(400);
 	}
 
+	const backUrl = event.cookies.get('auth_back_url') ?? null;
+	event.cookies.delete('auth_back_url', { path: '/' });
+
 	let tokens: OAuth2Tokens;
 
 	try {
@@ -42,7 +44,7 @@ export const GET = async (event) => {
 		const session = await createSession(token, existing.id);
 		setSessionTokenCookie(event, token, session.expiresAt);
 
-		redirect(302, getBackUrl(event.url) ?? '/');
+		redirect(302, backUrl ?? '/');
 	}
 
 	if (!event.locals.user) {
@@ -58,5 +60,5 @@ export const GET = async (event) => {
 			.where(eq(userTable.id, event.locals.user.id));
 	}
 
-	redirect(302, getBackUrl(event.url) ?? '/');
+	redirect(302, backUrl ?? '/');
 };

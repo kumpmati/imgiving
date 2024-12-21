@@ -18,6 +18,10 @@ export const load = async ({ locals, params, url }) => {
 		error(404, 'list not found');
 	}
 
+	if (!member) {
+		error(403, 'you are not a member of this wishlist');
+	}
+
 	return {
 		list,
 		buylist,

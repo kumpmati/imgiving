@@ -10,7 +10,9 @@
 	import { enhance } from '$app/forms';
 	import * as Alert from '$ui/alert';
 	import TablerAlertCircle from '~icons/tabler/alert-circle';
+	import TablerCheck from '~icons/tabler/check';
 	import TablerBrandGoogleFilled from '~icons/tabler/brand-google-filled';
+	import { Badge } from '$ui/badge';
 
 	dayjs.extend(relativeTime);
 
@@ -50,15 +52,17 @@
 					data-sveltekit-preload-data="off"
 					class="w-fit"
 					variant="outline"
-					disabled={!!data.user?.googleId}
 				>
 					<TablerBrandGoogleFilled class="size-4" /> Google
 				</Button>
 
 				{#if data.user?.googleId}
-					<p>Connected</p>
+					<Badge class="gap-1 bg-green-600">
+						<TablerCheck class="size-4" />
+						Connected
+					</Badge>
 				{:else}
-					<p>Not connected</p>
+					<p class="text-sm text-muted-foreground">Not connected</p>
 				{/if}
 			</div>
 

@@ -1,5 +1,5 @@
 import { db } from '$lib/server/db';
-import { getListMember, joinList, leaveList } from '$lib/server/db/handlers/listUser';
+import { getListMember, leaveList } from '$lib/server/db/handlers/listUser';
 import { wishCommentTable, wishQuestionTable } from '$lib/server/db/schema';
 import { error, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
@@ -13,11 +13,6 @@ const schema = z.object({
 });
 
 export const POST = endpoint({
-	joinList: zod(z.string(), async ({ locals }, listId) => {
-		if (!locals.user) error(401);
-		await joinList(listId, locals.user.id);
-	}),
-
 	leaveList: zod(z.string(), async ({ locals }, listId) => {
 		if (!locals.user) error(401);
 		await leaveList(listId, locals.user.id);

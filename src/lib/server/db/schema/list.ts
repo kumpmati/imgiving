@@ -14,6 +14,7 @@ export const listTable = pgTable(
 		authorId: text('author_id')
 			.references(() => userTable.id, { onDelete: 'cascade' })
 			.notNull(),
+		publicShareLink: text('public_share_link'),
 		createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow()
 	},
 	(table) => [index('list_created_at_index').on(table.createdAt)]

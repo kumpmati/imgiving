@@ -6,7 +6,6 @@
 	import FloatingShoppingList from './FloatingShoppingList.svelte';
 	import Step from './Step.svelte';
 	import TablerArrowRight from '~icons/tabler/arrow-right';
-	import JoinWishlistDialog from './JoinWishlistDialog.svelte';
 
 	let { data, children } = $props();
 
@@ -46,24 +45,18 @@
 {#await data.streamed.unreadQuestions}
 	<WishlistNav
 		currentUserId={data.user?.id}
-		wishlistAuthorId={data.list.authorId}
-		wishlistId={data.list.id}
-		wishlistName={data.list.name}
+		list={data.list}
 		users={data.list.users}
 		unreadQuestions={[]}
 	/>
 {:then unreadQuestions}
 	<WishlistNav
 		currentUserId={data.user?.id}
-		wishlistAuthorId={data.list.authorId}
-		wishlistId={data.list.id}
-		wishlistName={data.list.name}
+		list={data.list}
 		users={data.list.users}
 		{unreadQuestions}
 	/>
 {/await}
-
-<JoinWishlistDialog open={!data.member} list={data.list} />
 
 <main class="mx-auto flex w-full gap-8 p-4 sm:mt-8 sm:max-w-6xl">
 	<section class="flex w-full flex-col sm:max-w-2xl">

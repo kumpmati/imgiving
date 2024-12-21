@@ -16,7 +16,9 @@
 </script>
 
 {#if state.messages.length > 0}
-	<ul class="fixed bottom-0 right-0 z-10 flex w-full max-w-96 flex-col items-stretch gap-2 p-4">
+	<ul
+		class="fixed bottom-0 right-0 z-[1000000] flex w-full max-w-96 flex-col items-stretch gap-2 p-4"
+	>
 		{#each state.messages as m (m.id)}
 			<li
 				animate:flip={{ duration: 400 }}

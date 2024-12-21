@@ -1,0 +1,1 @@
+DROP TABLE "list_invites" CASCADE;
