@@ -16,6 +16,6 @@
 	});
 </script>
 
-<Toaster state={toastState} />
-
 {@render children()}
+
+<Toaster state={toastState} />

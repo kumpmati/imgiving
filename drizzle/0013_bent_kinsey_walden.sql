@@ -1,0 +1,1 @@
+ALTER TABLE "lists" ADD COLUMN "public_share_link" text;

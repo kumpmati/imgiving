@@ -1,4 +1,4 @@
-import { listId } from '$lib/id.js';
+import { generateListId, publicShareLink } from '$lib/id.js';
 import { setSessionTokenCookie } from '$lib/server/auth/cookies.js';
 import { createUserAndSession } from '$lib/server/auth/helpers.js';
 import { db } from '$lib/server/db';
@@ -43,20 +43,21 @@ export const actions = {
 			return fail(400, { message: 'not signed in and user creation failed' });
 		}
 
-		const lid = listId();
+		const listId = generateListId();
 
 		// TODO: do these in a transaction
 		await db.insert(listTable).values({
-			id: lid,
+			id: listId,
 			name: parsed.data.wishlist_name,
-			authorId: uid
+			authorId: uid,
+			publicShareLink: publicShareLink()
 		});
 
 		await db.insert(listUserTable).values({
-			listId: lid,
+			listId: listId,
 			userId: uid
 		});
 
-		redirect(302, `/list/${lid}`);
+		redirect(302, `/list/${listId}`);
 	}
 };

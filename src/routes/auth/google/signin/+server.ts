@@ -1,8 +1,9 @@
+import { getBackUrl } from '$lib/return.js';
 import { google } from '$lib/server/auth/google.js';
 import { redirect } from '@sveltejs/kit';
 import { generateCodeVerifier, generateState } from 'arctic';
 
-export const GET = async ({ cookies }) => {
+export const GET = async ({ cookies, url }) => {
 	const state = generateState();
 	const verifier = generateCodeVerifier();
 	const authUrl = google.createAuthorizationURL(state, verifier, ['openid', 'profile']);
@@ -19,6 +20,17 @@ export const GET = async ({ cookies }) => {
 		maxAge: 60 * 10, // 10 minutes
 		sameSite: 'lax'
 	});
+
+	const backUrl = getBackUrl(url);
+
+	if (backUrl) {
+		cookies.set('auth_back_url', backUrl, {
+			path: '/',
+			httpOnly: true,
+			maxAge: 60 * 10, // 10 minutes
+			sameSite: 'lax'
+		});
+	}
 
 	redirect(302, authUrl);
 };
