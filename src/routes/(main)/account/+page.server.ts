@@ -1,19 +1,24 @@
 import { redirectToSignIn } from '$lib/return.js';
 import { db } from '$lib/server/db/index.js';
 import { listTable } from '$lib/server/db/schema/list.js';
-import { fail, redirect } from '@sveltejs/kit';
+import { listUserTable } from '$lib/server/db/schema/listUser.js';
+import { fail } from '@sveltejs/kit';
 import { and, desc, eq } from 'drizzle-orm';
 import { z } from 'zod';
 
-export const load = async ({ locals }) => {
-	if (!locals.user) redirect(302, '/auth/signin?back=/account');
+export const load = async ({ locals, url }) => {
+	if (!locals.user) return redirectToSignIn(url);
 
 	return {
-		wishlists: await db.query.listTable.findMany({
-			where: eq(listTable.authorId, locals.user.id),
-			orderBy: desc(listTable.createdAt),
+		memberships: await db.query.listUserTable.findMany({
+			where: eq(listUserTable.userId, locals.user.id),
+			orderBy: desc(listUserTable.joinedAt),
+			columns: { listId: true, joinedAt: true },
 			with: {
-				users: { columns: { userId: true } }
+				list: {
+					columns: { name: true, authorId: true, createdAt: true },
+					with: { users: { columns: { userId: true } } }
+				}
 			}
 		})
 	};
