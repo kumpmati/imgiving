@@ -6,8 +6,11 @@
 	import { Button } from '$ui/button';
 	import { enhance } from '$app/forms';
 	import { cn } from '$lib/utils';
+	import Spinner from '$lib/components/Spinner.svelte';
 
 	let { data } = $props();
+
+	let loading = $state<Record<string, boolean>>({});
 </script>
 
 <svelte:head>
@@ -53,21 +56,36 @@
 					{/if}
 				</Table.Cell>
 				<Table.Cell class="text-right">
-					<form method="post" action="?/toggle_wish_status" class="contents" use:enhance>
+					<form
+						method="post"
+						action="?/toggle_wish_status"
+						class="contents"
+						use:enhance={() => {
+							loading[wish.id] = true;
+
+							return async ({ update }) => {
+								await update();
+								delete loading[wish.id];
+							};
+						}}
+					>
 						<input type="hidden" name="wishId" value={wish.id} />
 						<Button
 							type="submit"
 							variant={status ? 'default' : 'outline'}
 							class={cn('px-2', status && 'bg-green-600 hover:bg-green-700')}
 							title="{wish.numGivers} are giving {wish.name} to {wish.username}"
+							disabled={loading[wish.id]}
 						>
-							{#if status}
+							{#if loading[wish.id]}
+								<Spinner class="size-4" />
+							{:else if status}
 								<TablerCircleCheckFilled class="size-4" />
 							{:else}
 								<TablerCircleCheck class="size-4" />
 							{/if}
 
-							<span class="w-[1ch]">{wish.numGivers}</span>
+							<span class="min-w-[1ch]">{wish.numGivers}</span>
 						</Button>
 					</form>
 				</Table.Cell>
