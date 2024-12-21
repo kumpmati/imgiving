@@ -32,7 +32,7 @@
 </script>
 
 <Sheet.Root bind:open={ctx.current.open}>
-	<Sheet.Content side="right">
+	<Sheet.Content side="right" class="w-[calc(100%-2rem)] sm:max-w-md">
 		<Sheet.Header>
 			<Sheet.Title class="inline-flex items-center gap-1">
 				{#if ctx.current.type === 'questions'}
