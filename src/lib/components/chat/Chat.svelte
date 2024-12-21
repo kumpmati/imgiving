@@ -1,72 +1,63 @@
 <script lang="ts">
 	import TablerSend2 from '~icons/tabler/send-2';
-	import { enhance } from '$app/forms';
 	import Button from '$ui/button/button.svelte';
 	import Input from '$ui/input/input.svelte';
 	import Message from './Message.svelte';
 	import type { ChatMessage } from '$lib/chat';
 
 	type Props = {
-		wishId: string;
 		description: string | null;
 		currentUserId: string | undefined;
-		messages: ChatMessage[] | Promise<ChatMessage[]>;
-		formaction: string;
-		hideMessageInput?: boolean;
-		onsubmit?: () => void;
+		messages: ChatMessage[];
+		onsubmit: (message: string) => Promise<void> | void;
 	};
 
-	let {
-		wishId,
-		description,
-		formaction,
-		currentUserId,
-		messages,
-		hideMessageInput = false,
-		onsubmit
-	}: Props = $props();
+	let { description, currentUserId, messages, onsubmit }: Props = $props();
+
+	let listElement = $state<HTMLUListElement>();
+	let newMessage = $state('');
+
+	$inspect(messages);
+
+	$effect(() => {
+		messages.length; // run scroll effect when messages are added
+
+		if (listElement) {
+			listElement.scrollTop = listElement.scrollHeight;
+		}
+	});
 </script>
 
-<div class="flex flex-col gap-2">
+<div class="flex h-full max-h-[80vh] flex-col gap-2">
 	<p class="mx-auto mb-5 max-w-64 text-center text-xs text-muted-foreground">{description}</p>
 
-	<ul class="flex h-full flex-col gap-1">
-		{#await messages}
-			<p>Loading...</p>
-		{:then loadedMessages}
-			{#each loadedMessages as m, i (m.id)}
-				<Message
-					isOwn={m.userId === currentUserId}
-					sameAuthorAsPrevious={i > 0 && loadedMessages[i - 1].userId === m.userId}
-					text={m.message}
-				/>
-			{/each}
-		{/await}
+	<ul bind:this={listElement} class="flex h-full flex-col gap-1 overflow-y-auto">
+		{#each messages as m, i (m.id)}
+			<Message
+				isOwn={m.userId === currentUserId}
+				sameAuthorAsPrevious={i > 0 && messages[i - 1].userId === m.userId}
+				text={m.message}
+			/>
+		{/each}
 	</ul>
 
-	{#if !hideMessageInput}
-		<form
-			class="mt-4 flex gap-2"
-			method="post"
-			action={formaction}
-			use:enhance={() => {
-				return async ({ update }) => {
-					await update();
-					onsubmit?.();
-				};
-			}}
-		>
-			<input type="hidden" name="id" value={wishId} />
-			<Input
-				required
-				name="message"
-				maxlength={200}
-				placeholder="Type your message..."
-				class="bg-card"
-			/>
-			<Button type="submit">
-				<TablerSend2 class="size-4" />
-			</Button>
-		</form>
-	{/if}
+	<form
+		class="mt-4 flex gap-2"
+		onsubmit={async (e) => {
+			e.preventDefault();
+			await onsubmit(newMessage);
+			newMessage = '';
+		}}
+	>
+		<Input
+			required
+			maxlength={200}
+			placeholder="Type your message..."
+			class="bg-card"
+			bind:value={newMessage}
+		/>
+		<Button type="submit">
+			<TablerSend2 class="size-4" />
+		</Button>
+	</form>
 </div>
