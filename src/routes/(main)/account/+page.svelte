@@ -103,50 +103,65 @@
 
 	<Card.Root>
 		<Card.Header>
-			<Card.Title>My wishlists ({data.wishlists.length})</Card.Title>
+			<Card.Title>My wishlists ({data.memberships.length})</Card.Title>
 		</Card.Header>
 		<Card.Content>
 			<ul class="flex flex-col gap-2">
-				{#each data.wishlists as list (list.id)}
+				{#each data.memberships as membership (membership.listId)}
+					{@const isOwner = membership.list.authorId === data.user?.id}
 					<li
-						class="flex items-center justify-between rounded px-2 py-1 transition-colors hover:bg-slate-100"
+						class="flex items-center justify-between rounded p-2 transition-colors hover:bg-slate-50"
 					>
-						<a href="/list/{list.id}" class="flex flex-col">
-							{list.name}
-							<span class="flex items-center gap-2 text-xs text-muted-foreground">
+						<a href="/list/{membership.listId}" class="flex flex-col gap-0.5 overflow-hidden">
+							<span class="overflow-hidden text-ellipsis whitespace-nowrap text-base font-medium">
+								{membership.list.name}
+
+								{#if isOwner}
+									<span class="font-normal text-muted-foreground">(Owner)</span>
+								{/if}
+							</span>
+							<span
+								class="flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap text-xs text-muted-foreground"
+							>
 								<span class="inline-flex items-center gap-1">
 									<TablerUsers class="size-4" />
-									{list.users.length}
+									{membership.list.users.length}
 								</span>
-
 								-
-
-								<span>Created {dayjs(list.createdAt).fromNow()}</span>
+								{#if isOwner}
+									<span>Created {dayjs(membership.list.createdAt).fromNow()}</span>
+								{:else}
+									<span>Joined {dayjs(membership.joinedAt).fromNow()}</span>
+								{/if}
 							</span>
 						</a>
 
-						<Dialog.Root>
-							<Dialog.Trigger class={buttonVariants({ size: 'icon', variant: 'ghost' })}>
-								<TablerTrash class="size-4" />
-							</Dialog.Trigger>
-							<Dialog.Content>
-								<Dialog.Header>
-									<Dialog.Title>Are you sure?</Dialog.Title>
-									<Dialog.Description>
-										You are about to permanently delete {list.name} and all its associated data. This
-										cannot be undone.
-									</Dialog.Description>
-								</Dialog.Header>
+						{#if isOwner}
+							<Dialog.Root>
+								<Dialog.Trigger class={buttonVariants({ size: 'icon', variant: 'ghost' })}>
+									<TablerTrash class="size-4" />
+								</Dialog.Trigger>
+								<Dialog.Content>
+									<Dialog.Header>
+										<Dialog.Title>Are you sure?</Dialog.Title>
+										<Dialog.Description>
+											You are about to permanently delete {membership.list.name} and all its associated
+											data. This cannot be undone.
+										</Dialog.Description>
+									</Dialog.Header>
 
-								<Dialog.Footer>
-									<Dialog.Close class={buttonVariants({ variant: 'outline' })}>Cancel</Dialog.Close>
-									<form method="post" action="?/delete_list" use:enhance>
-										<input type="hidden" name="id" value={list.id} />
-										<Button type="submit" variant="destructive">Delete</Button>
-									</form>
-								</Dialog.Footer>
-							</Dialog.Content>
-						</Dialog.Root>
+									<Dialog.Footer class="gap-2">
+										<Dialog.Close class={buttonVariants({ variant: 'outline' })}>
+											Cancel
+										</Dialog.Close>
+										<form method="post" action="?/delete_list" use:enhance class="contents">
+											<input type="hidden" name="id" value={membership.listId} />
+											<Button type="submit" variant="destructive">Delete</Button>
+										</form>
+									</Dialog.Footer>
+								</Dialog.Content>
+							</Dialog.Root>
+						{/if}
 					</li>
 				{:else}
 					<li class="text-sm text-muted-foreground">You don't have any wishlists yet.</li>
