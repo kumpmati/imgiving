@@ -1,11 +1,10 @@
-import { deleteSessionTokenCookie, getSessionTokenCookie } from '$lib/server/auth/cookies';
+import { deleteSessionTokenCookie } from '$lib/server/auth/cookies';
 import { invalidateSession } from '$lib/server/auth/session';
 import { redirect } from '@sveltejs/kit';
 
 export const GET = async (e) => {
-	const token = getSessionTokenCookie(e);
-	if (token) {
-		await invalidateSession(token);
+	if (e.locals.session) {
+		await invalidateSession(e.locals.session.id);
 		deleteSessionTokenCookie(e);
 	}
 

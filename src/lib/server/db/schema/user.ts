@@ -5,6 +5,7 @@ import { wishTable } from './wish';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import type { z } from 'zod';
 import { sessionTable } from './session';
+import { userNotificationsTable } from './userNotifications';
 
 export const userTable = pgTable(
 	'users',
@@ -24,7 +25,8 @@ export const userTable = pgTable(
 export const userRelations = relations(userTable, ({ many }) => ({
 	sessions: many(sessionTable),
 	lists: many(listUserTable),
-	wishes: many(wishTable)
+	wishes: many(wishTable),
+	notifications: many(userNotificationsTable)
 }));
 
 export const userSchema = createSelectSchema(userTable);
