@@ -1,6 +1,7 @@
 import { chatMessageId } from '$lib/id';
 import { db } from '$lib/server/db';
 import { getListMember } from '$lib/server/db/handlers/listUser';
+import { getWishAuthorNotifications } from '$lib/server/db/handlers/notifications';
 import { markQuestionsAsSeen } from '$lib/server/db/handlers/questions';
 import {
 	wishCommentTable,
@@ -9,6 +10,7 @@ import {
 	wishQuestionInsertSchema,
 	wishCommentInsertSchema
 } from '$lib/server/db/schema';
+import { getAdminMessaging } from '$lib/server/firebase/admin';
 import { error } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
 import { asc } from 'drizzle-orm';
@@ -83,20 +85,35 @@ export const POST = endpoint({
 			if (!locals.user) error(401);
 			if (!(await getListMember(body.listId, locals.user.id))) error(403);
 
-			const [inserted] = await db
-				.insert(wishQuestionTable)
-				.values({
-					id: chatMessageId(),
-					wishId: body.wishId,
-					message: body.message,
-					userId: locals.user.id
-				})
-				.returning();
+			const [rows, notifications] = await Promise.all([
+				db
+					.insert(wishQuestionTable)
+					.values({
+						id: chatMessageId(),
+						wishId: body.wishId,
+						message: body.message,
+						userId: locals.user.id
+					})
+					.returning(),
+				getWishAuthorNotifications(body.wishId)
+			]);
+
+			// TODO: clean up notification logic
+			// don't send notification if wish owner is sending question
+			if (notifications.length > 0 && notifications[0].wishUserId !== locals.user.id) {
+				await getAdminMessaging().send({
+					token: notifications[0].token,
+					notification: {
+						title: 'New question',
+						body: `Someone asked a question about '${notifications[0].wishName}'`
+					}
+				});
+			}
 
 			// this will mark questions as seen if the user is the owner of the wish
 			await markQuestionsAsSeen(body.wishId, body.listId, locals.user.id);
 
-			return inserted;
+			return rows[0];
 		}
 	),
 

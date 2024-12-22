@@ -7,6 +7,8 @@
 	import Step from './Step.svelte';
 	import TablerArrowRight from '~icons/tabler/arrow-right';
 	import ChatSheet from '$lib/components/chat/ChatSheet.svelte';
+	import { getNotificationContext } from '$lib/components/notifications/context.svelte';
+	import NotificationPermissionDialog from '$lib/components/notifications/NotificationPermissionDialog.svelte';
 
 	let { data, children } = $props();
 
@@ -43,6 +45,7 @@
 	<title>{data.list.name}</title>
 </svelte:head>
 
+<NotificationPermissionDialog />
 <ChatSheet />
 
 {#await data.streamed.unreadQuestions}
