@@ -30,7 +30,7 @@
 			</Dialog.Description>
 		</Dialog.Header>
 
-		<Dialog.Footer>
+		<Dialog.Footer class="gap-2">
 			<Dialog.Close
 				onclick={() => localStorage.setItem('giftari-notifications', 'ignore')}
 				class={buttonVariants({ variant: 'secondary' })}
@@ -60,9 +60,9 @@
 				disabled={loading}
 			>
 				{#if loading}
-					<Spinner class="size-4" /> Enabling notifications...
+					<Spinner class="size-4" /> Requesting permission...
 				{:else}
-					Enable notifications
+					Request permission
 				{/if}
 			</Button>
 		</Dialog.Footer>
