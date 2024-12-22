@@ -20,6 +20,8 @@
 	import { getChatContext } from '$lib/components/chat/context.svelte';
 	import TablerMessageCircle from '~icons/tabler/message-circle';
 	import { sum } from '$lib/math';
+	import { getNotificationContext } from '$lib/components/notifications/context.svelte';
+	import { Badge } from '$ui/badge';
 
 	dayjs.extend(relativeTime);
 
@@ -30,11 +32,14 @@
 		wishes: (Wish & { numQuestions: number })[];
 	};
 
+	const notifications = getNotificationContext();
 	const chat = getChatContext();
 	const toast = getToast();
 	const actions = superActions<ListEndpoint>('/list');
 
 	let { currentUserId, list, users, wishes }: Props = $props();
+
+	let updateSwLoading = $state(false);
 
 	let joinLink = $derived(`${$page.url.origin}/join/${list.publicShareLink}`);
 
@@ -67,7 +72,7 @@
 
 		<Dialog.Content class="max-w-sm">
 			<Dialog.Header>
-				<Dialog.Title>Unread questions</Dialog.Title>
+				<Dialog.Title>Notifications</Dialog.Title>
 				<Dialog.Description>Any questions on your wishes will appear here.</Dialog.Description>
 			</Dialog.Header>
 
@@ -98,6 +103,30 @@
 					{/each}
 				</Table.Body>
 			</Table.Root>
+
+			<p class="mt-4 font-semibold">Settings</p>
+			<Badge
+				variant={notifications.allowed ? 'default' : 'destructive'}
+				class={cn('w-fit', notifications.allowed && 'bg-green-600')}
+			>
+				Notifications {notifications.allowed ? 'enabled' : 'disabled'}
+			</Badge>
+
+			<Button
+				onclick={async () => {
+					updateSwLoading = true;
+					await notifications.updateRegistration();
+					toast.success('Updated');
+					updateSwLoading = false;
+				}}
+				disabled={updateSwLoading}
+			>
+				{#if updateSwLoading}
+					Updating...
+				{:else}
+					Update service worker
+				{/if}
+			</Button>
 		</Dialog.Content>
 	</Dialog.Root>
 
