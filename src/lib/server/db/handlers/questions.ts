@@ -1,4 +1,4 @@
-import { and, countDistinct, desc, eq, getTableColumns, gte, not } from 'drizzle-orm';
+import { and, countDistinct, desc, eq, getTableColumns, gt, not } from 'drizzle-orm';
 import { db } from '..';
 import { wishQuestionTable, wishTable } from '../schema';
 
@@ -14,7 +14,7 @@ export const getWishesWithUnreadQuestionCount = async (listId: string, userId: s
 				eq(wishTable.listId, listId), // only given list
 				eq(wishTable.userId, userId), // only given user
 				not(eq(wishQuestionTable.userId, userId)), // exclude own messages
-				gte(wishQuestionTable.createdAt, wishTable.lastSeenQuestionTimestamp) // only messages after last seen timestamp
+				gt(wishQuestionTable.createdAt, wishTable.lastSeenQuestionTimestamp) // only messages after last seen timestamp
 			)
 		)
 		.groupBy(wishTable.id)

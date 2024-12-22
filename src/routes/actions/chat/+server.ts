@@ -1,7 +1,7 @@
 import { chatMessageId } from '$lib/id';
 import { db } from '$lib/server/db';
 import { getListMember } from '$lib/server/db/handlers/listUser';
-import { getWishAuthorNotifications } from '$lib/server/db/handlers/notifications';
+import { deleteByTokens, getWishAuthorNotifications } from '$lib/server/db/handlers/notifications';
 import { markQuestionsAsSeen } from '$lib/server/db/handlers/questions';
 import {
 	wishCommentTable,
@@ -101,15 +101,27 @@ export const POST = endpoint({
 			// TODO: clean up notification logic
 			// don't send notification if wish owner is sending question
 			if (notifications.length > 0 && notifications[0].wishUserId !== locals.user.id) {
-				await fcm.sendToTokens(
+				const unregistered = await fcm.sendToTokens(
 					{
 						notification: {
 							title: 'New question',
 							body: `Someone asked a question about '${notifications[0].wishName}'`
+						},
+
+						webpush: {
+							notification: {
+								title: 'New question',
+								body: `Someone asked a question about '${notifications[0].wishName}'`,
+								actions: [{ action: 'open', title: 'View message' }]
+							}
 						}
 					},
 					notifications.map((n) => n.token)
 				);
+
+				if (unregistered.length > 0) {
+					await deleteByTokens(unregistered);
+				}
 			}
 
 			// this will mark questions as seen if the user is the owner of the wish
