@@ -1,4 +1,4 @@
-import { dev } from '$app/environment';
+import { browser, dev } from '$app/environment';
 import { PUBLIC_FCM_PUBLIC_KEY } from '$env/static/public';
 import { firebaseConfig } from '$lib/firebase/config';
 import { initializeApp } from 'firebase/app';
@@ -13,6 +13,9 @@ export const notificationContextKey = Symbol('notifications');
 export const getNotificationContext = () => getContext<NotificationContext>(notificationContextKey);
 
 export class NotificationContext {
+	permission = $state<NotificationPermission>();
+	allowed = $derived(this.permission === 'granted');
+
 	#messaging = $state<Messaging | undefined>();
 	#sw = $state<ServiceWorkerRegistration>();
 	#actions = superActions<NotificationEndpoint>('/actions/notifications');
@@ -20,6 +23,10 @@ export class NotificationContext {
 
 	constructor(t: Toasts) {
 		this.#toast = t;
+
+		if (browser) {
+			this.permission = Notification.permission;
+		}
 	}
 
 	async init() {
@@ -29,12 +36,21 @@ export class NotificationContext {
 			.then((registration) => (this.#sw = registration));
 	}
 
+	async updateRegistration() {
+		if (!this.#sw) {
+			await this.init();
+		}
+
+		await this.#sw!.update();
+	}
+
 	async requestPermissions() {
 		if (!this.#messaging) {
 			await this.init();
 		}
 
 		await Notification.requestPermission().then(async (status) => {
+			this.permission = status;
 			if (status === 'granted') {
 				await getToken(this.#messaging!, {
 					serviceWorkerRegistration: this.#sw,
