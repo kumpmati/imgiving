@@ -39,10 +39,15 @@ const messaging = getMessaging(firebaseApp);
 console.log('sw initialised');
 
 onMessage(messaging, (payload) => {
-	console.log('sw: got message', { payload });
+	sw.registration.showNotification(payload.notification?.title ?? 'Notification', {
+		...payload.notification,
+		icon: payload.notification?.icon ?? 'https://giftari.site/favicon.svg'
+	});
 });
 
 onBackgroundMessage(messaging, (payload) => {
-	console.log('sw: got background message', { payload });
-	sw.registration.showNotification('sw bg test title', { body: 'sw bg body' });
+	sw.registration.showNotification(payload.notification?.title ?? 'Notification', {
+		...payload.notification,
+		icon: payload.notification?.icon ?? 'https://giftari.site/favicon.svg'
+	});
 });

@@ -2,7 +2,7 @@ import { signInFormSchema } from '$lib/components/signIn/schema.js';
 import { redirectToSignIn } from '$lib/return.js';
 import { setSessionTokenCookie } from '$lib/server/auth/cookies.js';
 import { createUserAndSession } from '$lib/server/auth/helpers.js';
-import { getListMember, joinList, joinListIfNotJoined } from '$lib/server/db/handlers/listUser';
+import { getListMember, joinList } from '$lib/server/db/handlers/listUser';
 import { db } from '$lib/server/db/index.js';
 import { listTable } from '$lib/server/db/schema/list.js';
 import { error, fail, redirect } from '@sveltejs/kit';
@@ -35,7 +35,7 @@ export const actions = {
 			return fail(400, { message: 'invite not found' });
 		}
 
-		await joinListIfNotJoined(list.id, locals.user.id);
+		await joinList(list.id, locals.user.id);
 
 		redirect(302, `/list/${list.id}`);
 	},

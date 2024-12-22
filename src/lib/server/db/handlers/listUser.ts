@@ -15,11 +15,9 @@ export const joinList = async (listId: string, userId: string) => {
 	return db.insert(listUserTable).values({ listId, userId });
 };
 
-export const joinListIfNotJoined = async (listId: string, userId: string) => {
-	return db.insert(listUserTable).values({ listId, userId }).onConflictDoNothing();
-};
-
 export const leaveList = async (listId: string, userId: string) => {
+	// TODO: also remove wishes from list
+
 	return db
 		.delete(listUserTable)
 		.where(and(eq(listUserTable.listId, listId), eq(listUserTable.userId, userId)));
