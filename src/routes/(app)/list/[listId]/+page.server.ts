@@ -9,10 +9,8 @@ import { and, eq } from 'drizzle-orm';
 export const load = async ({ locals, params, url }) => {
 	if (!locals.user) return redirectToSignIn(url);
 
-	const wishes = await getOwnWishes(params.listId, locals.user.id);
-
 	return {
-		wishes
+		wishes: await getOwnWishes(params.listId, locals.user.id)
 	};
 };
 
