@@ -32,7 +32,7 @@ export class NotificationContext {
 	async init() {
 		this.#messaging = getMessaging(initializeApp(firebaseConfig));
 		await navigator.serviceWorker
-			.register('/service-worker.js', { type: dev ? 'module' : 'classic' })
+			.register('/service-worker.js', { type: dev ? 'module' : 'classic', scope: '/' })
 			.then((registration) => (this.#sw = registration));
 	}
 
