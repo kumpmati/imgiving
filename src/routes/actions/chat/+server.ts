@@ -10,7 +10,7 @@ import {
 	wishQuestionInsertSchema,
 	wishCommentInsertSchema
 } from '$lib/server/db/schema';
-import { getAdminMessaging } from '$lib/server/firebase/admin';
+import { fcm } from '$lib/server/fcm';
 import { error } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
 import { asc } from 'drizzle-orm';
@@ -101,13 +101,15 @@ export const POST = endpoint({
 			// TODO: clean up notification logic
 			// don't send notification if wish owner is sending question
 			if (notifications.length > 0 && notifications[0].wishUserId !== locals.user.id) {
-				await getAdminMessaging().send({
-					token: notifications[0].token,
-					notification: {
-						title: 'New question',
-						body: `Someone asked a question about '${notifications[0].wishName}'`
-					}
-				});
+				await fcm.sendToTokens(
+					{
+						notification: {
+							title: 'New question',
+							body: `Someone asked a question about '${notifications[0].wishName}'`
+						}
+					},
+					notifications.map((n) => n.token)
+				);
 			}
 
 			// this will mark questions as seen if the user is the owner of the wish
