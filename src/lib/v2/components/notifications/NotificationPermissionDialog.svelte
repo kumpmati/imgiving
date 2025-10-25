@@ -13,8 +13,8 @@
 	let loading = $state(false);
 
 	onMount(() => {
-		console.log(Notification.permission, localStorage.getItem('giftari-notifications'));
-		if (Notification.permission === 'default' && !localStorage.getItem('giftari-notifications')) {
+		console.log(Notification.permission, localStorage.getItem('imgiving-notifications'));
+		if (Notification.permission === 'default' && !localStorage.getItem('imgiving-notifications')) {
 			open = true;
 		}
 	});
@@ -32,7 +32,7 @@
 
 		<Dialog.Footer class="gap-2">
 			<Dialog.Close
-				onclick={() => localStorage.setItem('giftari-notifications', 'ignore')}
+				onclick={() => localStorage.setItem('imgiving-notifications', 'ignore')}
 				class={buttonVariants({ variant: 'secondary' })}
 			>
 				Close

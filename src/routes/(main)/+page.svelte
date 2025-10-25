@@ -17,7 +17,7 @@
 </script>
 
 <svelte:head>
-	<title>Giftari - Gift coordination made easy</title>
+	<title>ImGiving - Gift coordination made easy</title>
 </svelte:head>
 
 <section class="relative flex flex-col items-center overflow-hidden p-4 pb-24">

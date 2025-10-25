@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-	<title>Giftari - For companies</title>
+	<title>ImGiving - For companies</title>
 </svelte:head>
 
 <main class="mx-auto flex max-w-6xl flex-col items-center p-4">
@@ -20,8 +20,8 @@
 	</section>
 
 	<p class="max-w-[50ch] text-center text-muted-foreground">
-		Giftari isn't available for non-individuals or commercial use yet. If you are interested in
-		using it within your company or for commercial purposes, you can
+		ImGiving is currently only available for personal use. If you are interested in using it within
+		your company or for commercial purposes, you can
 		<a
 			href="https://forms.gle/db498eG5bhK7sPd58"
 			target="_blank"

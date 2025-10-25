@@ -9,7 +9,7 @@
 	const userState = getUserContext();
 </script>
 
-<Nav title="Giftari" href="/" class={cn($page.url.pathname === '/' && 'absolute')}>
+<Nav title="ImGiving" href="/" class={cn($page.url.pathname === '/' && 'absolute')}>
 	<Button
 		variant="link"
 		href="/for-companies"
