@@ -2,7 +2,7 @@ import { error, redirect } from '@sveltejs/kit';
 import { setSessionTokenCookie } from '$lib/server/auth/cookies.js';
 import { createUserAndSession } from '$lib/server/auth/helpers.js';
 import { getBackUrl } from '$lib/return.js';
-import { signInFormSchema } from '$lib/components/signIn/schema';
+import { signInFormSchema } from '$lib/v2/components/signIn/schema';
 
 export const actions = {
 	default: async (e) => {

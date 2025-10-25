@@ -4,7 +4,7 @@
 	import * as Card from '$ui/card';
 	import { getBackUrl } from '$lib/return';
 	import { page } from '$app/stores';
-	import SignInForm from '$lib/components/signIn/SignInForm.svelte';
+	import SignInForm from '$lib/v2/components/signIn/SignInForm.svelte';
 </script>
 
 <svelte:head>

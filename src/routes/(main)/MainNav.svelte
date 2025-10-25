@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import Nav from '$lib/components/Nav.svelte';
+	import Nav from '$lib/v2/components/Nav.svelte';
 	import { getUserContext } from '$lib/state/user.svelte';
 	import { cn } from '$lib/utils';
 	import { Button } from '$ui/button';

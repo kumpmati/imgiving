@@ -1,4 +1,4 @@
-import { signInFormSchema } from '$lib/components/signIn/schema.js';
+import { signInFormSchema } from '$lib/v2/components/signIn/schema.js';
 import { redirectToSignIn } from '$lib/return.js';
 import { setSessionTokenCookie } from '$lib/server/auth/cookies.js';
 import { createUserAndSession } from '$lib/server/auth/helpers.js';
@@ -17,10 +17,7 @@ export const load = async ({ params, locals }) => {
 		error(404, 'invite not found');
 	}
 
-	return {
-		list,
-		member: locals.user ? await getListMember(list.id, locals.user.id) : null
-	};
+	return { list, member: locals.user ? await getListMember(list.id, locals.user.id) : null };
 };
 
 export const actions = {

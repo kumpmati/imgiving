@@ -10,7 +10,7 @@
 	import { invalidateAll } from '$app/navigation';
 	import { Badge } from '$ui/badge';
 	import { Button } from '$ui/button/index.js';
-	import { getChatContext } from '$lib/components/chat/context.svelte.js';
+	import { getChatContext } from '$lib/v2/components/chat/context.svelte.js';
 
 	let { data } = $props();
 

@@ -11,16 +11,16 @@
 	import relativeTime from 'dayjs/plugin/relativeTime';
 	import { superActions } from 'sveltekit-superactions';
 	import type { ListEndpoint } from '../+server';
-	import Nav from '$lib/components/Nav.svelte';
+	import Nav from '$lib/v2/components/Nav.svelte';
 	import TablerShare from '~icons/tabler/share';
 	import { Input } from '$ui/input';
 	import Label from '$ui/label/label.svelte';
 	import { page } from '$app/stores';
-	import { getToast } from '$lib/components/toasts/context';
-	import { getChatContext } from '$lib/components/chat/context.svelte';
+	import { getToast } from '$lib/v2/components/toasts/context';
+	import { getChatContext } from '$lib/v2/components/chat/context.svelte';
 	import TablerMessageCircle from '~icons/tabler/message-circle';
 	import { sum } from '$lib/math';
-	import { getNotificationContext } from '$lib/components/notifications/context.svelte';
+	import { getNotificationContext } from '$lib/v2/components/notifications/context.svelte';
 	import { Badge } from '$ui/badge';
 
 	dayjs.extend(relativeTime);

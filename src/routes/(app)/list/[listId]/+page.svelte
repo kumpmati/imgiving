@@ -7,8 +7,8 @@
 	import { Badge } from '$ui/badge/index.js';
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
-	import { toastKey } from '$lib/components/toasts/context';
-	import { Toasts } from '$lib/components/toasts/state.svelte';
+	import { toastKey } from '$lib/v2/components/toasts/context';
+	import { Toasts } from '$lib/v2/components/toasts/state.svelte';
 
 	let { data } = $props();
 

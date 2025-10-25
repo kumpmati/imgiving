@@ -5,14 +5,14 @@
 	import TablerGiftCard from '~icons/tabler/gift-card';
 	import TablerArrowRight from '~icons/tabler/arrow-right';
 	import * as Card from '$ui/card';
-	import Logo from '$lib/components/Logo.svelte';
+	import Logo from '$lib/v2/components/Logo.svelte';
 	import * as Dialog from '$ui/dialog';
 	import { cn } from '$lib/utils';
-	import SignInForm from '$lib/components/signIn/SignInForm.svelte';
+	import SignInForm from '$lib/v2/components/signIn/SignInForm.svelte';
 	import { page } from '$app/stores';
 	import { enhance } from '$app/forms';
-	import { getToast } from '$lib/components/toasts/context.js';
-	import Spinner from '$lib/components/Spinner.svelte';
+	import { getToast } from '$lib/v2/components/toasts/context.js';
+	import Spinner from '$lib/v2/components/Spinner.svelte';
 
 	let { data } = $props();
 

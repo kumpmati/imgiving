@@ -6,9 +6,9 @@
 	import FloatingShoppingList from './FloatingShoppingList.svelte';
 	import Step from './Step.svelte';
 	import TablerArrowRight from '~icons/tabler/arrow-right';
-	import ChatSheet from '$lib/components/chat/ChatSheet.svelte';
-	import { getNotificationContext } from '$lib/components/notifications/context.svelte';
-	import NotificationPermissionDialog from '$lib/components/notifications/NotificationPermissionDialog.svelte';
+	import ChatSheet from '$lib/v2/components/chat/ChatSheet.svelte';
+	import { getNotificationContext } from '$lib/v2/components/notifications/context.svelte';
+	import NotificationPermissionDialog from '$lib/v2/components/notifications/NotificationPermissionDialog.svelte';
 
 	let { data, children } = $props();
 

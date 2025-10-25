@@ -6,7 +6,7 @@
 	import { Button } from '$ui/button';
 	import { enhance } from '$app/forms';
 	import { cn } from '$lib/utils';
-	import Spinner from '$lib/components/Spinner.svelte';
+	import Spinner from '$lib/v2/components/Spinner.svelte';
 
 	let { data } = $props();
 
