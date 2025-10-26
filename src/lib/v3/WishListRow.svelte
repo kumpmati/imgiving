@@ -19,14 +19,14 @@
 
 <button
 	class={cn(
-		'flex w-full items-center gap-4 border-b border-slate-100 p-4 transition-colors hover:bg-slate-50',
+		'flex w-full items-center gap-4 border-b border-slate-100 p-3 transition-colors hover:bg-slate-50',
 		giving && 'bg-green-50 text-green-600 hover:bg-green-100'
 	)}
 	onclick={onClick}
 >
 	<div
 		class={cn(
-			'relative flex size-12 min-w-12 items-center justify-center overflow-hidden rounded-lg bg-red-50',
+			'relative flex size-12 min-w-12 items-center justify-center overflow-hidden rounded-xl bg-red-50',
 			giving && 'bg-green-100'
 		)}
 	>

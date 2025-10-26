@@ -46,7 +46,7 @@
 					{m.discuss()}
 				{/if}
 			</p>
-			<p class="text-xl font-semibold leading-tight text-black">
+			<p class="text-lg font-semibold leading-tight text-black">
 				{#if chat.current.loading}
 					{m.loading()}
 				{:else}

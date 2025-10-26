@@ -12,7 +12,7 @@
 
 <a
 	{href}
-	class={cn('flex items-center gap-2 text-xl font-semibold text-red-600 hover:text-red-700')}
+	class={cn('flex items-center gap-2 text-lg font-semibold text-red-600 hover:text-red-700')}
 >
 	<TablerGiftFilled class="size-6" />
 	{title}

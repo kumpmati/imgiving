@@ -67,7 +67,9 @@
 {/await}
 
 {#if data.wishes.length == 0}
-	<div class="mx-auto mt-16 flex max-w-56 flex-col items-center text-slate-500">
+	<div
+		class="fixed left-1/2 top-1/2 flex max-w-56 -translate-x-1/2 -translate-y-1/2 flex-col items-center text-slate-500"
+	>
 		<TablerGift class="size-5" />
 		<p class="text-md mt-2 text-center font-medium">{m.empty_own_wishes_title()}</p>
 
@@ -80,7 +82,7 @@
 		</button>
 	</div>
 {:else}
-	<div class="flex items-center gap-2 font-medium text-slate-600">
+	<div class="flex items-center gap-2 text-slate-600">
 		<TablerStar class="size-5" />
 		<p>{m.i_wish_for()}</p>
 	</div>
@@ -119,9 +121,9 @@
 <Dialog bind:open={newWishOpen} class="w-96">
 	<form method="dialog" class="flex items-center gap-3">
 		<Button class="p-2">
-			<TablerX class="size-6" />
+			<TablerX class="size-5" />
 		</Button>
-		<p class="text-xl font-semibold">{m.add_wish_title()}</p>
+		<p class="text-lg font-semibold">{m.add_wish_title()}</p>
 	</form>
 
 	<form
@@ -152,9 +154,9 @@
 	<div class="flex items-center justify-between">
 		<form method="dialog" class="flex items-center gap-3">
 			<Button class="p-2">
-				<TablerX class="size-6" />
+				<TablerX class="size-5" />
 			</Button>
-			<p class="text-xl font-semibold">{m.edit_wish_title()}</p>
+			<p class="text-lg font-semibold">{m.edit_wish_title()}</p>
 		</form>
 
 		<form
@@ -172,7 +174,7 @@
 			<Button
 				type="submit"
 				title="Delete wish"
-				class="ml-auto bg-red-200 p-2 text-red-600 hover:bg-red-300 hover:text-red-700"
+				class="ml-auto bg-red-50 p-2 text-red-600 hover:bg-red-100"
 			>
 				<TablerTrash class="size-6" />
 			</Button>

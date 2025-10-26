@@ -93,11 +93,7 @@
 
 		/* Exiting State */
 		&:not([open]) {
-			--duration: 150ms;
-			translate: 0 0rem;
-			opacity: 0;
-			transform: scale(0.9);
-			transition-timing-function: cubic-bezier(0.55, 0.06, 0.68, 0.19); // cubic-in
+			--duration: 0;
 		}
 	}
 

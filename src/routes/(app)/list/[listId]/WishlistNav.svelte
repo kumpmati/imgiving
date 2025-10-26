@@ -45,10 +45,10 @@
 </Nav>
 
 <Dialog bind:open={dialogOpen} class="w-[450px]">
-	<div class="mb-4 flex gap-2">
+	<div class="mb-4 flex items-center gap-2">
 		<form method="dialog" class="contents">
-			<Button class="size-10 justify-center p-0">
-				<TablerX class="size-6" />
+			<Button class="size-9 justify-center p-0">
+				<TablerX class="size-5" />
 			</Button>
 		</form>
 

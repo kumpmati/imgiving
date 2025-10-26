@@ -74,7 +74,9 @@
 		{/each}
 	</div>
 {:else}
-	<div class="mx-auto mt-16 flex max-w-56 flex-col items-center text-slate-500">
+	<div
+		class="fixed left-1/2 top-1/2 flex max-w-56 -translate-x-1/2 -translate-y-1/2 flex-col items-center text-slate-500"
+	>
 		<TablerGiftOff class="size-5" />
 		<p class="text-md mt-2 text-center font-medium">
 			{m.empty_wishes_title()}

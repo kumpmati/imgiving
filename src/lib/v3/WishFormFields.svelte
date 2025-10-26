@@ -24,7 +24,7 @@
 		name="name"
 		type="text"
 		bind:value={name}
-		class="rounded-xl bg-slate-200 p-3 text-base font-normal text-black placeholder-slate-400"
+		class="rounded-xl bg-slate-200 px-3 py-2 text-base font-normal text-black placeholder-slate-400"
 	/>
 </label>
 
@@ -34,7 +34,7 @@
 		placeholder="Extra info about the wish..."
 		name="description"
 		bind:value={description}
-		class="resize-y rounded-xl bg-slate-200 p-3 text-base font-normal text-black placeholder-slate-400"
+		class="resize-y rounded-xl bg-slate-200 px-3 py-2 text-base font-normal text-black placeholder-slate-400"
 	></textarea>
 </label>
 
@@ -47,7 +47,7 @@
 		min="0"
 		step="0.01"
 		bind:value={price}
-		class="rounded-xl bg-slate-200 p-3 text-base font-normal text-black placeholder-slate-400"
+		class="rounded-xl bg-slate-200 px-3 py-2 text-base font-normal text-black placeholder-slate-400"
 	/>
 </label>
 
@@ -60,7 +60,7 @@
 			name="imageUrl"
 			type="url"
 			bind:value={imageUrl}
-			class="w-full rounded-xl bg-slate-200 p-3 text-base font-normal text-black placeholder-slate-400"
+			class="w-full rounded-xl bg-slate-200 px-3 py-2 text-base font-normal text-black placeholder-slate-400"
 		/>
 
 		{#if imageUrl}
