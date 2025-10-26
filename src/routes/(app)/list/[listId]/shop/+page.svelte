@@ -19,7 +19,7 @@
 </script>
 
 <svelte:head>
-	<title>Shopping list - {data.list.name}</title>
+	<title>Shop - {data.list.name}</title>
 </svelte:head>
 
 <Table.Root>

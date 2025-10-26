@@ -5,7 +5,7 @@ import { initializeApp } from 'firebase/app';
 import { getMessaging, getToken, type Messaging, onMessage } from 'firebase/messaging';
 import { getContext } from 'svelte';
 import { superActions } from 'sveltekit-superactions';
-import type { NotificationEndpoint } from '../../../routes/actions/notifications/+server';
+import type { NotificationEndpoint } from '../../../../routes/actions/notifications/+server';
 import { Toasts } from '../toasts/state.svelte';
 
 export const notificationContextKey = Symbol('notifications');

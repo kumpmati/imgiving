@@ -17,10 +17,7 @@ import { asc } from 'drizzle-orm';
 import { endpoint, zod } from 'sveltekit-superactions';
 import { z } from 'zod';
 
-const schema = z.object({
-	listId: z.string(),
-	wishId: z.string()
-});
+const schema = z.object({ listId: z.string(), wishId: z.string() });
 
 export const POST = endpoint({
 	getQuestions: zod(schema, async ({ locals }, body) => {
@@ -29,9 +26,7 @@ export const POST = endpoint({
 
 		const wish = await db.query.wishTable.findFirst({
 			where: and(eq(wishTable.id, body.wishId), eq(wishTable.listId, body.listId)),
-			with: {
-				user: { columns: { name: true } }
-			}
+			with: { user: { columns: { name: true } } }
 		});
 
 		if (!wish) {
@@ -39,16 +34,13 @@ export const POST = endpoint({
 		}
 
 		// TODO: make sure the given listId matches the wish's list
-		const questions = await db
-			.select()
-			.from(wishQuestionTable)
-			.where(eq(wishQuestionTable.wishId, body.wishId))
-			.orderBy(asc(wishQuestionTable.createdAt));
+		const questions = await db.query.wishQuestionTable.findMany({
+			where: eq(wishQuestionTable.wishId, body.wishId),
+			orderBy: asc(wishQuestionTable.createdAt),
+			with: { user: { columns: { name: true } } }
+		});
 
-		return {
-			wish,
-			questions
-		};
+		return { wish, questions };
 	}),
 
 	getComments: zod(schema, async ({ locals }, body) => {
@@ -57,9 +49,7 @@ export const POST = endpoint({
 
 		const wish = await db.query.wishTable.findFirst({
 			where: and(eq(wishTable.id, body.wishId), eq(wishTable.listId, body.listId)),
-			with: {
-				user: { columns: { name: true } }
-			}
+			with: { user: { columns: { name: true } } }
 		});
 
 		if (!wish) {
@@ -67,16 +57,13 @@ export const POST = endpoint({
 		}
 
 		// TODO: make sure the given listId matches the wish's list
-		const comments = await db
-			.select()
-			.from(wishCommentTable)
-			.where(eq(wishCommentTable.wishId, body.wishId))
-			.orderBy(asc(wishCommentTable.createdAt));
+		const comments = await db.query.wishCommentTable.findMany({
+			where: eq(wishCommentTable.wishId, body.wishId),
+			orderBy: asc(wishCommentTable.createdAt),
+			with: { user: { columns: { name: true } } }
+		});
 
-		return {
-			wish,
-			comments
-		};
+		return { wish, comments };
 	}),
 
 	sendQuestion: zod(
@@ -90,6 +77,7 @@ export const POST = endpoint({
 					.insert(wishQuestionTable)
 					.values({
 						id: chatMessageId(),
+						listId: body.listId,
 						wishId: body.wishId,
 						message: body.message,
 						userId: locals.user.id
@@ -141,6 +129,7 @@ export const POST = endpoint({
 				.insert(wishCommentTable)
 				.values({
 					id: chatMessageId(),
+					listId: body.listId,
 					wishId: body.wishId,
 					message: body.message,
 					userId: locals.user.id

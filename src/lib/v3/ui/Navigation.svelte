@@ -3,6 +3,7 @@
 	import TablerGift from '~icons/tabler/gift';
 	import TablerShoppingBag from '~icons/tabler/shopping-bag';
 	import { page } from '$app/state';
+	import { cn } from '$lib/utils';
 
 	type Props = {
 		listId: string;
@@ -10,6 +11,7 @@
 
 	let { listId }: Props = $props();
 
+	// TODO: larger version on desktop?
 	const items = [
 		{ path: `/list/${listId}`, icon: TablerStar, title: 'Wish' },
 		{ path: `/list/${listId}/give`, icon: TablerGift, title: 'Give' },
@@ -21,13 +23,13 @@
 	{#each items as item (item.path)}
 		<a
 			href={item.path}
-			class={[
-				'flex rounded-full px-7 py-[10px] text-slate-500 transition-colors hover:bg-red-50 hover:text-red-800',
+			class={cn(
+				'flex rounded-full px-6 py-2 text-slate-500 transition-colors hover:bg-red-50 hover:text-red-800',
 				page.url.pathname === item.path &&
 					'bg-red-600 text-red-50 hover:bg-red-600 hover:text-white'
-			]}
+			)}
 		>
-			<item.icon width={28} height={28} />
+			<item.icon width={24} height={24} />
 		</a>
 	{/each}
 </nav>

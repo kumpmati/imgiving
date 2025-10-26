@@ -4,11 +4,15 @@ import { relations } from 'drizzle-orm';
 import { wishTable } from './wish';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { z } from 'zod';
+import { listTable } from './list';
 
 export const wishQuestionTable = pgTable(
 	'wish_questions',
 	{
 		id: text('id').primaryKey(),
+		listId: text('list_id')
+			.references(() => listTable.id, { onDelete: 'cascade' })
+			.notNull(),
 		wishId: text('wish_id')
 			.references(() => wishTable.id, { onDelete: 'cascade' })
 			.notNull(),
@@ -25,7 +29,8 @@ export const wishQuestionTable = pgTable(
 );
 
 export const wishQuestionRelations = relations(wishQuestionTable, ({ one }) => ({
-	wish: one(wishTable, { fields: [wishQuestionTable.wishId], references: [wishTable.id] })
+	wish: one(wishTable, { fields: [wishQuestionTable.wishId], references: [wishTable.id] }),
+	user: one(userTable, { fields: [wishQuestionTable.userId], references: [userTable.id] })
 }));
 
 export const wishQuestionSchema = createSelectSchema(wishQuestionTable);
@@ -38,6 +43,9 @@ export const wishCommentTable = pgTable(
 	'wish_comments',
 	{
 		id: text('id').primaryKey(),
+		listId: text('list_id')
+			.references(() => listTable.id, { onDelete: 'cascade' })
+			.notNull(),
 		wishId: text('wish_id')
 			.references(() => wishTable.id, { onDelete: 'cascade' })
 			.notNull(),

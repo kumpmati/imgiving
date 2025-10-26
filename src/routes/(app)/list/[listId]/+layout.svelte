@@ -1,10 +1,19 @@
 <script lang="ts">
+	import TablerLoader2 from '~icons/tabler/loader-2';
 	import WishlistNav from './WishlistNav.svelte';
-	import ChatSheet from '$lib/v2/components/chat/ChatSheet.svelte';
+	import TablerArrowLeft from '~icons/tabler/arrow-left';
 	import NotificationPermissionDialog from '$lib/v2/components/notifications/NotificationPermissionDialog.svelte';
-	import Navigation from '$lib/v3/components/Navigation.svelte';
+	import Navigation from '$lib/v3/ui/Navigation.svelte';
+	import { getChatContext } from '$lib/v2/components/chat/context.svelte';
+	import BottomDrawer from '$lib/v3/ui/BottomDrawer.svelte';
+	import Button from '$lib/v3/ui/Button.svelte';
+	import Alert from '$lib/v3/Alert.svelte';
+	import Chat from '$lib/v2/components/chat/Chat.svelte';
+	import { invalidateAll } from '$app/navigation';
 
 	let { data, children } = $props();
+
+	const chat = getChatContext();
 </script>
 
 <svelte:head>
@@ -12,7 +21,6 @@
 </svelte:head>
 
 <NotificationPermissionDialog />
-<ChatSheet />
 
 {#await data.streamed.unreadQuestions}
 	<WishlistNav currentUserId={data.user?.id} list={data.list} users={data.list.users} wishes={[]} />
@@ -25,8 +33,72 @@
 	/>
 {/await}
 
-<main class="mx-auto flex w-full gap-8 p-4 sm:mt-8 sm:max-w-6xl">
+<main class="mx-auto flex w-full max-w-xl flex-col p-4">
 	<Navigation listId={data.list.id} />
 
 	{@render children()}
 </main>
+
+<BottomDrawer bind:open={chat.current.open} class="w-[450px]">
+	<div class="mb-4 flex items-center gap-2">
+		<form method="dialog" class="contents">
+			<Button class="p-2">
+				<TablerArrowLeft class="size-6" />
+			</Button>
+		</form>
+
+		<div class="flex flex-col">
+			<p class="text-sm font-semibold leading-tight text-slate-500">
+				{#if chat.current.type === 'questions'}
+					Ask {chat.current.wish?.user.name}
+				{:else}
+					Discuss
+				{/if}
+			</p>
+			<p class="text-xl font-semibold leading-tight text-black">
+				{#if chat.current.loading}
+					Loading...
+				{:else}
+					{chat.current.wish?.name}
+				{/if}
+			</p>
+		</div>
+	</div>
+
+	{#if !chat.current.loading}
+		{#if chat.current.type === 'comments'}
+			<Alert type="warning">
+				{chat.current.wish?.user.name} won't see these messages, but everyone else will.
+			</Alert>
+		{:else}
+			<Alert type="error">
+				Everyone including {chat.current.wish?.user.name} will see these messages, but {chat.current
+					.wish?.user.name} won't see who sent them.
+			</Alert>
+		{/if}
+
+		<Chat
+			class="mt-8"
+			wishOwnerId={chat.current.wish?.userId}
+			currentUserId={data.user?.id}
+			messages={chat.current.messages}
+			onsubmit={(message) => {
+				if (!data.user) return;
+
+				if (chat.current.type === 'questions') {
+					chat.sendQuestion(data.user.id, message).then(() => invalidateAll());
+				} else {
+					chat.sendComment(data.user.id, message).then(() => invalidateAll());
+				}
+			}}
+		/>
+	{:else}
+		<TablerLoader2 class="mx-auto my-4 size-8 animate-spin text-slate-500" />
+	{/if}
+</BottomDrawer>
+
+<style>
+	:global(body) {
+		background: rgb(248 250 252 / var(--tw-bg-opacity, 1)); /* bg-slate-50 */
+	}
+</style>

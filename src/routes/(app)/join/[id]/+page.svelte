@@ -46,7 +46,7 @@
 
 		<Card.Root class="border-dashed border-red-200 shadow-lg">
 			<Card.Content class="flex flex-col items-center text-center">
-				<Logo title="ImGiving" size="sm" />
+				<Logo title="ImGiving" />
 				<p class="mt-8 text-sm text-muted-foreground">You've been invited to join</p>
 				<h1 class="mt-2 text-2xl font-semibold text-primary sm:text-3xl">{data.list.name}</h1>
 			</Card.Content>

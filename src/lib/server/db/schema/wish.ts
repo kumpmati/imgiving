@@ -1,4 +1,4 @@
-import { index, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
+import { index, pgTable, text, integer, timestamp } from 'drizzle-orm/pg-core';
 import { userTable } from './user';
 import { listTable } from './list';
 import { relations, sql } from 'drizzle-orm';
@@ -19,7 +19,8 @@ export const wishTable = pgTable(
 
 		name: text('name').notNull(),
 		description: text('description'),
-		price: text('price'),
+		priceCents: integer('price_cents'),
+		imageUrl: text('image_url'),
 
 		// used to keep track which questions the owner has seen
 		lastSeenQuestionTimestamp: timestamp('last_seen_question', { withTimezone: true })
