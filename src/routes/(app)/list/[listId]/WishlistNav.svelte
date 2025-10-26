@@ -26,8 +26,11 @@
 </script>
 
 <Nav title={list.name} href="/">
-	<button onclick={() => setLocale(getLocale() === 'en' ? 'fi' : 'en')} class="mr-2">
-		{getLocale()}
+	<button
+		onclick={() => setLocale(getLocale() === 'en' ? 'fi' : 'en')}
+		class="mr-2 text-slate-500 hover:text-slate-600"
+	>
+		{getLocale().toUpperCase()}
 	</button>
 
 	<button

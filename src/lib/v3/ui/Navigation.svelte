@@ -4,6 +4,7 @@
 	import TablerShoppingBag from '~icons/tabler/shopping-bag';
 	import { page } from '$app/state';
 	import { cn } from '$lib/utils';
+	import { m } from '$lib/paraglide/messages';
 
 	type Props = {
 		listId: string;
@@ -13,9 +14,9 @@
 
 	// TODO: larger version on desktop?
 	const items = [
-		{ path: `/list/${listId}`, icon: TablerStar, title: 'Wish' },
-		{ path: `/list/${listId}/give`, icon: TablerGift, title: 'Give' },
-		{ path: `/list/${listId}/shop`, icon: TablerShoppingBag, title: 'Shop' }
+		{ path: `/list/${listId}`, icon: TablerStar, title: m.pagetitle_wish() },
+		{ path: `/list/${listId}/give`, icon: TablerGift, title: m.pagetitle_gift() },
+		{ path: `/list/${listId}/shop`, icon: TablerShoppingBag, title: m.pagetitle_shop() }
 	];
 </script>
 
