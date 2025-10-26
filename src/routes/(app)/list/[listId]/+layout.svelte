@@ -22,17 +22,7 @@
 </svelte:head>
 
 <NotificationPermissionDialog />
-
-{#await data.streamed.unreadQuestions}
-	<WishlistNav currentUserId={data.user?.id} list={data.list} users={data.list.users} wishes={[]} />
-{:then unreadQuestions}
-	<WishlistNav
-		currentUserId={data.user?.id}
-		list={data.list}
-		users={data.list.users}
-		wishes={unreadQuestions}
-	/>
-{/await}
+<WishlistNav currentUserId={data.user?.id} list={data.list} users={data.list.users} />
 
 <main class="mx-auto flex w-full max-w-xl flex-col p-4">
 	<Navigation listId={data.list.id} />
