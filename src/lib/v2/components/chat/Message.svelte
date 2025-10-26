@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { m } from '$lib/paraglide/messages';
 	import { cn } from '$lib/utils';
 
 	type Props = {
@@ -18,7 +19,7 @@
 		<small class={cn('text-sm text-muted-foreground', isOwner && 'text-orange-900')}>
 			{isOwn ? 'You' : username}
 			{#if isOwner}
-				(owner)
+				({m.wish_owner()})
 			{/if}
 		</small>
 	{/if}

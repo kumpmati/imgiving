@@ -14,7 +14,8 @@
 		"test": "npm run test:unit -- --run",
 		"db:generate": "drizzle-kit generate",
 		"db:migrate": "drizzle-kit migrate",
-		"db:studio": "drizzle-kit studio"
+		"db:studio": "drizzle-kit studio",
+		"machine-translate": "inlang machine translate --project project.inlang"
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20241205.0",
@@ -54,7 +55,9 @@
 		"vite": "^5.0.3",
 		"vitest": "^2.0.4",
 		"wrangler": "^3.93.0",
-		"zod": "^3.23.8"
+		"zod": "^3.23.8",
+		"@inlang/paraglide-js": "2.4.0",
+		"@inlang/cli": "^3.0.0"
 	},
 	"dependencies": {
 		"@neondatabase/serverless": "^0.10.4",

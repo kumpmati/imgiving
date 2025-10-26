@@ -29,7 +29,7 @@
 <label class="flex flex-col gap-0.5 text-sm font-medium text-slate-500">
 	Description (optional)
 	<textarea
-		placeholder="Headphones"
+		placeholder="Extra info about the wish..."
 		name="description"
 		bind:value={description}
 		class="resize-y rounded-xl bg-slate-200 p-3 text-base font-normal text-black placeholder-slate-400"

@@ -17,6 +17,7 @@
 	import WishListBody from '$lib/v3/WishListBody.svelte';
 	import { flip } from 'svelte/animate';
 	import { getChatContext } from '$lib/v2/components/chat/context.svelte.js';
+	import { m } from '$lib/paraglide/messages.js';
 
 	let { data } = $props();
 
@@ -34,7 +35,7 @@
 </script>
 
 <svelte:head>
-	<title>Wish - {data.list.name}</title>
+	<title>{m.pagetitle_wish()} - {data.list.name}</title>
 </svelte:head>
 
 {#await data.streamed.unreadQuestions then wishesWithQuestions}
@@ -78,13 +79,13 @@
 			class="mx-auto mt-8 flex gap-2 rounded-2xl bg-white px-6 py-2 text-base font-semibold text-black shadow-lg hover:bg-slate-100"
 		>
 			<TablerPlus class="size-6" />
-			Add wish
+			{m.add_wish()}
 		</button>
 	</div>
 {:else}
 	<div class="flex items-center gap-2 font-medium text-slate-600">
 		<TablerStar class="size-5" />
-		<p>I wish for...</p>
+		<p>{m.i_wish_for()}</p>
 	</div>
 
 	<WishListBody>
@@ -113,7 +114,7 @@
 		class="mx-auto mt-3 flex gap-2 rounded-2xl bg-white px-6 py-2 text-base font-semibold shadow-lg hover:bg-slate-50"
 	>
 		<TablerPlus class="size-6" />
-		Add wish
+		{m.add_wish()}
 	</button>
 {/if}
 
@@ -123,7 +124,7 @@
 		<Button class="p-2">
 			<TablerX class="size-6" />
 		</Button>
-		<p class="text-xl font-semibold">Add new wish</p>
+		<p class="text-xl font-semibold">{m.add_wish_title()}</p>
 	</form>
 
 	<form
@@ -144,7 +145,7 @@
 			class="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl bg-green-600 px-6 py-2 text-white hover:bg-green-700"
 		>
 			<TablerPlus class="size-6" />
-			Add wish
+			{m.add_wish()}
 		</Button>
 	</form>
 </Dialog>
@@ -156,7 +157,7 @@
 			<Button class="p-2">
 				<TablerX class="size-6" />
 			</Button>
-			<p class="text-xl font-semibold">Edit wish</p>
+			<p class="text-xl font-semibold">{m.edit_wish_title()}</p>
 		</form>
 
 		<form
@@ -206,7 +207,7 @@
 			class="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl bg-green-600 px-6 py-2 text-white hover:bg-green-700"
 		>
 			<TablerDeviceFloppy class="size-6" />
-			Save changes
+			{m.save_changes()}
 		</Button>
 	</form>
 </Dialog>

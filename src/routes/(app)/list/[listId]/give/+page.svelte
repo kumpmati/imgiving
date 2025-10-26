@@ -14,6 +14,7 @@
 	import TablerGiftOff from '~icons/tabler/gift-off';
 	import { enhance } from '$app/forms';
 	import { getChatContext } from '$lib/v2/components/chat/context.svelte.js';
+	import { m } from '$lib/paraglide/messages.js';
 
 	let { data } = $props();
 
@@ -33,7 +34,7 @@
 </script>
 
 <svelte:head>
-	<title>Gift - {data.list.name}</title>
+	<title>{m.pagetitle_gift()} - {data.list.name}</title>
 </svelte:head>
 
 {#if data.wishes.length > 0}
@@ -44,7 +45,8 @@
 			<div class="flex flex-col">
 				<p class="flex items-center gap-1.5 font-medium text-slate-600">
 					<TablerGift class="size-5" />
-					{user?.user.name}'s wishes ({wishes.length})
+					{m.user_wishes({ user: user?.user.name ?? '' })}
+					({wishes.length})
 				</p>
 
 				<WishListBody>
@@ -84,7 +86,8 @@
 <BottomDrawer bind:open={wishOpen} class="w-[450px]">
 	<form method="dialog" class="contents">
 		<Button class="sticky top-0 gap-1 px-3 py-2 font-medium">
-			<TablerX class="size-5" /> Close
+			<TablerX class="size-5" />
+			{m.close()}
 		</Button>
 	</form>
 
@@ -134,10 +137,7 @@
 						{/each}
 					</div>
 
-					<p>
-						{active.wish.numGivers}
-						{active.wish.numGivers === 1 ? 'person is' : 'people are'} giving this
-					</p>
+					<p>{m.num_givers({ amount: active.wish.numGivers })}</p>
 				</button>
 
 				<div class="grid grid-cols-2 gap-4">
@@ -146,14 +146,16 @@
 						class="w-full justify-center rounded-2xl border border-slate-500 bg-transparent px-3 py-3 font-medium leading-none text-slate-500 hover:bg-slate-100 hover:text-slate-600"
 					>
 						<TablerMessage class="size-5" />
-						Discuss {active.wish.numComments ? `(${active.wish.numComments})` : ''}
+						{m.discuss()}
+						{active.wish.numComments ? `(${active.wish.numComments})` : ''}
 					</Button>
 					<Button
 						onclick={() => active.wish && chat.openQuestions(active.wish.id, data.list.id)}
 						class="w-full justify-center rounded-2xl px-3 py-3 font-medium leading-none"
 					>
 						<TablerHelp class="size-5" />
-						Ask owner {active.wish.numQuestions ? `(${active.wish.numQuestions})` : ''}
+						{m.ask_owner()}
+						{active.wish.numQuestions ? `(${active.wish.numQuestions})` : ''}
 					</Button>
 				</div>
 
@@ -187,9 +189,9 @@
 						{#if loading['toggle']}
 							<TablerLoader2 class="flex size-6 animate-spin" />
 						{:else if active.status}
-							<TablerCheck class="size-6" /> I'm giving this
+							<TablerCheck class="size-6" /> {m.im_giving_this_button()}
 						{:else}
-							Give this
+							{m.give_this_button()}
 						{/if}
 					</Button>
 				</form>
@@ -209,7 +211,7 @@
 
 		<div class="flex flex-col">
 			<p class="text-sm font-semibold leading-tight text-slate-500">
-				Giving {active.wish?.username}
+				{m.giving_list_title({ name: active.wish?.username ?? '' })}
 			</p>
 			<p class="text-xl font-semibold leading-tight text-black">{active.wish?.name}</p>
 		</div>

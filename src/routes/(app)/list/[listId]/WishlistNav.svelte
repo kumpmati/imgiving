@@ -4,6 +4,7 @@
 	import dayjs from 'dayjs';
 	import relativeTime from 'dayjs/plugin/relativeTime';
 	import Nav from '$lib/v2/components/Nav.svelte';
+	import { setLocale, getLocale } from '$lib/paraglide/runtime.js';
 
 	dayjs.extend(relativeTime);
 
@@ -25,6 +26,10 @@
 </script>
 
 <Nav title={list.name} href="/">
+	<button onclick={() => setLocale(getLocale() === 'en' ? 'fi' : 'en')} class="mr-2">
+		{getLocale()}
+	</button>
+
 	<button
 		class="flex items-center gap-1.5 rounded-full bg-white px-4 py-2 font-medium text-black shadow-lg transition-colors hover:bg-slate-50"
 	>

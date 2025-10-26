@@ -10,6 +10,7 @@
 	import Alert from '$lib/v3/Alert.svelte';
 	import Chat from '$lib/v2/components/chat/Chat.svelte';
 	import { invalidateAll } from '$app/navigation';
+	import { m } from '$lib/paraglide/messages';
 
 	let { data, children } = $props();
 
@@ -50,14 +51,14 @@
 		<div class="flex flex-col">
 			<p class="text-sm font-semibold leading-tight text-slate-500">
 				{#if chat.current.type === 'questions'}
-					Ask {chat.current.wish?.user.name}
+					{m.ask_owner()}
 				{:else}
-					Discuss
+					{m.discuss()}
 				{/if}
 			</p>
 			<p class="text-xl font-semibold leading-tight text-black">
 				{#if chat.current.loading}
-					Loading...
+					{m.loading()}
 				{:else}
 					{chat.current.wish?.name}
 				{/if}
@@ -68,12 +69,11 @@
 	{#if !chat.current.loading}
 		{#if chat.current.type === 'comments'}
 			<Alert type="warning">
-				{chat.current.wish?.user.name} won't see these messages, but everyone else will.
+				{m.discussion_warning({ name: chat.current.wish?.user.name ?? '' })}
 			</Alert>
 		{:else}
 			<Alert type="error">
-				Everyone including {chat.current.wish?.user.name} will see these messages, but {chat.current
-					.wish?.user.name} won't see who sent them.
+				{m.question_warning({ name: chat.current.wish?.user.name ?? '' })}
 			</Alert>
 		{/if}
 

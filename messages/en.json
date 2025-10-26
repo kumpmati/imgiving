@@ -1,0 +1,23 @@
+{
+	"$schema": "https://inlang.com/schema/inlang-message-format",
+	"loading": "Loading...",
+	"close": "Close",
+	"pagetitle_wish": "Wish",
+	"pagetitle_gift": "Gift",
+	"pagetitle_shop": "Shop",
+	"add_wish": "Add wish",
+	"add_wish_title": "Add new wish",
+	"edit_wish_title": "Edit wish",
+	"save_changes": "Save changes",
+	"user_wishes": "{user}'s wishes",
+	"i_wish_for": "I wish for...",
+	"giving_list_title": "Giving {name}",
+	"discuss": "Discuss",
+	"ask_owner": "Ask owner",
+	"wish_owner": "Owner",
+	"num_givers": "{amount} are giving this",
+	"give_this_button": "Give this",
+	"im_giving_this_button": "I'm giving this",
+	"question_warning": "{name} will see these messages, but won't see the senders' names.",
+	"discussion_warning": "{name} won't see these messages."
+}
