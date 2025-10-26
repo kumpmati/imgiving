@@ -14,9 +14,15 @@
 <textarea
 	bind:this={ref}
 	class={cn(
-		'flex w-full resize-y rounded-xl border border-slate-300 bg-slate-50 bg-transparent px-3 py-2 text-base font-normal text-black transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-400 focus-visible:border-slate-600 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+		'flex min-h-16 w-full resize-y rounded-xl border border-slate-300 bg-slate-50 bg-transparent px-3 py-2 text-base font-normal text-black transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-400 focus-visible:border-slate-600 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
 		className
 	)}
 	bind:value
 	{...restProps}
 ></textarea>
+
+<style>
+	textarea {
+		field-sizing: content; /* auto-resize when content changes */
+	}
+</style>

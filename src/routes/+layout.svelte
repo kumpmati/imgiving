@@ -5,8 +5,8 @@
 	import { onMount, setContext } from 'svelte';
 	import { toastKey } from '$lib/v2/components/toasts/context';
 	import { setUserContext } from '$lib/state/user.svelte';
-	import { chatSheetKey } from '$lib/v2/components/chat/context.svelte';
-	import { ChatSheetState } from '$lib/v2/components/chat/state.svelte';
+	import { chatSheetKey } from '$lib/v3/chat/context.svelte';
+	import { ChatSheetState } from '$lib/v3/chat/state.svelte';
 	import {
 		NotificationContext,
 		notificationContextKey

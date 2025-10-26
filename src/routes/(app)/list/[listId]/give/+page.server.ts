@@ -1,10 +1,9 @@
 import { getListMember } from '$lib/server/db/handlers/listUser';
-import { getAllWishesWithCounts } from '$lib/server/db/handlers/wish';
+import { getAllWishesWithStatuses } from '$lib/server/db/handlers/wish';
 import {
 	createWishStatus,
 	deleteWishStatus,
-	getWishStatus,
-	getWishStatuses
+	getWishStatus
 } from '$lib/server/db/handlers/wishStatus.js';
 import { wishStatusInsertSchema } from '$lib/server/db/schema/wishStatus.js';
 import { error } from '@sveltejs/kit';
@@ -12,10 +11,9 @@ import { error } from '@sveltejs/kit';
 export const load = async ({ locals, params }) => {
 	if (!locals.user) error(401);
 
-	const wishes = await getAllWishesWithCounts(params.listId, locals.user.id);
-	const statuses = await getWishStatuses(params.listId, locals.user.id);
+	const wishes = await getAllWishesWithStatuses(params.listId, locals.user.id);
 
-	return { wishes, statuses };
+	return { wishes };
 };
 
 export const actions = {

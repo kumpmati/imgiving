@@ -1,6 +1,6 @@
 import { superActions } from 'sveltekit-superactions';
 import type { ChatSheetContext } from './context.svelte';
-import type { ChatEndpoint } from '../../../../routes/actions/chat/+server';
+import type { ChatEndpoint } from '../../../routes/actions/chat/+server';
 
 export class ChatSheetState {
 	#actions = superActions<ChatEndpoint>('/actions/chat');

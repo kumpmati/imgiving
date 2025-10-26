@@ -34,7 +34,9 @@ export const wishQuestionRelations = relations(wishQuestionTable, ({ one }) => (
 }));
 
 export const wishQuestionSchema = createSelectSchema(wishQuestionTable);
-export const wishQuestionInsertSchema = createInsertSchema(wishQuestionTable);
+export const wishQuestionInsertSchema = createInsertSchema(wishQuestionTable, {
+	message: z.string().max(300, 'message is too long')
+});
 
 export type WishQuestion = z.infer<typeof wishQuestionSchema>;
 export type WishQuestionInsert = z.infer<typeof wishQuestionInsertSchema>;
@@ -67,7 +69,9 @@ export const wishCommentRelations = relations(wishCommentTable, ({ one }) => ({
 }));
 
 export const wishCommentSchema = createSelectSchema(wishCommentTable);
-export const wishCommentInsertSchema = createInsertSchema(wishCommentTable);
+export const wishCommentInsertSchema = createInsertSchema(wishCommentTable, {
+	message: z.string().max(300, 'message is too long')
+});
 
 export type WishComment = z.infer<typeof wishCommentSchema>;
 export type WishCommentInsert = z.infer<typeof wishCommentInsertSchema>;

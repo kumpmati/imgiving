@@ -52,7 +52,7 @@
 				required
 				name="message"
 				type="text"
-				maxlength={200}
+				maxlength={300}
 				placeholder="Type your message..."
 				class="w-full bg-transparent px-3 py-2 text-base placeholder-slate-400 focus-visible:outline-none"
 				bind:value={newMessage}

@@ -24,7 +24,8 @@ export const wishStatusTable = pgTable(
 );
 
 export const wishStatusRelations = relations(wishStatusTable, ({ one }) => ({
-	user: one(userTable, { fields: [wishStatusTable.userId], references: [userTable.id] })
+	user: one(userTable, { fields: [wishStatusTable.userId], references: [userTable.id] }),
+	wish: one(wishTable, { fields: [wishStatusTable.wishId], references: [wishTable.id] })
 }));
 
 export const wishStatusSchema = createSelectSchema(wishStatusTable);

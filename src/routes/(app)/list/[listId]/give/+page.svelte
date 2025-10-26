@@ -13,7 +13,7 @@
 	import TablerMessage from '~icons/tabler/message';
 	import TablerGiftOff from '~icons/tabler/gift-off';
 	import { enhance } from '$app/forms';
-	import { getChatContext } from '$lib/v2/components/chat/context.svelte.js';
+	import { getChatContext } from '$lib/v3/chat/context.svelte.js';
 	import { m } from '$lib/paraglide/messages.js';
 
 	let { data } = $props();
@@ -27,10 +27,12 @@
 	let wishOpen = $state(false);
 	let wishGiversOpen = $state(false);
 	let activeWishId = $state<string | null>(null);
-	const active = $derived.by(() => ({
-		wish: data.wishes.find((w) => w.id === activeWishId),
-		status: data.statuses.find((s) => s.wishId === activeWishId && s.userId == data.user?.id)
-	}));
+
+	const active = $derived.by(() => {
+		const wish = data.wishes.find((w) => w.id === activeWishId);
+		const ownStatus = wish?.statuses.find((s) => s.userId === data.user?.id);
+		return { wish, ownStatus };
+	});
 </script>
 
 <svelte:head>
@@ -51,17 +53,15 @@
 
 				<WishListBody>
 					{#each wishes as wish (wish.id)}
-						{@const status = data.statuses.find(
-							(s) => s.wishId === wish.id && s.userId === data.user?.id
-						)}
+						{@const ownStatus = wish.statuses.find((s) => s.userId == data.user?.id)}
 
 						<li class="contents">
 							<WishListRow
 								name={wish.name}
 								imageUrl={wish.imageUrl}
 								priceCents={wish.priceCents}
-								numGivers={wish.numGivers}
-								giving={!!status}
+								numGivers={wish.statuses.length}
+								giving={!!ownStatus}
 								onClick={() => {
 									activeWishId = wish.id;
 									wishOpen = true;
@@ -106,7 +106,7 @@
 			<!-- Basic info -->
 			<div class="flex flex-col gap-2">
 				<div class="flex items-center justify-between leading-tight">
-					<p class="font-medium text-slate-500">{active.wish?.username}</p>
+					<p class="font-medium text-slate-500">{active.wish?.user.name}</p>
 
 					{#if active.wish.priceCents}
 						<p class="rounded-full bg-red-100 px-2 py-0 font-medium text-red-600">
@@ -131,14 +131,14 @@
 				>
 					<!-- Giver circles -->
 					<div class="flex items-center">
-						{#each { length: Math.min(active.wish.numGivers, 5) }, index}
+						{#each { length: Math.min(active.wish.statuses.length, 5) }, index}
 							<div class="-ml-3 size-[22px] rounded-full border-2 border-white bg-slate-200"></div>
 						{:else}
 							<TablerX />
 						{/each}
 					</div>
 
-					<p>{m.wish_givers_amount({ amount: active.wish.numGivers })}</p>
+					<p>{m.wish_givers_amount({ amount: active.wish.statuses.length })}</p>
 				</button>
 
 				<div class="grid grid-cols-2 gap-4">
@@ -148,7 +148,7 @@
 					>
 						<TablerMessage class="size-5" />
 						{m.button_title_discuss()}
-						{active.wish.numComments ? `(${active.wish.numComments})` : ''}
+						{active.wish.comments.length ? `(${active.wish.comments.length})` : ''}
 					</Button>
 					<Button
 						onclick={() => active.wish && chat.openQuestions(active.wish.id, data.list.id)}
@@ -156,7 +156,7 @@
 					>
 						<TablerHelp class="size-5" />
 						{m.button_title_ask_owner()}
-						{active.wish.numQuestions ? `(${active.wish.numQuestions})` : ''}
+						{active.wish.questions.length ? `(${active.wish.questions.length})` : ''}
 					</Button>
 				</div>
 
@@ -171,7 +171,7 @@
 							await update();
 							loading['toggle'] = false;
 
-							if (active.status) {
+							if (active.ownStatus) {
 								wishOpen = false;
 							}
 						};
@@ -182,15 +182,15 @@
 					<Button
 						type="submit"
 						class={cn(
-							'w-full justify-center rounded-2xl border border-transparent bg-green-600 px-8 py-4 text-center text-xl font-semibold leading-tight text-white shadow-md hover:bg-green-700',
-							active.status &&
+							'w-full justify-center rounded-2xl border border-transparent bg-green-600 px-8 py-3 text-center text-lg font-semibold leading-tight text-white shadow-md hover:bg-green-700',
+							active.ownStatus &&
 								'border-green-500 bg-transparent text-green-600 shadow-none hover:border-green-600 hover:bg-green-50 hover:text-green-700'
 						)}
 					>
 						{#if loading['toggle']}
-							<TablerLoader2 class="flex size-6 animate-spin" />
-						{:else if active.status}
-							<TablerCheck class="size-6" /> {m.im_giving_this_button()}
+							<TablerLoader2 class="flex size-5 animate-spin" />
+						{:else if active.ownStatus}
+							<TablerCheck class="size-5" /> {m.im_giving_this_button()}
 						{:else}
 							{m.give_this_button()}
 						{/if}
@@ -212,17 +212,17 @@
 
 		<div class="flex flex-col">
 			<p class="text-sm font-semibold leading-tight text-slate-500">
-				{m.giving_list_title({ name: active.wish?.username ?? '' })}
+				{m.giving_list_title({ name: active.wish?.user.name ?? '' })}
 			</p>
 			<p class="text-xl font-semibold leading-tight text-black">{active.wish?.name}</p>
 		</div>
 	</div>
 
 	<ul class="mt-8 flex flex-col gap-2">
-		{#each { length: active.wish?.numGivers ?? 0 }, index}
-			<li class="flex gap-2 font-semibold text-black">
+		{#each active.wish?.statuses as status}
+			<li class="flex items-center gap-2 font-semibold text-black">
 				<div class="size-8 rounded-full bg-slate-200"></div>
-				Person {index + 1}
+				{status.user.name}
 			</li>
 		{/each}
 	</ul>

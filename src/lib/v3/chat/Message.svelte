@@ -18,9 +18,6 @@
 	{#if !sameAuthorAsPrevious}
 		<small class={cn('text-sm text-muted-foreground', isOwner && 'text-orange-900')}>
 			{isOwn ? 'You' : username}
-			{#if isOwner}
-				({m.wish_owner()})
-			{/if}
 		</small>
 	{/if}
 

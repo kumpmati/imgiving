@@ -13,7 +13,7 @@
 	import WishListRow from '$lib/v3/WishListRow.svelte';
 	import WishListBody from '$lib/v3/WishListBody.svelte';
 	import { flip } from 'svelte/animate';
-	import { getChatContext } from '$lib/v2/components/chat/context.svelte.js';
+	import { getChatContext } from '$lib/v3/chat/context.svelte.js';
 	import { m } from '$lib/paraglide/messages.js';
 
 	let { data } = $props();
@@ -118,7 +118,7 @@
 {/if}
 
 <!-- Add dialog -->
-<Dialog bind:open={newWishOpen} class="w-96">
+<Dialog bind:open={newWishOpen} class="w-[450px]">
 	<form method="dialog" class="flex items-center gap-3">
 		<Button class="p-2">
 			<TablerX class="size-5" />
@@ -150,7 +150,7 @@
 </Dialog>
 
 <!-- Edit dialog -->
-<Dialog open={editData.wishId != null} class="w-96" onClose={() => (editData.wishId = null)}>
+<Dialog open={editData.wishId != null} class="w-[450px]" onClose={() => (editData.wishId = null)}>
 	<div class="flex items-center justify-between">
 		<form method="dialog" class="flex items-center gap-3">
 			<Button class="p-2">

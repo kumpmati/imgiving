@@ -5,6 +5,7 @@ import { relations, sql } from 'drizzle-orm';
 import { wishCommentTable, wishQuestionTable } from './wishComments';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import type { z } from 'zod';
+import { wishStatusTable } from './wishStatus';
 
 export const wishTable = pgTable(
 	'wishes',
@@ -43,7 +44,8 @@ export const wishRelations = relations(wishTable, ({ one, many }) => ({
 	list: one(listTable, { fields: [wishTable.listId], references: [listTable.id] }),
 	user: one(userTable, { fields: [wishTable.userId], references: [userTable.id] }),
 	questions: many(wishQuestionTable),
-	comments: many(wishCommentTable)
+	comments: many(wishCommentTable),
+	statuses: many(wishStatusTable)
 }));
 
 export const wishSchema = createSelectSchema(wishTable);

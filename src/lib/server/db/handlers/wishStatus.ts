@@ -1,18 +1,6 @@
-import { and, eq, getTableColumns } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import { db } from '..';
-import { wishStatusTable, wishTable, type WishStatus, type WishStatusInsert } from '../schema';
-
-/**
- * Returns all wish statuses for the given user in the given list
- */
-export const getWishStatuses = async (listId: string, userId: string) => {
-	return db
-		.select({ ...getTableColumns(wishStatusTable) })
-		.from(wishStatusTable)
-		.where(eq(wishStatusTable.userId, userId))
-		.innerJoin(wishTable, eq(wishTable.listId, listId))
-		.groupBy(wishStatusTable.wishId, wishStatusTable.userId);
-};
+import { wishStatusTable, type WishStatus, type WishStatusInsert } from '../schema';
 
 export const getWishStatus = async (wishId: string, userId: string) => {
 	return db.query.wishStatusTable.findFirst({

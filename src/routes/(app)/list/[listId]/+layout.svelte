@@ -4,11 +4,11 @@
 	import TablerArrowLeft from '~icons/tabler/arrow-left';
 	import NotificationPermissionDialog from '$lib/v2/components/notifications/NotificationPermissionDialog.svelte';
 	import Navigation from '$lib/v3/ui/Navigation.svelte';
-	import { getChatContext } from '$lib/v2/components/chat/context.svelte';
+	import { getChatContext } from '$lib/v3/chat/context.svelte';
 	import BottomDrawer from '$lib/v3/ui/BottomDrawer.svelte';
 	import Button from '$lib/v3/ui/Button.svelte';
 	import Alert from '$lib/v3/Alert.svelte';
-	import Chat from '$lib/v2/components/chat/Chat.svelte';
+	import Chat from '$lib/v3/chat/Chat.svelte';
 	import { invalidateAll } from '$app/navigation';
 	import { m } from '$lib/paraglide/messages';
 

@@ -31,24 +31,22 @@ export const getOwnWishes = async (listId: string, userId: string) => {
 
 /**
  * Returns all the wishes in a list except for the given user id.
- * Each wish has the question, comment and giver count included.
+ * Each wish questions, comments and givers included (with minimal columns).
  */
-export const getAllWishesWithCounts = async (listId: string, excludeUserId: string) => {
-	return db
-		.select({
-			...getTableColumns(wishTable),
-			username: userTable.name,
-			numQuestions: countDistinct(wishQuestionTable),
-			numComments: countDistinct(wishCommentTable),
-			numGivers: countDistinct(wishStatusTable)
-		})
-		.from(wishTable)
-		.where(and(eq(wishTable.listId, listId), not(eq(wishTable.userId, excludeUserId))))
-		.leftJoin(wishQuestionTable, eq(wishTable.id, wishQuestionTable.wishId))
-		.leftJoin(wishCommentTable, eq(wishTable.id, wishCommentTable.wishId))
-		.leftJoin(wishStatusTable, eq(wishTable.id, wishStatusTable.wishId))
-		.innerJoin(userTable, eq(wishTable.userId, userTable.id)) // we can inner join since all wishes have a user;
-		.groupBy(wishTable.id, userTable.id);
+export const getAllWishesWithStatuses = async (listId: string, excludeUserId: string) => {
+	return db.query.wishTable.findMany({
+		where: and(eq(wishTable.listId, listId), not(eq(wishTable.userId, excludeUserId))),
+		with: {
+			user: { columns: { name: true } },
+			statuses: {
+				columns: { status: true, userId: true },
+				with: { user: { columns: { name: true } } }
+			},
+			// we don't really use any fields from these, just the count
+			comments: { columns: { id: true } },
+			questions: { columns: { id: true } }
+		}
+	});
 };
 
 /**
