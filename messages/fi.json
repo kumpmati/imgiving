@@ -11,6 +11,8 @@
 	"formfield_wish_description": "Kuvaus (valinnainen)",
 	"formfield_wish_price": "Hinta (valinnainen)",
 	"formfield_wish_image_url": "Kuvan osoite (valinnainen)",
+	"empty_own_wishes_title": "Et ole toivonut vielä mitään.",
+	"empty_wishes_title": "Kukaan ei ole toivonut vielä mitään. Tarkista myöhemmin uudelleen.",
 	"add_wish": "Lisää toive",
 	"add_wish_title": "Lisää uusi toive",
 	"edit_wish_title": "Muokkaa toivetta",

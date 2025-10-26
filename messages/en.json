@@ -11,6 +11,8 @@
 	"formfield_wish_description": "Description (optional)",
 	"formfield_wish_price": "Price (optional)",
 	"formfield_wish_image_url": "Image URL (optional)",
+	"empty_own_wishes_title": "You don't have any wishes yet.",
+	"empty_wishes_title": "Nobody has wished for anything yet. Check again later.",
 	"add_wish": "Add wish",
 	"add_wish_title": "Add new wish",
 	"edit_wish_title": "Edit wish",

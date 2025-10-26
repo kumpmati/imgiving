@@ -1,8 +1,5 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { getContext } from 'svelte';
-	import { toastKey } from '$lib/v2/components/toasts/context';
-	import { Toasts } from '$lib/v2/components/toasts/state.svelte';
 	import TablerStar from '~icons/tabler/star';
 	import TablerGift from '~icons/tabler/gift';
 	import TablerPlus from '~icons/tabler/plus';
@@ -70,9 +67,9 @@
 {/await}
 
 {#if data.wishes.length == 0}
-	<div class="mx-auto mt-16 flex max-w-52 flex-col items-center text-slate-500">
-		<TablerGift class="size-6" />
-		<p class="mt-2 text-center text-xl font-semibold">You don't have any wishes yet.</p>
+	<div class="mx-auto mt-16 flex max-w-56 flex-col items-center text-slate-500">
+		<TablerGift class="size-5" />
+		<p class="text-md mt-2 text-center font-medium">{m.empty_own_wishes_title()}</p>
 
 		<button
 			onclick={() => (newWishOpen = true)}
