@@ -1,6 +1,6 @@
 import { superActions } from 'sveltekit-superactions';
 import type { ChatSheetContext } from './context.svelte';
-import type { ChatEndpoint } from '../../../routes/actions/chat/+server';
+import type { ChatEndpoint } from '../../../../routes/actions/chat/+server';
 
 export class ChatSheetState {
 	#actions = superActions<ChatEndpoint>('/actions/chat');
@@ -17,12 +17,7 @@ export class ChatSheetState {
 	async openComments(wishId: string, listId: string) {
 		try {
 			this.clear();
-			this.current = {
-				...this.current,
-				loading: true,
-				open: true,
-				type: 'comments'
-			};
+			this.current = { ...this.current, loading: true, open: true, type: 'comments' };
 
 			const result = await this.#actions.getComments({ wishId, listId });
 
@@ -40,12 +35,7 @@ export class ChatSheetState {
 	async openQuestions(wishId: string, listId: string) {
 		try {
 			this.clear();
-			this.current = {
-				...this.current,
-				loading: true,
-				open: true,
-				type: 'questions'
-			};
+			this.current = { ...this.current, loading: true, open: true, type: 'questions' };
 
 			const result = await this.#actions.getQuestions({ wishId, listId });
 

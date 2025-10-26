@@ -10,7 +10,8 @@
 	import { invalidateAll } from '$app/navigation';
 	import { Badge } from '$ui/badge';
 	import { Button } from '$ui/button/index.js';
-	import { getChatContext } from '$lib/components/chat/context.svelte.js';
+	import { getChatContext } from '$lib/v2/components/chat/context.svelte.js';
+	import { m } from '$lib/paraglide/messages.js';
 
 	let { data } = $props();
 
@@ -19,7 +20,7 @@
 </script>
 
 <svelte:head>
-	<title>Shopping list - {data.list.name}</title>
+	<title>{m.pagetitle_shop()} - {data.list.name}</title>
 </svelte:head>
 
 <Table.Root>
@@ -61,8 +62,8 @@
 					</div>
 				</Table.Cell>
 				<Table.Cell class="hidden align-top sm:table-cell">
-					{#if wish.price}
-						<Badge class="mt-1 w-max">{wish.price}</Badge>
+					{#if wish.priceCents}
+						<Badge class="mt-1 w-max">{wish.priceCents / 100} €</Badge>
 					{/if}
 				</Table.Cell>
 				<Table.Cell class="align-baseline">

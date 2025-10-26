@@ -120,6 +120,20 @@
       "when": 1734823450132,
       "tag": "0016_green_blacklash",
       "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1761425135148,
+      "tag": "0017_fearless_skreet",
+      "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1761485173932,
+      "tag": "0018_wealthy_ego",
+      "breakpoints": true
     }
   ]
 }

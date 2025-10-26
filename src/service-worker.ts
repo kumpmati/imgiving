@@ -41,13 +41,13 @@ console.log('sw initialised');
 onMessage(messaging, (payload) => {
 	sw.registration.showNotification(payload.notification?.title ?? 'Notification', {
 		...payload.notification,
-		icon: payload.notification?.icon ?? 'https://giftari.site/favicon.svg'
+		icon: payload.notification?.icon ?? 'https://imgiving.app/favicon.svg'
 	});
 });
 
 onBackgroundMessage(messaging, (payload) => {
 	sw.registration.showNotification(payload.notification?.title ?? 'Notification', {
 		...payload.notification,
-		icon: payload.notification?.icon ?? 'https://giftari.site/favicon.svg'
+		icon: payload.notification?.icon ?? 'https://imgiving.app/favicon.svg'
 	});
 });

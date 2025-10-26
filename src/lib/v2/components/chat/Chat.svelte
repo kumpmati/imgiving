@@ -1,18 +1,18 @@
 <script lang="ts">
 	import TablerSend2 from '~icons/tabler/send-2';
-	import Button from '$ui/button/button.svelte';
-	import Input from '$ui/input/input.svelte';
 	import Message from './Message.svelte';
 	import type { ChatMessage } from '$lib/chat';
+	import { cn } from '$lib/utils';
 
 	type Props = {
-		description: string | null;
 		currentUserId: string | undefined;
+		wishOwnerId: string | undefined;
 		messages: ChatMessage[];
 		onsubmit: (message: string) => Promise<void> | void;
+		class?: string;
 	};
 
-	let { description, currentUserId, messages, onsubmit }: Props = $props();
+	let { currentUserId, wishOwnerId, messages, onsubmit, class: classes }: Props = $props();
 
 	let listElement = $state<HTMLUListElement>();
 	let newMessage = $state('');
@@ -26,13 +26,13 @@
 	});
 </script>
 
-<div class="flex h-[calc(100%-5rem)] flex-col gap-2">
-	<p class="mx-auto mb-5 max-w-64 text-center text-xs text-muted-foreground">{description}</p>
-
-	<ul bind:this={listElement} class="flex h-full flex-col gap-1 overflow-y-auto">
+<div class={cn('flex h-[calc(100%-5rem)] flex-col gap-2', classes)}>
+	<ul bind:this={listElement} class="flex h-full flex-col gap-2 overflow-y-auto">
 		{#each messages as m, i (m.id)}
 			<Message
 				isOwn={m.userId === currentUserId}
+				isOwner={m.userId === wishOwnerId}
+				username={currentUserId === wishOwnerId ? 'Anonymous' : (m.user?.name ?? 'Anonymous')}
 				sameAuthorAsPrevious={i > 0 && messages[i - 1].userId === m.userId}
 				text={m.message}
 			/>
@@ -47,15 +47,18 @@
 			newMessage = '';
 		}}
 	>
-		<Input
-			required
-			maxlength={200}
-			placeholder="Type your message..."
-			class="bg-card"
-			bind:value={newMessage}
-		/>
-		<Button type="submit">
-			<TablerSend2 class="size-4" />
-		</Button>
+		<div class="flex w-full rounded-xl bg-slate-200">
+			<input
+				required
+				type="text"
+				maxlength={200}
+				placeholder="Type your message..."
+				class="w-full rounded-xl bg-transparent p-3 text-base placeholder-slate-400"
+				bind:value={newMessage}
+			/>
+			<button type="submit" class="p-3 text-slate-600 hover:text-slate-500">
+				<TablerSend2 class="size-6" />
+			</button>
+		</div>
 	</form>
 </div>

@@ -1,16 +1,16 @@
 <script lang="ts">
 	import '../app.css';
-	import { Toasts } from '$lib/components/toasts/state.svelte';
-	import Toaster from '$lib/components/toasts/Toaster.svelte';
+	import { Toasts } from '$lib/v2/components/toasts/state.svelte';
+	import Toaster from '$lib/v2/components/toasts/Toaster.svelte';
 	import { onMount, setContext } from 'svelte';
-	import { toastKey } from '$lib/components/toasts/context';
+	import { toastKey } from '$lib/v2/components/toasts/context';
 	import { setUserContext } from '$lib/state/user.svelte';
-	import { chatSheetKey } from '$lib/components/chat/context.svelte';
-	import { ChatSheetState } from '$lib/components/chat/state.svelte';
+	import { chatSheetKey } from '$lib/v2/components/chat/context.svelte';
+	import { ChatSheetState } from '$lib/v2/components/chat/state.svelte';
 	import {
 		NotificationContext,
 		notificationContextKey
-	} from '$lib/components/notifications/context.svelte';
+	} from '$lib/v2/components/notifications/context.svelte';
 
 	let { children, data } = $props();
 

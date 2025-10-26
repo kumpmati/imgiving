@@ -14,6 +14,13 @@ export const createWish = async (w: Omit<WishInsert, 'id'>) => {
 	return db.insert(wishTable).values({ id: wishId(), ...w });
 };
 
+export const updateWish = async (
+	id: string,
+	w: Pick<WishInsert, 'imageUrl' | 'name' | 'description' | 'priceCents'>
+) => {
+	return db.update(wishTable).set(w).where(eq(wishTable.id, id));
+};
+
 export const getOwnWishes = async (listId: string, userId: string) => {
 	return db
 		.select()

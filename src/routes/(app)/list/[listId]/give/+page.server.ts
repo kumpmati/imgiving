@@ -15,10 +15,7 @@ export const load = async ({ locals, params }) => {
 	const wishes = await getAllWishesWithCounts(params.listId, locals.user.id);
 	const statuses = await getWishStatuses(params.listId, locals.user.id);
 
-	return {
-		wishes,
-		statuses
-	};
+	return { wishes, statuses };
 };
 
 export const actions = {

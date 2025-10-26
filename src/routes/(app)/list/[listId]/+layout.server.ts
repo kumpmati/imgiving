@@ -27,8 +27,6 @@ export const load = async ({ locals, params, url }) => {
 		buylist,
 		member,
 
-		streamed: {
-			unreadQuestions: getWishesWithUnreadQuestionCount(params.listId, locals.user.id)
-		}
+		streamed: { unreadQuestions: getWishesWithUnreadQuestionCount(params.listId, locals.user.id) }
 	};
 };

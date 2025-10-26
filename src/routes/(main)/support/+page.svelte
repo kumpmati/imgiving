@@ -5,7 +5,7 @@
 </script>
 
 <svelte:head>
-	<title>Giftari - Support</title>
+	<title>ImGiving - Support</title>
 </svelte:head>
 
 <main class="mx-auto flex max-w-6xl flex-col items-center p-4">
@@ -23,8 +23,8 @@
 	</section>
 
 	<p class="max-w-[50ch] text-center text-muted-foreground">
-		Giftari is free to use for individuals and non-commercial purposes, and doesn't have ads. If you
-		like, you can help cover running costs by
+		ImGiving is free for personal use, and doesn't have ads. If you like, you can help cover running
+		costs by
 		<a
 			href="https://buymeacoffee.com/kumpmati"
 			target="_blank"
