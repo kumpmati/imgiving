@@ -176,7 +176,7 @@
 				title="Delete wish"
 				class="ml-auto bg-red-50 p-2 text-red-600 hover:bg-red-100"
 			>
-				<TablerTrash class="size-6" />
+				<TablerTrash class="size-5" />
 			</Button>
 		</form>
 	</div>
