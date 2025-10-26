@@ -74,10 +74,10 @@
 		{/each}
 	</div>
 {:else}
-	<div class="mt-16 flex flex-col items-center text-slate-500">
-		<TablerGiftOff class="size-6" />
-		<p class="mt-2 text-center text-xl font-semibold">
-			Nobody has wished for anything yet. <br /> Check again later.
+	<div class="mx-auto mt-16 flex max-w-56 flex-col items-center text-slate-500">
+		<TablerGiftOff class="size-5" />
+		<p class="text-md mt-2 text-center font-medium">
+			{m.empty_wishes_title()}
 		</p>
 	</div>
 {/if}
