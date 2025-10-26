@@ -66,18 +66,18 @@
 	{/if}
 {/await}
 
-{#if data.wishes.length == 0}
+{#if data.wishes.length === 0}
 	<div
 		class="fixed left-1/2 top-1/2 flex max-w-56 -translate-x-1/2 -translate-y-1/2 flex-col items-center text-slate-500"
 	>
 		<TablerGift class="size-5" />
-		<p class="text-md mt-2 text-center font-medium">{m.empty_own_wishes_title()}</p>
+		<p class="text-md mt-2 text-center font-normal">{m.empty_own_wishes_title()}</p>
 
 		<button
 			onclick={() => (newWishOpen = true)}
-			class="mx-auto mt-8 flex gap-2 rounded-2xl bg-white px-6 py-2 text-base font-semibold text-black shadow-lg hover:bg-slate-100"
+			class="mx-auto mt-3 flex items-center gap-2 rounded-2xl bg-white px-4 py-2 text-sm font-semibold text-black shadow-lg hover:bg-slate-50"
 		>
-			<TablerPlus class="size-6" />
+			<TablerPlus class="size-5" />
 			{m.add_wish()}
 		</button>
 	</div>
@@ -110,9 +110,9 @@
 
 	<button
 		onclick={() => (newWishOpen = true)}
-		class="mx-auto mt-3 flex gap-2 rounded-2xl bg-white px-6 py-2 text-base font-semibold shadow-lg hover:bg-slate-50"
+		class="mx-auto mt-3 flex items-center gap-2 rounded-2xl bg-white px-4 py-2 text-sm font-semibold shadow-lg hover:bg-slate-50"
 	>
-		<TablerPlus class="size-6" />
+		<TablerPlus class="size-5" />
 		{m.add_wish()}
 	</button>
 {/if}
@@ -143,7 +143,7 @@
 			type="submit"
 			class="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl bg-green-600 px-6 py-2 text-white hover:bg-green-700"
 		>
-			<TablerPlus class="size-6" />
+			<TablerPlus class="size-5" />
 			{m.add_wish()}
 		</Button>
 	</form>
@@ -205,7 +205,7 @@
 			type="submit"
 			class="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl bg-green-600 px-6 py-2 text-white hover:bg-green-700"
 		>
-			<TablerDeviceFloppy class="size-6" />
+			<TablerDeviceFloppy class="size-5" />
 			{m.save_changes()}
 		</Button>
 	</form>

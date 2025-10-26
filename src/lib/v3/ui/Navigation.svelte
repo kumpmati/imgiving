@@ -25,12 +25,12 @@
 		<a
 			href={item.path}
 			class={cn(
-				'relative flex items-center gap-2 rounded-full px-6 py-2 text-slate-500 transition-colors hover:bg-red-50 hover:text-red-800',
+				'relative flex items-center gap-2 rounded-full px-7 py-2.5 text-slate-500 transition-colors hover:bg-red-50 hover:text-red-800',
 				page.url.pathname === item.path &&
 					'bg-red-600 text-red-50 hover:bg-red-600 hover:text-white'
 			)}
 		>
-			<item.icon class="size-5" />
+			<item.icon class="size-6" />
 
 			<span class="hidden sm:inline">{item.title}</span>
 		</a>

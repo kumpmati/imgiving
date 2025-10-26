@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { m } from '$lib/paraglide/messages';
+	import Input from './ui/Input.svelte';
+	import Textarea from './ui/Textarea.svelte';
 
 	type Props = {
 		name: string;
@@ -16,51 +18,34 @@
 	}: Props = $props();
 </script>
 
-<label class="flex flex-col gap-0.5 text-sm font-medium text-slate-500">
+<label class="flex flex-col gap-1 text-sm font-medium text-slate-500">
 	{m.formfield_wish_name()}
-	<input
-		placeholder="Headphones"
-		required
-		name="name"
-		type="text"
-		bind:value={name}
-		class="rounded-xl bg-slate-200 px-3 py-2 text-base font-normal text-black placeholder-slate-400"
-	/>
+	<Input placeholder="Headphones" required name="name" type="text" bind:value={name} />
 </label>
 
-<label class="flex flex-col gap-0.5 text-sm font-medium text-slate-500">
+<label class="flex flex-col gap-1 text-sm font-medium text-slate-500">
 	{m.formfield_wish_description()}
-	<textarea
+	<Textarea
 		placeholder="Extra info about the wish..."
 		name="description"
 		bind:value={description}
-		class="resize-y rounded-xl bg-slate-200 px-3 py-2 text-base font-normal text-black placeholder-slate-400"
-	></textarea>
-</label>
-
-<label class="flex flex-col gap-0.5 text-sm font-medium text-slate-500">
-	{m.formfield_wish_price()}
-	<input
-		placeholder="5 €"
-		name="price"
-		type="number"
-		min="0"
-		step="0.01"
-		bind:value={price}
-		class="rounded-xl bg-slate-200 px-3 py-2 text-base font-normal text-black placeholder-slate-400"
 	/>
 </label>
 
-<label class="flex flex-col gap-0.5 text-sm font-medium text-slate-500">
+<label class="flex flex-col gap-1 text-sm font-medium text-slate-500">
+	{m.formfield_wish_price()}
+	<Input placeholder="5 €" name="price" type="number" min="0" step="0.01" bind:value={price} />
+</label>
+
+<label class="flex flex-col gap-1 text-sm font-medium text-slate-500">
 	{m.formfield_wish_image_url()}
 
 	<div class="flex items-center">
-		<input
+		<Input
 			placeholder="https://link_to_an_image_here"
 			name="imageUrl"
 			type="url"
 			bind:value={imageUrl}
-			class="w-full rounded-xl bg-slate-200 px-3 py-2 text-base font-normal text-black placeholder-slate-400"
 		/>
 
 		{#if imageUrl}

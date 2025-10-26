@@ -47,16 +47,17 @@
 			newMessage = '';
 		}}
 	>
-		<div class="flex w-full rounded-xl bg-slate-200">
+		<div class="flex w-full rounded-xl border border-slate-300 focus-within:border-slate-600">
 			<input
 				required
+				name="message"
 				type="text"
 				maxlength={200}
 				placeholder="Type your message..."
-				class="w-full rounded-xl bg-transparent p-3 text-base placeholder-slate-400"
+				class="w-full bg-transparent px-3 py-2 text-base placeholder-slate-400 focus-visible:outline-none"
 				bind:value={newMessage}
 			/>
-			<button type="submit" class="p-3 text-slate-600 hover:text-slate-500">
+			<button type="submit" class="px-3 py-2 text-slate-600 hover:text-slate-500">
 				<TablerSend2 class="size-6" />
 			</button>
 		</div>

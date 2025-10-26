@@ -33,8 +33,8 @@
 <BottomDrawer bind:open={chat.current.open} class="w-[450px]">
 	<div class="mb-4 flex items-center gap-2">
 		<form method="dialog" class="contents">
-			<Button class="p-2">
-				<TablerArrowLeft class="size-6" />
+			<Button class="size-9 p-2">
+				<TablerArrowLeft class="size-5" />
 			</Button>
 		</form>
 

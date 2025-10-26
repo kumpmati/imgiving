@@ -43,7 +43,7 @@
 			{@const user = data.list.users.find((u) => u.userId == userId)}
 
 			<div class="flex flex-col">
-				<p class="flex items-center gap-1.5 font-medium text-slate-600">
+				<p class="flex items-center gap-1.5 text-slate-600">
 					<TablerGift class="size-5" />
 					{m.user_wishes({ user: user?.user.name ?? '' })}
 					({wishes.length})
@@ -78,7 +78,7 @@
 		class="fixed left-1/2 top-1/2 flex max-w-56 -translate-x-1/2 -translate-y-1/2 flex-col items-center text-slate-500"
 	>
 		<TablerGiftOff class="size-5" />
-		<p class="text-md mt-2 text-center font-medium">
+		<p class="text-md mt-2 text-center font-normal">
 			{m.empty_wishes_title()}
 		</p>
 	</div>
@@ -87,9 +87,8 @@
 <!-- Item drawer -->
 <BottomDrawer bind:open={wishOpen} class="w-[450px]">
 	<form method="dialog" class="contents">
-		<Button class="sticky top-0 gap-1 px-3 py-2 font-medium">
+		<Button class="sticky top-0 gap-1 p-2">
 			<TablerX class="size-5" />
-			{m.button_title_close()}
 		</Button>
 	</form>
 
@@ -145,7 +144,7 @@
 				<div class="grid grid-cols-2 gap-4">
 					<Button
 						onclick={() => active.wish && chat.openComments(active.wish.id, data.list.id)}
-						class="w-full justify-center rounded-2xl border border-slate-500 bg-transparent px-3 py-3 font-medium leading-none text-slate-500 hover:bg-slate-100 hover:text-slate-600"
+						class="w-full justify-center rounded-2xl border border-slate-500 bg-transparent p-3 font-medium leading-none text-slate-500 hover:bg-slate-100 hover:text-slate-600"
 					>
 						<TablerMessage class="size-5" />
 						{m.button_title_discuss()}
@@ -153,7 +152,7 @@
 					</Button>
 					<Button
 						onclick={() => active.wish && chat.openQuestions(active.wish.id, data.list.id)}
-						class="w-full justify-center rounded-2xl px-3 py-3 font-medium leading-none"
+						class="w-full justify-center rounded-2xl p-3 font-medium leading-none"
 					>
 						<TablerHelp class="size-5" />
 						{m.button_title_ask_owner()}
@@ -206,8 +205,8 @@
 <BottomDrawer bind:open={wishGiversOpen} class="w-[450px]">
 	<div class="flex items-center gap-3">
 		<form method="dialog" class="contents">
-			<Button class="sticky top-0 p-2">
-				<TablerArrowLeft class="size-6" />
+			<Button class="size-9 p-2">
+				<TablerArrowLeft class="size-5" />
 			</Button>
 		</form>
 
