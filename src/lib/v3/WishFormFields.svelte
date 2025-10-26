@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { m } from '$lib/paraglide/messages';
+
 	type Props = {
 		name: string;
 		description: string | null;
@@ -15,7 +17,7 @@
 </script>
 
 <label class="flex flex-col gap-0.5 text-sm font-medium text-slate-500">
-	Name
+	{m.formfield_wish_name()}
 	<input
 		placeholder="Headphones"
 		required
@@ -27,7 +29,7 @@
 </label>
 
 <label class="flex flex-col gap-0.5 text-sm font-medium text-slate-500">
-	Description (optional)
+	{m.formfield_wish_description()}
 	<textarea
 		placeholder="Extra info about the wish..."
 		name="description"
@@ -37,7 +39,7 @@
 </label>
 
 <label class="flex flex-col gap-0.5 text-sm font-medium text-slate-500">
-	Price (optional)
+	{m.formfield_wish_price()}
 	<input
 		placeholder="5 €"
 		name="price"
@@ -50,7 +52,7 @@
 </label>
 
 <label class="flex flex-col gap-0.5 text-sm font-medium text-slate-500">
-	Photo URL (optional)
+	{m.formfield_wish_image_url()}
 
 	<div class="flex items-center">
 		<input

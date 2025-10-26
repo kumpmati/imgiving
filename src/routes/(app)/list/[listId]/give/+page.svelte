@@ -87,7 +87,7 @@
 	<form method="dialog" class="contents">
 		<Button class="sticky top-0 gap-1 px-3 py-2 font-medium">
 			<TablerX class="size-5" />
-			{m.close()}
+			{m.button_title_close()}
 		</Button>
 	</form>
 
@@ -137,7 +137,7 @@
 						{/each}
 					</div>
 
-					<p>{m.num_givers({ amount: active.wish.numGivers })}</p>
+					<p>{m.wish_givers_amount({ amount: active.wish.numGivers })}</p>
 				</button>
 
 				<div class="grid grid-cols-2 gap-4">
@@ -146,7 +146,7 @@
 						class="w-full justify-center rounded-2xl border border-slate-500 bg-transparent px-3 py-3 font-medium leading-none text-slate-500 hover:bg-slate-100 hover:text-slate-600"
 					>
 						<TablerMessage class="size-5" />
-						{m.discuss()}
+						{m.button_title_discuss()}
 						{active.wish.numComments ? `(${active.wish.numComments})` : ''}
 					</Button>
 					<Button
@@ -154,7 +154,7 @@
 						class="w-full justify-center rounded-2xl px-3 py-3 font-medium leading-none"
 					>
 						<TablerHelp class="size-5" />
-						{m.ask_owner()}
+						{m.button_title_ask_owner()}
 						{active.wish.numQuestions ? `(${active.wish.numQuestions})` : ''}
 					</Button>
 				</div>
