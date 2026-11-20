@@ -1,8 +1,8 @@
-import { redirectToSignIn } from '$lib/return.js';
-import { getListMember } from '$lib/server/db/handlers/listUser.js';
-import { createWish, getOwnWishes, updateWish } from '$lib/server/db/handlers/wish.js';
-import { db } from '$lib/server/db/index.js';
-import { wishSchema, wishTable } from '$lib/server/db/schema/wish.js';
+import { redirectToSignIn } from '#lib/return.js';
+import { getListMember } from '#lib/server/db/handlers/listUser.js';
+import { createWish, getOwnWishes, updateWish } from '#lib/server/db/handlers/wish.js';
+import { db } from '#lib/server/db/index.js';
+import { wishSchema, wishTable } from '#lib/server/db/schema/wish.js';
 import { error } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
 import z from 'zod';

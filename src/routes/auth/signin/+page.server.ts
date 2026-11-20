@@ -1,8 +1,8 @@
 import { error, redirect } from '@sveltejs/kit';
-import { setSessionTokenCookie } from '$lib/server/auth/cookies.js';
-import { createUserAndSession } from '$lib/server/auth/helpers.js';
-import { getBackUrl } from '$lib/return.js';
-import { signInFormSchema } from '$lib/v2/components/signIn/schema';
+import { setSessionTokenCookie } from '#lib/server/auth/cookies.js';
+import { createUserAndSession } from '#lib/server/auth/helpers.js';
+import { getBackUrl } from '#lib/return.js';
+import { signInFormSchema } from '#lib/v2/components/signIn/schema.ts';
 
 export const actions = {
 	default: async (e) => {

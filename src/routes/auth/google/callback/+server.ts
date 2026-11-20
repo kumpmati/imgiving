@@ -1,10 +1,10 @@
-import { setSessionTokenCookie } from '$lib/server/auth/cookies.js';
-import { google } from '$lib/server/auth/google.js';
-import { createUserAndSession } from '$lib/server/auth/helpers.js';
-import { createSession, generateSessionToken } from '$lib/server/auth/session.js';
-import { getUserByGoogleId } from '$lib/server/db/handlers/user.js';
-import { db } from '$lib/server/db/index.js';
-import { userTable } from '$lib/server/db/schema/user.js';
+import { setSessionTokenCookie } from '#lib/server/auth/cookies.js';
+import { google } from '#lib/server/auth/google.js';
+import { createUserAndSession } from '#lib/server/auth/helpers.js';
+import { createSession, generateSessionToken } from '#lib/server/auth/session.js';
+import { getUserByGoogleId } from '#lib/server/db/handlers/user.js';
+import { db } from '#lib/server/db/index.js';
+import { userTable } from '#lib/server/db/schema/user.js';
 import { error, redirect } from '@sveltejs/kit';
 import { decodeIdToken, type OAuth2Tokens } from 'arctic';
 import { eq } from 'drizzle-orm';

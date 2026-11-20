@@ -2,13 +2,13 @@ import {
 	deleteSessionTokenCookie,
 	getSessionTokenCookie,
 	setSessionTokenCookie
-} from '$lib/server/auth/cookies';
-import { validateSessionToken } from '$lib/server/auth/session';
-import { paraglideMiddleware } from '$lib/paraglide/server';
+} from '#lib/server/auth/cookies.ts';
+import { validateSessionToken } from '#lib/server/auth/session.ts';
+import { paraglideMiddleware } from '#lib/paraglide/server.js';
 
 // TODO: consider caching sessions / users?
 
-export async function handle({ event, resolve }) {
+export function handle({ event, resolve }) {
 	return paraglideMiddleware(event.request, async ({ request: localizedRequest, locale }) => {
 		event.request = localizedRequest;
 

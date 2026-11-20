@@ -1,6 +1,6 @@
 <script lang="ts">
 	import TablerHelp from '~icons/tabler/help';
-	import { cn } from '$lib/utils';
+	import { cn } from '#lib/utils.ts';
 	import type { Snippet } from 'svelte';
 
 	type Props = {

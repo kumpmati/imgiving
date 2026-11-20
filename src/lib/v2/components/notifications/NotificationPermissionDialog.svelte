@@ -1,10 +1,10 @@
 <script lang="ts">
-	import Button, { buttonVariants } from '$ui/button/button.svelte';
-	import * as Dialog from '$ui/dialog';
+	import Button, { buttonVariants } from '#lib/v2/components/ui/button/button.svelte';
+	import * as Dialog from '#lib/v2/components/ui/dialog/index.ts';
 	import { onMount } from 'svelte';
-	import { getNotificationContext } from './context.svelte';
 	import Spinner from '../Spinner.svelte';
 	import { getToast } from '../toasts/context';
+	import { getNotificationContext } from './context';
 
 	const notifications = getNotificationContext();
 	const toast = getToast();

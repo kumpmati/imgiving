@@ -5,7 +5,7 @@ import {
 	PUBLIC_FIREBASE_PROJECT_ID,
 	PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
 	PUBLIC_FIREBASE_APP_ID
-} from '$env/static/public';
+} from '$app/env/public';
 import { type FirebaseOptions } from 'firebase/app';
 
 export const firebaseConfig: FirebaseOptions = {

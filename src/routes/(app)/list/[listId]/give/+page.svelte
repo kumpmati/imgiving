@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { cn, groupBy } from '$lib/utils.js';
-	import BottomDrawer from '$lib/v3/ui/BottomDrawer.svelte';
-	import Button from '$lib/v3/ui/Button.svelte';
-	import WishListBody from '$lib/v3/WishListBody.svelte';
-	import WishListRow from '$lib/v3/WishListRow.svelte';
+	import { cn, groupBy } from '#lib/utils.js';
+	import BottomDrawer from '#lib/v3/ui/BottomDrawer.svelte';
+	import Button from '#lib/v3/ui/Button.svelte';
+	import WishListBody from '#lib/v3/WishListBody.svelte';
+	import WishListRow from '#lib/v3/WishListRow.svelte';
 	import TablerGift from '~icons/tabler/gift';
 	import TablerX from '~icons/tabler/x';
 	import TablerLoader2 from '~icons/tabler/loader-2';
@@ -13,8 +13,8 @@
 	import TablerMessage from '~icons/tabler/message';
 	import TablerGiftOff from '~icons/tabler/gift-off';
 	import { enhance } from '$app/forms';
-	import { getChatContext } from '$lib/v3/chat/context.svelte.js';
-	import { m } from '$lib/paraglide/messages.js';
+	import { getChatContext } from '#lib/v3/chat/context.js';
+	import { m } from '#lib/paraglide/messages.js';
 
 	let { data } = $props();
 
@@ -75,7 +75,7 @@
 	</div>
 {:else}
 	<div
-		class="fixed left-1/2 top-1/2 flex max-w-56 -translate-x-1/2 -translate-y-1/2 flex-col items-center text-slate-500"
+		class="fixed top-1/2 left-1/2 flex max-w-56 -translate-x-1/2 -translate-y-1/2 flex-col items-center text-slate-500"
 	>
 		<TablerGiftOff class="size-5" />
 		<p class="text-md mt-2 text-center font-normal">
@@ -115,23 +115,23 @@
 					{/if}
 				</div>
 
-				<p class="text-2xl font-semibold leading-tight text-black">{active.wish.name}</p>
+				<p class="text-2xl leading-tight font-semibold text-black">{active.wish.name}</p>
 
 				{#if active.wish.description}
-					<p class="text-base font-normal leading-tight text-slate-600">
+					<p class="text-base leading-tight font-normal text-slate-600">
 						{active.wish.description}
 					</p>
 				{/if}
 			</div>
 
-			<div class="mt-12 flex flex-col gap-4">
+			<div class="mt-12 flex flex-col gap-4 max-[450px]:gap-2">
 				<button
 					class="mx-auto flex items-center gap-1.5 text-slate-500 hover:text-slate-600"
 					onclick={() => (wishGiversOpen = true)}
 				>
 					<!-- Giver circles -->
 					<div class="flex items-center">
-						{#each { length: Math.min(active.wish.statuses.length, 5) }, index}
+						{#each { length: Math.min(active.wish.statuses.length, 5) } as index}
 							<div class="-ml-3 size-[22px] rounded-full border-2 border-white bg-slate-200"></div>
 						{:else}
 							<TablerX />
@@ -141,10 +141,10 @@
 					<p>{m.wish_givers_amount({ amount: active.wish.statuses.length })}</p>
 				</button>
 
-				<div class="grid grid-cols-2 gap-4">
+				<div class="grid grid-cols-2 gap-4 max-[450px]:grid-cols-1 max-[450px]:gap-2">
 					<Button
 						onclick={() => active.wish && chat.openComments(active.wish.id, data.list.id)}
-						class="w-full justify-center rounded-2xl border border-slate-500 bg-transparent p-3 font-medium leading-none text-slate-500 hover:bg-slate-100 hover:text-slate-600"
+						class="w-full justify-center rounded-2xl border border-slate-500 bg-transparent p-2 text-sm leading-none font-medium text-slate-500 hover:bg-slate-100 hover:text-slate-600"
 					>
 						<TablerMessage class="size-5" />
 						{m.button_title_discuss()}
@@ -152,7 +152,7 @@
 					</Button>
 					<Button
 						onclick={() => active.wish && chat.openQuestions(active.wish.id, data.list.id)}
-						class="w-full justify-center rounded-2xl p-3 font-medium leading-none"
+						class="w-full justify-center rounded-2xl p-2 text-sm leading-none font-medium"
 					>
 						<TablerHelp class="size-5" />
 						{m.button_title_ask_owner()}
@@ -182,7 +182,7 @@
 					<Button
 						type="submit"
 						class={cn(
-							'w-full justify-center rounded-2xl border border-transparent bg-green-600 px-8 py-3 text-center text-lg font-semibold leading-tight text-white shadow-md hover:bg-green-700',
+							'w-full justify-center rounded-2xl border border-transparent bg-green-600 px-8 py-3 text-center text-lg leading-tight font-semibold text-white shadow-md hover:bg-green-700',
 							active.ownStatus &&
 								'border-green-500 bg-transparent text-green-600 shadow-none hover:border-green-600 hover:bg-green-50 hover:text-green-700'
 						)}
@@ -211,10 +211,10 @@
 		</form>
 
 		<div class="flex flex-col">
-			<p class="text-sm font-semibold leading-tight text-slate-500">
+			<p class="text-sm leading-tight font-semibold text-slate-500">
 				{m.giving_list_title({ name: active.wish?.user.name ?? '' })}
 			</p>
-			<p class="text-xl font-semibold leading-tight text-black">{active.wish?.name}</p>
+			<p class="text-xl leading-tight font-semibold text-black">{active.wish?.name}</p>
 		</div>
 	</div>
 

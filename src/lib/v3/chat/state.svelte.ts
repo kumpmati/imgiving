@@ -1,10 +1,13 @@
-import { superActions } from 'sveltekit-superactions';
-import type { ChatSheetContext } from './context.svelte';
-import type { ChatEndpoint } from '../../../routes/actions/chat/+server';
+import {
+	getComments,
+	getQuestions,
+	markQuestionsAsSeen,
+	sendComment,
+	sendQuestion
+} from '#lib/queries/chat.remote.ts';
+import type { ChatSheetContext } from './context';
 
 export class ChatSheetState {
-	#actions = superActions<ChatEndpoint>('/actions/chat');
-
 	current = $state<ChatSheetContext>({
 		open: false,
 		loading: false,
@@ -19,7 +22,7 @@ export class ChatSheetState {
 			this.clear();
 			this.current = { ...this.current, loading: true, open: true, type: 'comments' };
 
-			const result = await this.#actions.getComments({ wishId, listId });
+			const result = await getComments({ wishId, listId });
 
 			this.current = {
 				...this.current,
@@ -37,7 +40,7 @@ export class ChatSheetState {
 			this.clear();
 			this.current = { ...this.current, loading: true, open: true, type: 'questions' };
 
-			const result = await this.#actions.getQuestions({ wishId, listId });
+			const result = await getQuestions({ wishId, listId });
 
 			this.current = {
 				...this.current,
@@ -53,7 +56,7 @@ export class ChatSheetState {
 	async sendComment(userId: string, message: string) {
 		if (!this.current.wish || !this.current.listId) return;
 
-		const comment = await this.#actions.sendComment({
+		const comment = await sendComment({
 			wishId: this.current.wish.id,
 			listId: this.current.listId,
 			userId,
@@ -65,7 +68,7 @@ export class ChatSheetState {
 	async sendQuestion(userId: string, message: string) {
 		if (!this.current.wish || !this.current.listId) return;
 
-		const question = await this.#actions.sendQuestion({
+		const question = await sendQuestion({
 			wishId: this.current.wish.id,
 			listId: this.current.listId,
 			userId,
@@ -75,7 +78,7 @@ export class ChatSheetState {
 	}
 
 	async markQuestionsAsSeen(wishId: string, listId: string) {
-		return this.#actions.markQuestionsAsSeen({ listId, wishId });
+		return markQuestionsAsSeen({ listId, wishId });
 	}
 
 	private clear() {

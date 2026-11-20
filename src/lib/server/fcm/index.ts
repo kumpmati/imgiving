@@ -1,4 +1,4 @@
-import { FIREBASE_ADMIN_KEY } from '$env/static/private';
+import { FIREBASE_ADMIN_KEY } from '$app/env/private';
 import { FCM, FcmOptions } from 'fcm-cloudflare-workers';
 
 export const fcm = new FCM(

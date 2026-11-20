@@ -6,7 +6,7 @@
 	import TablerAlertTriangle from '~icons/tabler/alert-triangle';
 	import TablerCircleXFilled from '~icons/tabler/circle-x-filled';
 	import TablerInfoCircleFilled from '~icons/tabler/info-circle-filled';
-	import { cn } from '$lib/utils';
+	import { cn } from '#lib/utils.ts';
 
 	type Props = {
 		state: Toasts;

@@ -8,7 +8,7 @@ import {
 	wishTable,
 	type WishInsert
 } from '../schema';
-import { wishId } from '$lib/id';
+import { wishId } from '#lib/id.ts';
 
 export const createWish = async (w: Omit<WishInsert, 'id'>) => {
 	return db.insert(wishTable).values({ id: wishId(), ...w });

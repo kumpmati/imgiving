@@ -1,22 +1,20 @@
 <script lang="ts">
-	import type { List, ListUser } from '$lib/server/db/schema';
+	import type { List, ListUser } from '#lib/server/db/schema/index.ts';
 	import dayjs from 'dayjs';
 	import relativeTime from 'dayjs/plugin/relativeTime';
-	import Nav from '$lib/v2/components/Nav.svelte';
-	import { setLocale, getLocale } from '$lib/paraglide/runtime.js';
+	import Nav from '#lib/v2/components/Nav.svelte';
+	import { setLocale, getLocale } from '#lib/paraglide/runtime.js';
 	import TablerDotsVertical from '~icons/tabler/dots-vertical';
 	import TablerX from '~icons/tabler/x';
-	import Dialog from '$lib/v3/ui/Dialog.svelte';
-	import Button from '$lib/v3/ui/Button.svelte';
+	import Dialog from '#lib/v3/ui/Dialog.svelte';
+	import Button from '#lib/v3/ui/Button.svelte';
 	import { page } from '$app/state';
-	import { getToast } from '$lib/v2/components/toasts/context';
-	import { superActions } from 'sveltekit-superactions';
-	import type { ListEndpoint } from '../+server';
+	import { getToast } from '#lib/v2/components/toasts/context.ts';
+	import { leaveList } from '#lib/queries/list.remote.ts';
 
 	dayjs.extend(relativeTime);
 
 	type Props = {
-		currentUserId: string | undefined;
 		list: List;
 		users: (Pick<ListUser, 'userId' | 'joinedAt'> & { user: { name: string } })[];
 	};
@@ -25,7 +23,6 @@
 
 	let dialogOpen = $state(false);
 	const joinLink = $derived(`${page.url.origin}/join/${list.publicShareLink}`);
-	const actions = superActions<ListEndpoint>('/list');
 
 	const toast = getToast();
 
@@ -53,8 +50,8 @@
 		</form>
 
 		<div class="flex flex-col">
-			<p class="text-sm font-semibold leading-tight text-slate-500">Settings</p>
-			<h1 class="text-lg font-semibold leading-tight">{list.name}</h1>
+			<p class="text-sm leading-tight font-semibold text-slate-500">Settings</p>
+			<h1 class="text-lg leading-tight font-semibold">{list.name}</h1>
 		</div>
 	</div>
 
@@ -94,10 +91,7 @@
 			{/each}
 		</ul>
 
-		<Button
-			onclick={() => actions.leaveList(list.id)}
-			class="bg-red-600 px-4 text-white hover:bg-red-700"
-		>
+		<Button onclick={() => leaveList(list.id)} class="bg-red-600 px-4 text-white hover:bg-red-700">
 			Leave list
 		</Button>
 	</div>
