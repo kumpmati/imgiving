@@ -1,8 +1,8 @@
 <script lang="ts">
 	import TablerSend2 from '~icons/tabler/send-2';
 	import Message from './Message.svelte';
-	import type { ChatMessage } from '$lib/chat';
-	import { cn } from '$lib/utils';
+	import type { ChatMessage } from '#lib/chat.ts';
+	import { cn } from '#lib/utils.ts';
 
 	type Props = {
 		currentUserId: string | undefined;

@@ -1,5 +1,5 @@
-import { deleteSessionTokenCookie } from '$lib/server/auth/cookies';
-import { invalidateSession } from '$lib/server/auth/session';
+import { deleteSessionTokenCookie } from '#lib/server/auth/cookies.ts';
+import { invalidateSession } from '#lib/server/auth/session.ts';
 import { redirect } from '@sveltejs/kit';
 
 export const GET = async (e) => {

@@ -1,16 +1,10 @@
-import { browser, dev } from '$app/environment';
-import { PUBLIC_FCM_PUBLIC_KEY } from '$env/static/public';
-import { firebaseConfig } from '$lib/firebase/config';
+import { browser, dev } from '$app/env';
+import { PUBLIC_FCM_PUBLIC_KEY } from '$app/env/public';
+import { firebaseConfig } from '#lib/firebase/config.ts';
 import { initializeApp } from 'firebase/app';
 import { getMessaging, getToken, type Messaging, onMessage } from 'firebase/messaging';
-import { getContext } from 'svelte';
-import { superActions } from 'sveltekit-superactions';
-import type { NotificationEndpoint } from '../../../../routes/actions/notifications/+server';
 import { Toasts } from '../toasts/state.svelte';
-
-export const notificationContextKey = Symbol('notifications');
-
-export const getNotificationContext = () => getContext<NotificationContext>(notificationContextKey);
+import { saveToken } from '#lib/queries/fcm.remote.ts';
 
 export class NotificationContext {
 	permission = $state<NotificationPermission>();
@@ -18,7 +12,6 @@ export class NotificationContext {
 
 	#messaging = $state<Messaging | undefined>();
 	#sw = $state<ServiceWorkerRegistration>();
-	#actions = superActions<NotificationEndpoint>('/actions/notifications');
 	#toast = $state<Toasts>();
 
 	constructor(t: Toasts) {
@@ -57,7 +50,7 @@ export class NotificationContext {
 					vapidKey: PUBLIC_FCM_PUBLIC_KEY
 				}).then((token) => {
 					console.log('fcm token', token);
-					return this.#actions.saveToken(token);
+					return saveToken(token);
 				});
 			} else if (status === 'denied') {
 				throw new Error('notification permissions denied');

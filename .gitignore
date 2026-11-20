@@ -1,11 +1,10 @@
 node_modules
 
-# used for local development using D1
-miniflare
-
 # Output
 .output
 .vercel
+.netlify
+.wrangler
 /.svelte-kit
 /build
 
@@ -22,10 +21,3 @@ Thumbs.db
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
-
-# SQLite
-*.db
-
-# wrangler files
-.wrangler
-.dev.vars

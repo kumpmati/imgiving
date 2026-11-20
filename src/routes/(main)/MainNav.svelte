@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import Nav from '$lib/v2/components/Nav.svelte';
-	import { getUserContext } from '$lib/state/user.svelte';
-	import { cn } from '$lib/utils';
-	import { Button } from '$ui/button';
+	import Nav from '#lib/v2/components/Nav.svelte';
+	import { cn } from '#lib/utils.ts';
+	import { Button } from '#lib/v2/components/ui/button/index.ts';
 	import TablerUser from '~icons/tabler/user';
+	import { getUserContext } from '#lib/state/userContext.ts';
 
 	const userState = getUserContext();
 </script>
@@ -14,16 +14,19 @@
 		variant="link"
 		href="/for-companies"
 		class={cn(page.url.pathname === '/for-companies' && 'font-semibold underline')}
-		>For companies</Button
 	>
+		For companies
+	</Button>
 
 	<Button
 		variant="link"
 		href="/support"
-		class={cn(page.url.pathname === '/support' && 'font-semibold underline')}>Support</Button
+		class={cn(page.url.pathname === '/support' && 'font-semibold underline')}
 	>
+		Support
+	</Button>
 
-	{#if userState.current}
+	{#if userState()}
 		<Button variant="outline" href="/account" size="icon">
 			<TablerUser />
 		</Button>

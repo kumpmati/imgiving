@@ -65,5 +65,4 @@ export async function invalidateSession(sessionId: string): Promise<void> {
 }
 
 export type SessionValidationResult =
-	| { session: Session; user: User }
-	| { session: null; user: null };
+	{ session: Session; user: User } | { session: null; user: null };

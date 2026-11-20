@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import TablerBrandGoogleFilled from '~icons/tabler/brand-google-filled';
-	import { Button } from '$ui/button';
-	import Input from '$ui/input/input.svelte';
-	import { Label } from '$ui/label';
+	import { Button } from '#lib/v2/components/ui/button/index.ts';
+	import Input from '#lib/v2/components/ui/input/input.svelte';
+	import { Label } from '#lib/v2/components/ui/label/index.ts';
 	import Spinner from '../Spinner.svelte';
 
 	type Props = {
@@ -48,13 +48,13 @@
 
 <div class="my-2 flex items-center gap-2">
 	<div class="w-full border-b"></div>
-	<small class="shrink-0 text-center text-muted-foreground">Or continue with</small>
+	<small class="text-muted-foreground shrink-0 text-center">Or continue with</small>
 	<div class="w-full border-b"></div>
 </div>
 
 <Button
 	href={backUrl ? `/auth/google/signin?back=${backUrl}` : '/auth/google/signin'}
-	data-sveltekit-preload-data="off"
+	data-sveltekit-preload-data={false}
 	size="lg"
 	variant="outline"
 >

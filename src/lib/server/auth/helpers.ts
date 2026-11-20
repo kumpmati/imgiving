@@ -1,4 +1,4 @@
-import { userId } from '$lib/id';
+import { userId } from '#lib/id.ts';
 import { db } from '../db';
 import { userTable } from '../db/schema';
 import { createSession, generateSessionToken } from './session';

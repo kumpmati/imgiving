@@ -7,14 +7,14 @@
 	import TablerX from '~icons/tabler/x';
 	import TablerHelp from '~icons/tabler/help';
 	import TablerTrash from '~icons/tabler/trash';
-	import Dialog from '$lib/v3/ui/Dialog.svelte';
-	import Button from '$lib/v3/ui/Button.svelte';
-	import WishFormFields from '$lib/v3/WishFormFields.svelte';
-	import WishListRow from '$lib/v3/WishListRow.svelte';
-	import WishListBody from '$lib/v3/WishListBody.svelte';
+	import Dialog from '#lib/v3/ui/Dialog.svelte';
+	import Button from '#lib/v3/ui/Button.svelte';
+	import WishFormFields from '#lib/v3/WishFormFields.svelte';
+	import WishListRow from '#lib/v3/WishListRow.svelte';
+	import WishListBody from '#lib/v3/WishListBody.svelte';
 	import { flip } from 'svelte/animate';
-	import { getChatContext } from '$lib/v3/chat/context.svelte.js';
-	import { m } from '$lib/paraglide/messages.js';
+	import { getChatContext } from '#lib/v3/chat/context.js';
+	import { m } from '#lib/paraglide/messages.js';
 
 	let { data } = $props();
 
@@ -42,7 +42,7 @@
 			<p>Questions</p>
 		</div>
 
-		<ul class="mb-8 mt-3 flex flex-col gap-2">
+		<ul class="mt-3 mb-8 flex flex-col gap-2">
 			{#each wishesWithQuestions.filter((w) => w.numQuestions > 0) as wish (wish.id)}
 				<li class="contents">
 					<button
@@ -68,7 +68,7 @@
 
 {#if data.wishes.length === 0}
 	<div
-		class="fixed left-1/2 top-1/2 flex max-w-56 -translate-x-1/2 -translate-y-1/2 flex-col items-center text-slate-500"
+		class="fixed top-1/2 left-1/2 flex max-w-56 -translate-x-1/2 -translate-y-1/2 flex-col items-center text-slate-500"
 	>
 		<TablerGift class="size-5" />
 		<p class="text-md mt-2 text-center font-normal">{m.empty_own_wishes_title()}</p>

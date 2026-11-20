@@ -1,22 +1,19 @@
 <script lang="ts">
 	import TablerMessage from '~icons/tabler/message';
 	import TablerHelp from '~icons/tabler/help';
-	import { cn } from '$lib/utils';
-	import { Checkbox } from '$ui/checkbox';
-	import * as Table from '$ui/table';
-	import { superActions } from 'sveltekit-superactions';
-	import type { ShopEndpoint } from './+server.js';
-	import { page } from '$app/state';
+	import { cn } from '#lib/utils.ts';
+	import { Checkbox } from '#lib/v2/components/ui/checkbox/index.js';
+	import * as Table from '#lib/v2/components/ui/table/index.js';
 	import { invalidateAll } from '$app/navigation';
-	import { Badge } from '$ui/badge';
-	import { Button } from '$ui/button/index.js';
-	import { getChatContext } from '$lib/v3/chat/context.svelte.js';
-	import { m } from '$lib/paraglide/messages.js';
+	import { Badge } from '#lib/v2/components/ui/badge/index.js';
+	import { Button } from '#lib/v2/components/ui/button/index.js';
+	import { getChatContext } from '#lib/v3/chat/context.js';
+	import { m } from '#lib/paraglide/messages.js';
+	import { toggleBuylistChecked } from '#lib/queries/shop.remote.js';
 
 	let { data } = $props();
 
 	const chat = getChatContext();
-	const actions = superActions<ShopEndpoint>(page.url.pathname);
 </script>
 
 <svelte:head>
@@ -41,22 +38,22 @@
 					<div class="flex gap-4">
 						<Checkbox
 							name="checked"
-							class="mt-[3px] bg-card"
+							class="bg-card mt-[3px]"
 							checked={wish.status === 'confirmed'}
 							onCheckedChange={() =>
-								actions
-									.toggleBuylistChecked({ listId: data.list.id, wishId: wish.id })
-									.then(() => invalidateAll())}
+								toggleBuylistChecked({ listId: data.list.id, wishId: wish.id }).then(() =>
+									invalidateAll()
+								)}
 						/>
 
 						<div class={cn('flex flex-col', isDone && 'line-through')}>
 							<span class="text-base font-semibold">
 								{wish.name}
-								<span class="font-normal text-muted-foreground">({wish.recipient})</span>
+								<span class="text-muted-foreground font-normal">({wish.recipient})</span>
 							</span>
 
 							{#if wish.description}
-								<p class="text-sm text-muted-foreground">{wish.description}</p>
+								<p class="text-muted-foreground text-sm">{wish.description}</p>
 							{/if}
 						</div>
 					</div>

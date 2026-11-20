@@ -1,15 +1,14 @@
 <script lang="ts">
-	import { Button, buttonVariants } from '$ui/button';
+	import { Button, buttonVariants } from '#lib/v2/components/ui/button/index.js';
 	import TablerList from '~icons/tabler/list';
 	import TablerCheckbox from '~icons/tabler/checkbox';
 	import TablerShoppingCart from '~icons/tabler/shopping-cart';
 	import TablerGiftFilled from '~icons/tabler/gift-filled';
 	import TablerGiftCardFilled from '~icons/tabler/gift-card-filled';
 	import Section from './Section.svelte';
-	import Input from '$ui/input/input.svelte';
-	import { Label } from '$ui/label';
-	import * as Dialog from '$ui/dialog';
-	import { enhance } from '$app/forms';
+	import Input from '#lib/v2/components/ui/input/input.svelte';
+	import { Label } from '#lib/v2/components/ui/label/index.js';
+	import * as Dialog from '#lib/v2/components/ui/dialog/index.js';
 
 	let { data, form } = $props();
 
@@ -21,7 +20,7 @@
 </svelte:head>
 
 <section class="relative flex flex-col items-center overflow-hidden p-4 pb-24">
-	<div id="hero-bg" class="absolute left-0 top-0 -z-10 h-full w-full"></div>
+	<div id="hero-bg" class="absolute top-0 left-0 -z-10 h-full w-full"></div>
 
 	<div class="relative mt-32 w-full sm:mt-48">
 		<img
@@ -32,7 +31,7 @@
 
 		<div class="relative mx-auto w-fit">
 			<TablerGiftFilled
-				class="absolute -right-8 -top-8 size-6 translate-x-full rotate-12 text-red-600"
+				class="absolute -top-8 -right-8 size-6 translate-x-full rotate-12 text-red-600"
 			/>
 			<TablerGiftCardFilled
 				class="absolute -bottom-6 -left-3 size-6 translate-y-full -rotate-6 text-red-600"
@@ -57,20 +56,7 @@
 					</Dialog.Description>
 				</Dialog.Header>
 
-				<form
-					method="post"
-					action="?/create_list"
-					use:enhance={() => {
-						return async ({ update, result }) => {
-							if (result.type === 'success') {
-								wishlistDialogOpen = false;
-							}
-
-							await update();
-						};
-					}}
-					class="mt-4 flex flex-col gap-4"
-				>
+				<form method="post" action="?/create_list" class="mt-4 flex flex-col gap-4">
 					{#if data.user}
 						<div class="mx-auto flex items-center gap-2">
 							<p class="text-muted-foreground">

@@ -1,9 +1,9 @@
-import { generateListId, publicShareLink } from '$lib/id.js';
-import { setSessionTokenCookie } from '$lib/server/auth/cookies.js';
-import { createUserAndSession } from '$lib/server/auth/helpers.js';
-import { db } from '$lib/server/db';
-import { listTable } from '$lib/server/db/schema/list';
-import { listUserTable } from '$lib/server/db/schema/listUser.js';
+import { generateListId, publicShareLink } from '#lib/id.js';
+import { setSessionTokenCookie } from '#lib/server/auth/cookies.js';
+import { createUserAndSession } from '#lib/server/auth/helpers.js';
+import { db } from '#lib/server/db/index.ts';
+import { listTable } from '#lib/server/db/schema/list.ts';
+import { listUserTable } from '#lib/server/db/schema/listUser.js';
 import { fail, redirect } from '@sveltejs/kit';
 import { z } from 'zod';
 import { fromError } from 'zod-validation-error';

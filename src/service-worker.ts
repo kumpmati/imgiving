@@ -10,7 +10,7 @@ import {
 	PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
 	PUBLIC_FIREBASE_APP_ID
 	// TODO: this works but types don't like it, fix
-} from '$env/static/public';
+} from '$app/env/public';
 
 import { initializeApp, type FirebaseOptions } from 'firebase/app';
 import { onMessage } from 'firebase/messaging';

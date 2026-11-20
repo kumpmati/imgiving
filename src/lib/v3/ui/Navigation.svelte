@@ -5,8 +5,8 @@
 	import TablerGiftFilled from '~icons/tabler/gift-filled';
 	import TablerShoppingBag from '~icons/tabler/shopping-bag';
 	import { page } from '$app/state';
-	import { cn } from '$lib/utils';
-	import { m } from '$lib/paraglide/messages';
+	import { cn } from '#lib/utils.ts';
+	import { m } from '#lib/paraglide/messages.js';
 
 	type Props = {
 		listId: string;
@@ -15,7 +15,7 @@
 	let { listId }: Props = $props();
 
 	// TODO: larger version on desktop?
-	const items = [
+	const items = $derived([
 		{
 			path: `/list/${listId}`,
 			icon: TablerStar,
@@ -34,7 +34,7 @@
 			activeIcon: TablerShoppingBag,
 			title: m.pagetitle_shop()
 		}
-	];
+	]);
 </script>
 
 <nav

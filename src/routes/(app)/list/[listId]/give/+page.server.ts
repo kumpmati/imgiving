@@ -1,11 +1,11 @@
-import { getListMember } from '$lib/server/db/handlers/listUser';
-import { getAllWishesWithStatuses } from '$lib/server/db/handlers/wish';
+import { getListMember } from '#lib/server/db/handlers/listUser.ts';
+import { getAllWishesWithStatuses } from '#lib/server/db/handlers/wish.ts';
 import {
 	createWishStatus,
 	deleteWishStatus,
 	getWishStatus
-} from '$lib/server/db/handlers/wishStatus.js';
-import { wishStatusInsertSchema } from '$lib/server/db/schema/wishStatus.js';
+} from '#lib/server/db/handlers/wishStatus.js';
+import { wishStatusInsertSchema } from '#lib/server/db/schema/wishStatus.js';
 import { error } from '@sveltejs/kit';
 
 export const load = async ({ locals, params }) => {

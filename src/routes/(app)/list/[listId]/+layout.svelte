@@ -2,15 +2,15 @@
 	import TablerLoader2 from '~icons/tabler/loader-2';
 	import WishlistNav from './WishlistNav.svelte';
 	import TablerArrowLeft from '~icons/tabler/arrow-left';
-	import NotificationPermissionDialog from '$lib/v2/components/notifications/NotificationPermissionDialog.svelte';
-	import Navigation from '$lib/v3/ui/Navigation.svelte';
-	import { getChatContext } from '$lib/v3/chat/context.svelte';
-	import BottomDrawer from '$lib/v3/ui/BottomDrawer.svelte';
-	import Button from '$lib/v3/ui/Button.svelte';
-	import Alert from '$lib/v3/Alert.svelte';
-	import Chat from '$lib/v3/chat/Chat.svelte';
+	import NotificationPermissionDialog from '#lib/v2/components/notifications/NotificationPermissionDialog.svelte';
+	import Navigation from '#lib/v3/ui/Navigation.svelte';
+	import { getChatContext } from '#lib/v3/chat/context.js';
+	import BottomDrawer from '#lib/v3/ui/BottomDrawer.svelte';
+	import Button from '#lib/v3/ui/Button.svelte';
+	import Alert from '#lib/v3/Alert.svelte';
+	import Chat from '#lib/v3/chat/Chat.svelte';
 	import { invalidateAll } from '$app/navigation';
-	import { m } from '$lib/paraglide/messages';
+	import { m } from '#lib/paraglide/messages.js';
 
 	let { data, children } = $props();
 
@@ -22,7 +22,7 @@
 </svelte:head>
 
 <NotificationPermissionDialog />
-<WishlistNav currentUserId={data.user?.id} list={data.list} users={data.list.users} />
+<WishlistNav list={data.list} users={data.list.users} />
 
 <main class="mx-auto flex w-full max-w-xl flex-col p-4">
 	<Navigation listId={data.list.id} />
@@ -39,14 +39,14 @@
 		</form>
 
 		<div class="flex flex-col">
-			<p class="text-sm font-semibold leading-tight text-slate-500">
+			<p class="text-sm leading-tight font-semibold text-slate-500">
 				{#if chat.current.type === 'questions'}
 					{m.ask_owner()}
 				{:else}
 					{m.discuss()}
 				{/if}
 			</p>
-			<p class="text-lg font-semibold leading-tight text-black">
+			<p class="text-lg leading-tight font-semibold text-black">
 				{#if chat.current.loading}
 					{m.loading()}
 				{:else}

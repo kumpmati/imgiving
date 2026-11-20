@@ -1,7 +1,7 @@
-import { redirectToSignIn } from '$lib/return.js';
-import { db } from '$lib/server/db/index.js';
-import { listTable } from '$lib/server/db/schema/list.js';
-import { listUserTable } from '$lib/server/db/schema/listUser.js';
+import { redirectToSignIn } from '#lib/return.js';
+import { db } from '#lib/server/db/index.js';
+import { listTable } from '#lib/server/db/schema/list.js';
+import { listUserTable } from '#lib/server/db/schema/listUser.js';
 import { fail } from '@sveltejs/kit';
 import { and, desc, eq } from 'drizzle-orm';
 import { z } from 'zod';

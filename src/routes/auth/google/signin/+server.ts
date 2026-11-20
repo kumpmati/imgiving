@@ -1,5 +1,5 @@
-import { getBackUrl } from '$lib/return.js';
-import { google } from '$lib/server/auth/google.js';
+import { getBackUrl } from '#lib/return.js';
+import { google } from '#lib/server/auth/google.js';
 import { redirect } from '@sveltejs/kit';
 import { generateCodeVerifier, generateState } from 'arctic';
 

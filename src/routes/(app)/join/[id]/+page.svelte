@@ -1,18 +1,18 @@
 <script lang="ts">
-	import { Button, buttonVariants } from '$ui/button';
+	import { Button, buttonVariants } from '#lib/v2/components/ui/button/index.js';
 	import TablerUserPlus from '~icons/tabler/user-plus';
 	import TablerGiftFilled from '~icons/tabler/gift-filled';
 	import TablerGiftCard from '~icons/tabler/gift-card';
 	import TablerArrowRight from '~icons/tabler/arrow-right';
-	import * as Card from '$ui/card';
-	import Logo from '$lib/v2/components/Logo.svelte';
-	import * as Dialog from '$ui/dialog';
-	import { cn } from '$lib/utils';
-	import SignInForm from '$lib/v2/components/signIn/SignInForm.svelte';
+	import * as Card from '#lib/v2/components/ui/card/index.js';
+	import Logo from '#lib/v2/components/Logo.svelte';
+	import * as Dialog from '#lib/v2/components/ui/dialog/index.js';
+	import { cn } from '#lib/utils.ts';
+	import SignInForm from '#lib/v2/components/signIn/SignInForm.svelte';
 	import { page } from '$app/state';
 	import { enhance } from '$app/forms';
-	import { getToast } from '$lib/v2/components/toasts/context.js';
-	import Spinner from '$lib/v2/components/Spinner.svelte';
+	import { getToast } from '#lib/v2/components/toasts/context.js';
+	import Spinner from '#lib/v2/components/Spinner.svelte';
 
 	let { data } = $props();
 
@@ -26,29 +26,29 @@
 </svelte:head>
 
 <main class="relative flex h-screen overflow-hidden">
-	<div class="absolute left-1/2 top-1/2 w-full max-w-sm -translate-x-1/2 -translate-y-1/2">
+	<div class="absolute top-1/2 left-1/2 w-full max-w-sm -translate-x-1/2 -translate-y-1/2">
 		<img
 			src="/wave1.svg"
 			alt=""
-			class="pointer-events-none absolute -left-8 -top-8 z-10 scale-150 select-none"
+			class="pointer-events-none absolute -top-8 -left-8 z-10 scale-150 select-none"
 		/>
 		<img
 			src="/wave2.svg"
 			alt=""
-			class="pointer-events-none absolute -bottom-8 -left-8 -z-10 rotate-[15deg] scale-105 select-none"
+			class="pointer-events-none absolute -bottom-8 -left-8 -z-10 scale-105 rotate-[15deg] select-none"
 		/>
 		<TablerGiftFilled
-			class="pointer-events-none absolute -left-16 bottom-1/2 size-8 -rotate-6 select-none text-red-500"
+			class="pointer-events-none absolute bottom-1/2 -left-16 size-8 -rotate-6 text-red-500 select-none"
 		/>
 		<TablerGiftCard
-			class="pointer-events-none absolute -right-1/4 top-2/3 size-6 rotate-3 select-none text-red-300"
+			class="pointer-events-none absolute top-2/3 -right-1/4 size-6 rotate-3 text-red-300 select-none"
 		/>
 
 		<Card.Root class="border-dashed border-red-200 shadow-lg">
 			<Card.Content class="flex flex-col items-center text-center">
 				<Logo title="ImGiving" />
-				<p class="mt-8 text-sm text-muted-foreground">You've been invited to join</p>
-				<h1 class="mt-2 text-2xl font-semibold text-primary sm:text-3xl">{data.list.name}</h1>
+				<p class="text-muted-foreground mt-8 text-sm">You've been invited to join</p>
+				<h1 class="text-primary mt-2 text-2xl font-semibold sm:text-3xl">{data.list.name}</h1>
 			</Card.Content>
 
 			<Card.Footer class="mt-4">

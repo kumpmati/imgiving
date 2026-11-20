@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { cn } from '$lib/utils';
+	import { cn } from '#lib/utils.ts';
 	import { onMount, type Snippet } from 'svelte';
 
 	type Props = {
@@ -43,7 +43,7 @@
 <dialog
 	bind:this={ref}
 	class={cn(
-		'fixed bottom-0 top-[unset] z-10 max-w-[calc(100%-2rem)] rounded-t-[32px] p-0 shadow-xl',
+		'fixed top-[unset] bottom-0 z-10 max-w-[calc(100%-2rem)] rounded-t-[32px] p-0 shadow-xl',
 		classes
 	)}
 >
@@ -73,7 +73,7 @@
 			translate var(--duration),
 			opacity var(--duration),
 			display var(--duration) allow-discrete;
-		transition-timing-function: cubic-bezier(0.08, 0.82, 0.17, 1); // expo-out;
+		transition-timing-function: cubic-bezier(0.08, 0.82, 0.17, 1); /* expo-out */
 
 		&[open] {
 			/* Post-Entry (Normal) State */
@@ -91,12 +91,12 @@
 		&:not([open]) {
 			translate: 0 100%;
 			opacity: 0;
-			transition-timing-function: cubic-bezier(0.55, 0.06, 0.68, 0.19); // cubic-in
+			transition-timing-function: cubic-bezier(0.55, 0.06, 0.68, 0.19); /* cubic-in */
 		}
 	}
 
 	dialog::backdrop {
 		animation: fade 500ms;
-		animation-timing-function: cubic-bezier(0.08, 0.82, 0.17, 1); // expo-out
+		animation-timing-function: cubic-bezier(0.08, 0.82, 0.17, 1); /* expo-out */
 	}
 </style>

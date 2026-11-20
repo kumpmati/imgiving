@@ -1,10 +1,10 @@
-import { signInFormSchema } from '$lib/v2/components/signIn/schema.js';
-import { redirectToSignIn } from '$lib/return.js';
-import { setSessionTokenCookie } from '$lib/server/auth/cookies.js';
-import { createUserAndSession } from '$lib/server/auth/helpers.js';
-import { getListMember, joinList } from '$lib/server/db/handlers/listUser';
-import { db } from '$lib/server/db/index.js';
-import { listTable } from '$lib/server/db/schema/list.js';
+import { signInFormSchema } from '#lib/v2/components/signIn/schema.js';
+import { redirectToSignIn } from '#lib/return.js';
+import { setSessionTokenCookie } from '#lib/server/auth/cookies.js';
+import { createUserAndSession } from '#lib/server/auth/helpers.js';
+import { getListMember, joinList } from '#lib/server/db/handlers/listUser.ts';
+import { db } from '#lib/server/db/index.js';
+import { listTable } from '#lib/server/db/schema/list.js';
 import { error, fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 

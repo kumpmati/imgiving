@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { m } from '$lib/paraglide/messages';
+	import { m } from '#lib/paraglide/messages.js';
 	import Input from './ui/Input.svelte';
 	import Textarea from './ui/Textarea.svelte';
 

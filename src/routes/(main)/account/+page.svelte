@@ -1,18 +1,18 @@
 <script>
-	import { cn } from '$lib/utils';
-	import { Button, buttonVariants } from '$ui/button';
-	import * as Card from '$ui/card';
-	import * as Dialog from '$ui/dialog';
+	import { cn } from '#lib/utils.ts';
+	import { Button, buttonVariants } from '#lib/v2/components/ui/button/index.js';
+	import * as Card from '#lib/v2/components/ui/card/index.js';
+	import * as Dialog from '#lib/v2/components/ui/dialog/index.js';
 	import dayjs from 'dayjs';
 	import relativeTime from 'dayjs/plugin/relativeTime.js';
 	import TablerUsers from '~icons/tabler/users';
 	import TablerTrash from '~icons/tabler/trash';
 	import { enhance } from '$app/forms';
-	import * as Alert from '$ui/alert';
+	import * as Alert from '#lib/v2/components/ui/alert/index.js';
 	import TablerAlertCircle from '~icons/tabler/alert-circle';
 	import TablerCheck from '~icons/tabler/check';
 	import TablerBrandGoogleFilled from '~icons/tabler/brand-google-filled';
-	import { Badge } from '$ui/badge';
+	import { Badge } from '#lib/v2/components/ui/badge/index.js';
 
 	dayjs.extend(relativeTime);
 
@@ -44,12 +44,12 @@
 				</Alert.Root>
 			{/if}
 
-			<p class="mb-2 text-muted-foreground">Sign-in methods</p>
+			<p class="text-muted-foreground mb-2">Sign-in methods</p>
 
 			<div class="flex items-center gap-2">
 				<Button
 					href="/auth/google/signin?back=/account"
-					data-sveltekit-preload-data="off"
+					data-sveltekit-preload-data={false}
 					class="w-fit"
 					variant="outline"
 				>
@@ -62,7 +62,7 @@
 						Connected
 					</Badge>
 				{:else}
-					<p class="text-sm text-muted-foreground">Not connected</p>
+					<p class="text-muted-foreground text-sm">Not connected</p>
 				{/if}
 			</div>
 
@@ -82,7 +82,11 @@
 						</Dialog.Header>
 						<Dialog.Footer>
 							<Dialog.Close class={buttonVariants({ variant: 'secondary' })}>Cancel</Dialog.Close>
-							<Button data-sveltekit-preload-data="off" href="/auth/signout" variant="destructive">
+							<Button
+								data-sveltekit-preload-data={false}
+								href="/auth/signout"
+								variant="destructive"
+							>
 								Sign out
 							</Button>
 						</Dialog.Footer>
@@ -90,7 +94,7 @@
 				</Dialog.Root>
 			{:else}
 				<Button
-					data-sveltekit-preload-data="off"
+					data-sveltekit-preload-data={false}
 					href="/auth/signout"
 					variant="destructive"
 					class="mt-8 w-fit"
@@ -113,15 +117,15 @@
 						class="flex items-center justify-between rounded p-2 transition-colors hover:bg-slate-50"
 					>
 						<a href="/list/{membership.listId}" class="flex flex-col gap-0.5 overflow-hidden">
-							<span class="overflow-hidden text-ellipsis whitespace-nowrap text-base font-medium">
+							<span class="overflow-hidden text-base font-medium text-ellipsis whitespace-nowrap">
 								{membership.list.name}
 
 								{#if isOwner}
-									<span class="font-normal text-muted-foreground">(Owner)</span>
+									<span class="text-muted-foreground font-normal">(Owner)</span>
 								{/if}
 							</span>
 							<span
-								class="flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap text-xs text-muted-foreground"
+								class="text-muted-foreground flex items-center gap-2 overflow-hidden text-xs text-ellipsis whitespace-nowrap"
 							>
 								<span class="inline-flex items-center gap-1">
 									<TablerUsers class="size-4" />
@@ -164,7 +168,7 @@
 						{/if}
 					</li>
 				{:else}
-					<li class="text-sm text-muted-foreground">You don't have any wishlists yet.</li>
+					<li class="text-muted-foreground text-sm">You don't have any wishlists yet.</li>
 				{/each}
 			</ul>
 		</Card.Content>

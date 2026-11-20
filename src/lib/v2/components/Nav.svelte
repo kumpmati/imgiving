@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import Logo from './Logo.svelte';
-	import { cn } from '$lib/utils';
+	import { cn } from '#lib/utils.ts';
 
 	type Props = {
 		href: string;

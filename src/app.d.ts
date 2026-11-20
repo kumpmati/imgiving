@@ -1,7 +1,7 @@
 // See https://svelte.dev/docs/kit/types#app.d.ts
 
-import type { Session } from '$lib/server/db/schema';
-import type { User } from '$lib/server/db/schema/user';
+import type { Session } from '#lib/server/db/schema/index.ts';
+import type { User } from '#lib/server/db/schema/user.ts';
 import 'unplugin-icons/types/svelte';
 
 // for information about these interfaces
