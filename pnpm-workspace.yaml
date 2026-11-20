@@ -1,0 +1,10 @@
+allowBuilds:
+  '@firebase/util': false
+  '@parcel/watcher': false
+  esbuild: false
+  protobufjs: false
+  workerd: false
+minimumReleaseAgeExclude:
+  - '@cloudflare/workers-types@5.20261120.1'
+  - autoprefixer@10.7.0
+  - tailwind-merge@3.7.1
