@@ -9,14 +9,5 @@
 		"directory": ".svelte-kit/cloudflare"
 	},
 	"workers_dev": true,
-	"preview_urls": true,
-	"build": {
-		"command": "pnp run build:nowrangler"
-	}
+	"preview_urls": true
 }
-
-// #:schema node_modules/wrangler/config-schema.json
-// name = "giftea"
-// compatibility_date = "2024-12-05"
-// compatibility_flags = [ "nodejs_compat" ]
-// pages_build_output_dir = ".svelte-kit/cloudflare"
