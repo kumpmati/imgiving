@@ -124,14 +124,14 @@
 				{/if}
 			</div>
 
-			<div class="mt-12 flex flex-col gap-4">
+			<div class="mt-12 flex flex-col gap-4 max-[450px]:gap-2">
 				<button
 					class="mx-auto flex items-center gap-1.5 text-slate-500 hover:text-slate-600"
 					onclick={() => (wishGiversOpen = true)}
 				>
 					<!-- Giver circles -->
 					<div class="flex items-center">
-						{#each { length: Math.min(active.wish.statuses.length, 5) }, index}
+						{#each { length: Math.min(active.wish.statuses.length, 5) } as index}
 							<div class="-ml-3 size-[22px] rounded-full border-2 border-white bg-slate-200"></div>
 						{:else}
 							<TablerX />
@@ -141,10 +141,10 @@
 					<p>{m.wish_givers_amount({ amount: active.wish.statuses.length })}</p>
 				</button>
 
-				<div class="grid grid-cols-2 gap-4">
+				<div class="grid grid-cols-2 gap-4 max-[450px]:grid-cols-1 max-[450px]:gap-2">
 					<Button
 						onclick={() => active.wish && chat.openComments(active.wish.id, data.list.id)}
-						class="w-full justify-center rounded-2xl border border-slate-500 bg-transparent p-3 font-medium leading-none text-slate-500 hover:bg-slate-100 hover:text-slate-600"
+						class="w-full justify-center rounded-2xl border border-slate-500 bg-transparent p-2 text-sm font-medium leading-none text-slate-500 hover:bg-slate-100 hover:text-slate-600"
 					>
 						<TablerMessage class="size-5" />
 						{m.button_title_discuss()}
@@ -152,7 +152,7 @@
 					</Button>
 					<Button
 						onclick={() => active.wish && chat.openQuestions(active.wish.id, data.list.id)}
-						class="w-full justify-center rounded-2xl p-3 font-medium leading-none"
+						class="w-full justify-center rounded-2xl p-2 text-sm font-medium leading-none"
 					>
 						<TablerHelp class="size-5" />
 						{m.button_title_ask_owner()}

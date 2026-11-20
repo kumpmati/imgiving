@@ -38,7 +38,7 @@
 </script>
 
 <nav
-	class="fixed bottom-4 left-1/2 flex -translate-x-1/2 overflow-hidden rounded-full bg-white shadow-lg"
+	class="fixed bottom-4 left-1/2 z-10 flex -translate-x-1/2 overflow-hidden rounded-full bg-white shadow-lg"
 >
 	{#each items as item (item.path)}
 		<a
