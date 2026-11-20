@@ -7,6 +7,9 @@ import { paraglideVitePlugin } from '@inlang/paraglide-js';
 import Icons from 'unplugin-icons/vite';
 
 export default defineConfig({
+	ssr: {
+		external: ['diagnostics_channel'] // fix sentry build error on cloudflare workers
+	},
 	plugins: [
 		sentrySvelteKit({
 			org: 'matias-kumpulainen',
