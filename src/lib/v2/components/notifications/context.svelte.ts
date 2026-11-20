@@ -6,7 +6,7 @@ import { getMessaging, getToken, type Messaging, onMessage } from 'firebase/mess
 import { Toasts } from '../toasts/state.svelte';
 import { saveToken } from '#lib/queries/fcm.remote.ts';
 
-const supportsNotification = 'Notification' in window;
+const supportsNotification = browser && 'Notification' in window;
 
 export class NotificationContext {
 	permission = $state<NotificationPermission>();
