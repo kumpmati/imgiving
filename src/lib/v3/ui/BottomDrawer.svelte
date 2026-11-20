@@ -43,7 +43,7 @@
 <dialog
 	bind:this={ref}
 	class={cn(
-		'fixed top-[unset] bottom-0 z-10 max-w-[calc(100%-2rem)] rounded-t-[32px] p-0 shadow-xl',
+		'fixed top-[unset] bottom-0 z-10 mx-auto max-w-[calc(100%-2rem)] rounded-t-[32px] p-0 shadow-xl',
 		classes
 	)}
 >

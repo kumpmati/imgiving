@@ -42,7 +42,7 @@
 
 <dialog
 	bind:this={ref}
-	class={cn('z-10 max-w-[calc(100%-2rem)] rounded-[32px] p-0 shadow-2xl', classes)}
+	class={cn('z-10 mx-auto my-auto max-w-[calc(100%-2rem)] rounded-[32px] p-0 shadow-2xl', classes)}
 >
 	<div class="p-4">
 		{@render children()}
