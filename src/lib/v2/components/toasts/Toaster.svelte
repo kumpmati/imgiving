@@ -17,7 +17,7 @@
 
 {#if state.messages.length > 0}
 	<ul
-		class="fixed bottom-0 right-0 z-[1000000] flex w-full max-w-96 flex-col items-stretch gap-2 p-4"
+		class="fixed right-0 bottom-0 z-[1000000] flex w-full max-w-96 flex-col items-stretch gap-2 p-4"
 	>
 		{#each state.messages as m (m.id)}
 			<li
@@ -29,7 +29,7 @@
 				<button
 					onclick={() => state.dismiss(m.id)}
 					class={cn(
-						'z-0 flex w-full gap-2 rounded-lg border bg-card p-4 text-left text-sm shadow-lg sm:w-96',
+						'bg-card z-0 flex w-full gap-2 rounded-lg border p-4 text-left text-sm shadow-lg sm:w-96',
 						m.type === 'success' && 'text-primary'
 					)}
 				>
