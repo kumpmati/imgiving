@@ -18,7 +18,8 @@ export class NotificationContext {
 		this.#toast = t;
 
 		if (browser) {
-			this.permission = Notification.permission;
+			// Notification is undefined on some devices, can't assume it's not null.
+			this.permission = window?.Notification?.permission ?? 'default';
 		}
 	}
 
