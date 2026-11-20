@@ -1,3 +1,5 @@
+import { sequence } from '@sveltejs/kit/hooks';
+import * as Sentry from '@sentry/sveltekit';
 import {
 	deleteSessionTokenCookie,
 	getSessionTokenCookie,
@@ -8,7 +10,9 @@ import { paraglideMiddleware } from '#lib/paraglide/server.js';
 
 // TODO: consider caching sessions / users?
 
-export function handle({ event, resolve }) {
+export const handleError = Sentry.handleErrorWithSentry();
+
+export const handle = sequence(Sentry.sentryHandle(), function _handle({ event, resolve }) {
 	return paraglideMiddleware(event.request, async ({ request: localizedRequest, locale }) => {
 		event.request = localizedRequest;
 
@@ -40,4 +44,4 @@ export function handle({ event, resolve }) {
 			}
 		});
 	});
-}
+});

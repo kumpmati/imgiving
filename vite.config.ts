@@ -1,3 +1,4 @@
+import { sentrySvelteKit } from '@sentry/sveltekit/vite';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vitest/config';
 import adapter from '@sveltejs/adapter-cloudflare';
@@ -6,7 +7,14 @@ import { paraglideVitePlugin } from '@inlang/paraglide-js';
 import Icons from 'unplugin-icons/vite';
 
 export default defineConfig({
+	ssr: {
+		external: ['diagnostics_channel'] // fix sentry build error on cloudflare workers
+	},
 	plugins: [
+		sentrySvelteKit({
+			org: 'matias-kumpulainen',
+			project: 'javascript-sveltekit'
+		}),
 		paraglideVitePlugin({
 			project: './project.inlang',
 			outdir: './src/lib/paraglide',
@@ -22,7 +30,10 @@ export default defineConfig({
 				experimental: { async: true }
 			},
 			adapter: adapter(),
-			experimental: { remoteFunctions: true }
+			experimental: { remoteFunctions: true },
+			tracing: {
+				server: false // sentry
+			}
 		}),
 		Icons({ compiler: 'svelte' })
 	],
