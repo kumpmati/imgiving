@@ -85,7 +85,7 @@
 {/if}
 
 <!-- Item drawer -->
-<BottomDrawer bind:open={wishOpen} class="w-[450px]">
+<BottomDrawer bind:open={wishOpen} class="w-full max-w-[550px]">
 	<form method="dialog" class="contents">
 		<Button class="sticky top-0 gap-1 p-2">
 			<TablerX class="size-5" />
@@ -141,7 +141,7 @@
 					<p>{m.wish_givers_amount({ amount: active.wish.statuses.length })}</p>
 				</button>
 
-				<div class="grid grid-cols-2 gap-4 max-[450px]:grid-cols-1 max-[450px]:gap-2">
+				<div class="grid grid-cols-2 gap-4 max-[350px]:grid-cols-1 max-[350px]:gap-2">
 					<Button
 						onclick={() => active.wish && chat.openComments(active.wish.id, data.list.id)}
 						class="w-full justify-center rounded-2xl border border-slate-500 bg-transparent p-2 text-sm leading-none font-medium text-slate-500 hover:bg-slate-100 hover:text-slate-600"
@@ -202,7 +202,7 @@
 </BottomDrawer>
 
 <!-- Givers list -->
-<BottomDrawer bind:open={wishGiversOpen} class="w-[450px]">
+<BottomDrawer bind:open={wishGiversOpen} class="w-full max-w-[550px]">
 	<div class="flex items-center gap-3">
 		<form method="dialog" class="contents">
 			<Button class="size-9 p-2">

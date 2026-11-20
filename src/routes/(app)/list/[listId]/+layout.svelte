@@ -30,7 +30,7 @@
 	{@render children()}
 </main>
 
-<BottomDrawer bind:open={chat.current.open} class="w-[450px]">
+<BottomDrawer bind:open={chat.current.open} class="w-full max-w-[550px]">
 	<div class="mb-4 flex items-center gap-2">
 		<form method="dialog" class="contents">
 			<Button class="size-9 p-2">
