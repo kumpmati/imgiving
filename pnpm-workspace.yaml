@@ -1,8 +1,8 @@
 allowBuilds:
   '@firebase/util': true
-  '@parcel/watcher': false
+  '@parcel/watcher': true
   esbuild: true
-  protobufjs: false
+  protobufjs: true
   workerd: true
 minimumReleaseAgeExclude:
   - '@cloudflare/workers-types@5.20261120.1'
