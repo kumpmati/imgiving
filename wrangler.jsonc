@@ -9,7 +9,10 @@
 		"directory": ".svelte-kit/cloudflare"
 	},
 	"workers_dev": true,
-	"preview_urls": true
+	"preview_urls": true,
+	"build": {
+		"command": "pnp run build:nowrangler"
+	}
 }
 
 // #:schema node_modules/wrangler/config-schema.json
