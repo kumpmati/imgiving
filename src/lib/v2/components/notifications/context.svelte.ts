@@ -6,6 +6,8 @@ import { getMessaging, getToken, type Messaging, onMessage } from 'firebase/mess
 import { Toasts } from '../toasts/state.svelte';
 import { saveToken } from '#lib/queries/fcm.remote.ts';
 
+const supportsNotification = 'Notification' in window;
+
 export class NotificationContext {
 	permission = $state<NotificationPermission>();
 	allowed = $derived(this.permission === 'granted');
@@ -17,9 +19,9 @@ export class NotificationContext {
 	constructor(t: Toasts) {
 		this.#toast = t;
 
-		if (browser) {
+		if (browser && supportsNotification) {
 			// Notification is undefined on some devices, can't assume it's not null.
-			this.permission = window?.Notification?.permission ?? 'default';
+			this.permission = window.Notification.permission ?? 'default';
 		}
 	}
 
@@ -39,11 +41,15 @@ export class NotificationContext {
 	}
 
 	async requestPermissions() {
+		if (!supportsNotification) {
+			return;
+		}
+
 		if (!this.#messaging) {
 			await this.init();
 		}
 
-		await Notification.requestPermission().then(async (status) => {
+		await window.Notification.requestPermission().then(async (status) => {
 			this.permission = status;
 			if (status === 'granted') {
 				await getToken(this.#messaging!, {
