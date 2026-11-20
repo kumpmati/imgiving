@@ -3,7 +3,7 @@
 	import { Button } from '$ui/button';
 	import * as Card from '$ui/card';
 	import { getBackUrl } from '$lib/return';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import SignInForm from '$lib/v2/components/signIn/SignInForm.svelte';
 </script>
 
@@ -12,9 +12,9 @@
 </svelte:head>
 
 <main class="absolute left-1/2 top-1/2 w-full max-w-md -translate-x-1/2 -translate-y-1/2">
-	<Button href={getBackUrl($page.url) ?? '/'} variant="ghost" class="mb-2" size="sm">
-		<TablerArrowLeft class="size-4" /> Back
-	</Button>
+	<Button href={getBackUrl(page.url) ?? '/'} variant="ghost" class="mb-2" size="sm"
+		><TablerArrowLeft class="size-4" /> Back</Button
+	>
 
 	<Card.Root>
 		<Card.Header>

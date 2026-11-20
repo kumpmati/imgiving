@@ -6,7 +6,7 @@
 	import * as Table from '$ui/table';
 	import { superActions } from 'sveltekit-superactions';
 	import type { ShopEndpoint } from './+server.js';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { invalidateAll } from '$app/navigation';
 	import { Badge } from '$ui/badge';
 	import { Button } from '$ui/button/index.js';
@@ -16,7 +16,7 @@
 	let { data } = $props();
 
 	const chat = getChatContext();
-	const actions = superActions<ShopEndpoint>($page.url.pathname);
+	const actions = superActions<ShopEndpoint>(page.url.pathname);
 </script>
 
 <svelte:head>
@@ -27,8 +27,8 @@
 	<Table.Header>
 		<Table.Row>
 			<Table.Head>Name</Table.Head>
-			<Table.Head class="hidden w-0 min-w-20 sm:table-cell"></Table.Head>
-			<Table.Head class="w-0"></Table.Head>
+			<Table.Head class="hidden w-0 min-w-20 sm:table-cell" />
+			<Table.Head class="w-0" />
 		</Table.Row>
 	</Table.Header>
 

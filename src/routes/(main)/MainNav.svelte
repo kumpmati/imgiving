@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import Nav from '$lib/v2/components/Nav.svelte';
 	import { getUserContext } from '$lib/state/user.svelte';
 	import { cn } from '$lib/utils';
@@ -9,18 +9,18 @@
 	const userState = getUserContext();
 </script>
 
-<Nav title="ImGiving" href="/" class={cn($page.url.pathname === '/' && 'absolute')}>
+<Nav title="ImGiving" href="/" class={cn(page.url.pathname === '/' && 'absolute')}>
 	<Button
 		variant="link"
 		href="/for-companies"
-		class={cn($page.url.pathname === '/for-companies' && 'font-semibold underline')}
+		class={cn(page.url.pathname === '/for-companies' && 'font-semibold underline')}
+		>For companies</Button
 	>
-		For companies
-	</Button>
+
 	<Button
 		variant="link"
 		href="/support"
-		class={cn($page.url.pathname === '/support' && 'font-semibold underline')}>Support</Button
+		class={cn(page.url.pathname === '/support' && 'font-semibold underline')}>Support</Button
 	>
 
 	{#if userState.current}

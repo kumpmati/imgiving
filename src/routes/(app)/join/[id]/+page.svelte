@@ -9,7 +9,7 @@
 	import * as Dialog from '$ui/dialog';
 	import { cn } from '$lib/utils';
 	import SignInForm from '$lib/v2/components/signIn/SignInForm.svelte';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { enhance } from '$app/forms';
 	import { getToast } from '$lib/v2/components/toasts/context.js';
 	import Spinner from '$lib/v2/components/Spinner.svelte';
@@ -97,7 +97,7 @@
 							</Dialog.Header>
 
 							<div class="mt-4 flex flex-col gap-4">
-								<SignInForm action="?/signup_and_join" backUrl={$page.url.pathname} />
+								<SignInForm action="?/signup_and_join" backUrl={page.url.pathname} />
 							</div>
 						</Dialog.Content>
 					</Dialog.Root>
