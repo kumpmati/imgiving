@@ -13,9 +13,10 @@
 	let loading = $state(false);
 
 	onMount(() => {
-		console.log(Notification.permission, localStorage.getItem('imgiving-notifications'));
-		if (Notification.permission === 'default' && !localStorage.getItem('imgiving-notifications')) {
-			open = true;
+		if ("Notification" in window) {
+			if (window.Notification?.permission === 'default' && !localStorage.getItem('imgiving-notifications')) {
+				open = true;
+			}
 		}
 	});
 </script>
