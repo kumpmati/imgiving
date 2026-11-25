@@ -5,11 +5,11 @@ import { createSession, generateSessionToken } from '#lib/server/auth/session.js
 import { getUserByGoogleId } from '#lib/server/db/handlers/user.js';
 import { db } from '#lib/server/db/index.js';
 import { userTable } from '#lib/server/db/schema/user.js';
-import { error, redirect } from '@sveltejs/kit';
+import { error, redirect, type RequestHandler } from '@sveltejs/kit';
 import { decodeIdToken, type OAuth2Tokens } from 'arctic';
 import { eq } from 'drizzle-orm';
 
-export const GET = async (event) => {
+export const GET: RequestHandler = async (event) => {
 	const code = event.url.searchParams.get('code');
 	const state = event.url.searchParams.get('state');
 	const storedState = event.cookies.get('google_oauth_state') ?? null;

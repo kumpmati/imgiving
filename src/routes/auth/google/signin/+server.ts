@@ -1,9 +1,9 @@
 import { getBackUrl } from '#lib/return.js';
 import { google } from '#lib/server/auth/google.js';
-import { redirect } from '@sveltejs/kit';
+import { redirect, type RequestHandler } from '@sveltejs/kit';
 import { generateCodeVerifier, generateState } from 'arctic';
 
-export const GET = async ({ cookies, url }) => {
+export const GET: RequestHandler = ({ cookies, url }) => {
 	const state = generateState();
 	const verifier = generateCodeVerifier();
 	const authUrl = google.createAuthorizationURL(state, verifier, ['openid', 'profile']);
@@ -32,5 +32,5 @@ export const GET = async ({ cookies, url }) => {
 		});
 	}
 
-	redirect(302, authUrl);
+	redirect(302, authUrl, {external: true});
 };
