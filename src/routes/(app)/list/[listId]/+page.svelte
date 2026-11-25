@@ -110,7 +110,7 @@
 
 	<button
 		onclick={() => (newWishOpen = true)}
-		class="mx-auto mt-3 flex items-center gap-2 rounded-2xl bg-white px-4 py-2 text-sm font-semibold shadow-lg hover:bg-slate-50"
+		class="mx-auto mt-3 mb-16 flex items-center gap-2 rounded-2xl bg-white px-4 py-2 text-sm font-semibold shadow-lg hover:bg-slate-50"
 	>
 		<TablerPlus class="size-5" />
 		{m.add_wish()}
